@@ -1,842 +1,875 @@
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="page-width page-width--narrow section-{{ section.id }}-padding">
+  <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    {{ page.title | escape }}
+  </h1>
+  <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    {{ page.content }}
+  </div>
+</div>
+
 {%- comment -%}
-  Theme section: sections/main-page.liquid
+  ==========================================================================
+  HILM INSTITUTE :: EVENT LANDING PAGE
+  Self-contained. Nothing above this comment was changed and no schema
+  settings are used, so all content is edited right here in the code.
 
-  Two layouts in one file, chosen by the "Page layout" setting:
-
-    Standard page ....... the original theme markup (page title plus page content).
-    Event landing page .. the full Hilm Institute event page, with the theme
-                          header and footer hidden.
-
-  The setting is stored per template, so set it to "Event landing page" only in
-  templates/page.event.json. Every other page keeps the standard layout.
+  Edit the details in the liquid block below. Longer copy (the four reason
+  tiles, the activity cards and the schedule rows) is edited directly in
+  the markup further down, where each item sits next to its own image URL.
+  ==========================================================================
 {%- endcomment -%}
 
-{%- if section.settings.layout == 'event' -%}
-  {%- liquid
-    assign seat_total = 189
-    assign seats_claimed = section.settings.claimed_percent | times: seat_total | divided_by: 100
-    assign accent = section.settings.accent | default: '#F5A524'
-    assign booking_url = section.settings.booking_url | default: '#'
-    assign cta_label = section.settings.cta_label | default: 'Book your seat'
-  -%}
+{%- liquid
+  # ---- Event details -------------------------------------------------
+  assign ev_accent       = '#F5A524'
+  assign ev_booking_url  = 'https://your-booking-site.com/mtj-lahore'
+  assign ev_cta          = 'Book your seat'
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Instrument+Sans:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
+  assign ev_kicker = 'An evening with'
+  assign ev_title  = 'Molana Tariq Jameel'
+  assign ev_date   = 'Saturday 14 March 2026'
+  assign ev_venue  = 'Expo Centre, Lahore'
+  assign ev_entry  = 'Free entry'
+  assign ev_sub    = 'One talk, one hall, one evening. Doors open at 4 pm and entry is free with registration.'
 
+  # Replace with your own image once uploaded, for example:
+  #   assign ev_hero_image = 'hero.jpg' | file_img_url: '1200x'
+  assign ev_hero_image    = 'https://picsum.photos/seed/hilm-auditorium-hall/1000/1250'
+  assign ev_speaker_image = ''
+
+  # ---- Seat map ------------------------------------------------------
+  assign ev_seat_total   = 189
+  assign ev_seat_percent = 68
+  assign ev_seats_taken  = ev_seat_percent | times: ev_seat_total | divided_by: 100
+-%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Instrument+Sans:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+  /* Hides the theme header and footer on this page. */
+  .shopify-section-group-header-group,
+  .shopify-section-group-footer-group,
+  #shopify-section-header,
+  #shopify-section-footer,
+  .announcement-bar,
+  body > header,
+  body > footer { display: none !important; }
+
+  /* Hides the page title and rich text block above, so the hero comes first.
+     Delete this rule if you want the page title to show. */
+  #shopify-section-{{ section.id }} .page-width--narrow.section-{{ section.id }}-padding { display: none; }
+
+  /* The theme wraps this section in .section, which adds vertical rhythm we do not want. */
+  #shopify-section-{{ section.id }} { padding: 0 !important; margin: 0 !important; }
+
+  body { background: #0B0F14; }
+
+  /* ---------- Tokens ---------- */
+  .mtj {
+    --ink:      #0B0F14;
+    --ink-2:    #121821;
+    --ink-3:    #19212B;
+    --bone:     #F2EFE9;
+    --bone-dim: #A2ABB6;
+    --line:     rgba(242, 239, 233, .12);
+    --accent:   {{ ev_accent }};
+    --accent-soft: {{ ev_accent }}1F;
+    --accent-ink:  #1A1204;
+
+    --r-card: 14px;
+    --r-pill: 999px;
+    --r-mark: 3px;
+
+    --pad-x: clamp(20px, 5vw, 72px);
+    --maxw: 1320px;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+
+    font-family: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    color: var(--bone);
+    background: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mtj *, .mtj *::before, .mtj *::after { box-sizing: border-box; }
+  .mtj img { display: block; max-width: 100%; height: auto; }
+  .mtj p { margin: 0; }
+
+  .mtj__wrap {
+    width: 100%;
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding-inline: var(--pad-x);
+  }
+
+  .mtj__h2 {
+    font-family: "Archivo", ui-sans-serif, system-ui, sans-serif;
+    font-variation-settings: "wdth" 110;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: 1;
+    font-size: clamp(2rem, 4.4vw, 3.4rem);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .mtj__lede {
+    margin-top: 24px;
+    max-width: 58ch;
+    font-size: clamp(1rem, 1.1vw, 1.115rem);
+    line-height: 1.62;
+    color: var(--bone-dim);
+  }
+
+  .mtj__mono {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+  }
+
+  .mtj__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    padding: 16px 32px;
+    border-radius: var(--r-pill);
+    border: 1px solid transparent;
+    font: 600 1rem/1 "Instrument Sans", system-ui, sans-serif;
+    letter-spacing: -.01em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .25s var(--ease), border-color .25s var(--ease), transform .16s var(--ease);
+  }
+  .mtj__btn--primary { background: var(--accent); color: var(--accent-ink); }
+  .mtj__btn--primary:hover { filter: brightness(1.08); }
+  .mtj__btn--ghost { border-color: rgba(242, 239, 233, .3); color: var(--bone); }
+  .mtj__btn--ghost:hover { border-color: var(--bone); background: rgba(242, 239, 233, .06); }
+  .mtj__btn:active { transform: translateY(1px); }
+
+  .mtj :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  /* Scroll reveal, IntersectionObserver driven. */
+  .mtj [data-reveal] > * {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .7s var(--ease), transform .7s var(--ease);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+  .mtj [data-reveal].is-in > * { opacity: 1; transform: none; }
+
+  /* ---------- Hero ---------- */
+  .mtj-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 92dvh;
+    display: flex;
+    align-items: center;
+    padding-block: clamp(56px, 9vh, 96px) clamp(48px, 7vh, 80px);
+  }
+  .mtj-hero__glow {
+    position: absolute;
+    inset: -30% 0 auto -10%;
+    height: 90%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(48% 52% at 30% 20%, var(--accent-soft), transparent 70%);
+    animation: mtj-lights 1.4s var(--ease) both;
+  }
+  @keyframes mtj-lights { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: none; } }
+
+  .mtj-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .mtj-hero__title {
+    font-family: "Archivo", ui-sans-serif, system-ui, sans-serif;
+    font-variation-settings: "wdth" 114;
+    font-weight: 700;
+    letter-spacing: -.028em;
+    line-height: .94;
+    font-size: clamp(2.7rem, 6.1vw, 5.4rem);
+    margin: 0;
+    text-wrap: balance;
+  }
+  .mtj-hero__kicker {
+    display: block;
+    font-size: .3em;
+    font-weight: 400;
+    font-variation-settings: "wdth" 100;
+    letter-spacing: -.005em;
+    color: var(--bone-dim);
+    margin-bottom: .5em;
+  }
+
+  .mtj-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 30px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .mtj-hero__meta li {
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    padding: 9px 16px;
+    background: rgba(242, 239, 233, .03);
+  }
+  .mtj-hero__meta li:first-child { border-color: var(--accent); color: var(--bone); }
+
+  .mtj-hero__sub {
+    margin-top: 28px;
+    max-width: 46ch;
+    font-size: clamp(1.02rem, 1.2vw, 1.18rem);
+    line-height: 1.55;
+    color: var(--bone-dim);
+  }
+
+  .mtj-hero__cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+
+  .mtj-hero__media {
+    position: relative;
+    margin: 0;
+    border-radius: var(--r-card);
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+  }
+  .mtj-hero__media img { width: 100%; height: 100%; object-fit: cover; }
+  .mtj-hero__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, var(--ink) 2%, rgba(11, 15, 20, .3) 45%, rgba(11, 15, 20, .05) 100%);
+  }
+
+  .mtj-hero__copy > * { animation: mtj-rise .9s var(--ease) both; }
+  .mtj-hero__copy > *:nth-child(1) { animation-delay: .05s; }
+  .mtj-hero__copy > *:nth-child(2) { animation-delay: .16s; }
+  .mtj-hero__copy > *:nth-child(3) { animation-delay: .26s; }
+  .mtj-hero__copy > *:nth-child(4) { animation-delay: .36s; }
+  .mtj-hero__media { animation: mtj-rise 1s var(--ease) .2s both; }
+  @keyframes mtj-rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+
+  /* ---------- Section rhythm ---------- */
+  .mtj-band { padding-block: clamp(72px, 11vh, 132px); }
+  .mtj-band--raised { background: var(--ink-2); }
+  .mtj-band__head { max-width: 62ch; margin-bottom: clamp(40px, 6vh, 64px); }
+
+  /* ---------- Why come in person (bento, 4 cells) ---------- */
+  .mtj-why__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .mtj-cell {
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--ink-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .mtj-cell--a { grid-column: span 7; }
+  .mtj-cell--b { grid-column: span 5; background: var(--accent-soft); border-color: {{ ev_accent }}40; }
+  .mtj-cell--c { grid-column: span 5; }
+  .mtj-cell--d { grid-column: span 7; }
+  .mtj-cell__media { aspect-ratio: 16 / 9; }
+  .mtj-cell__media img { width: 100%; height: 100%; object-fit: cover; }
+  .mtj-cell__body { padding: clamp(24px, 3vw, 36px); margin-top: auto; }
+  .mtj-cell--text .mtj-cell__body { margin-block: auto; }
+  .mtj-cell--text .mtj-cell__title { font-size: clamp(1.5rem, 2.6vw, 2.05rem); margin-bottom: 16px; }
+  .mtj-cell--text .mtj-cell__text { font-size: 1.02rem; }
+  .mtj-cell__title {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-variation-settings: "wdth" 106;
+    font-weight: 700;
+    font-size: clamp(1.25rem, 1.9vw, 1.6rem);
+    letter-spacing: -.018em;
+    line-height: 1.12;
+    margin: 0 0 12px;
+  }
+  .mtj-cell__text { color: var(--bone-dim); line-height: 1.62; font-size: .98rem; }
+  .mtj-cell--b .mtj-cell__text { color: rgba(242, 239, 233, .78); }
+
+  /* ---------- Guest speaker ---------- */
+  .mtj-speaker__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+  .mtj-speaker__portrait {
+    position: relative;
+    margin: 0;
+    border-radius: var(--r-card);
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--ink-3);
+  }
+  .mtj-speaker__portrait img { width: 100%; height: 100%; object-fit: cover; }
+  .mtj-speaker__placeholder {
+    height: 100%;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    gap: 8px;
+    padding: 24px;
+    border: 1px dashed var(--line);
+    border-radius: var(--r-card);
+  }
+  .mtj-speaker__eyebrow { display: block; margin-bottom: 18px; }
+  .mtj-speaker__name {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-variation-settings: "wdth" 112;
+    font-weight: 700;
+    font-size: clamp(2.3rem, 5vw, 4rem);
+    letter-spacing: -.028em;
+    line-height: .95;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .mtj-speaker__bio { margin-top: 24px; max-width: 60ch; color: var(--bone-dim); line-height: 1.68; }
+  .mtj-speaker__bio p + p { margin-top: 14px; }
+
+  .mtj-topics { margin: 40px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  .mtj-topics li {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 16px;
+    align-items: baseline;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .mtj-topics__n { color: var(--accent); }
+  .mtj-topics__t { font-size: 1.06rem; font-weight: 500; }
+
+  /* ---------- Activities (horizontal rail) ---------- */
+  .mtj-rail__top { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+  .mtj-rail__nav { display: flex; gap: 10px; flex-shrink: 0; }
+  .mtj-rail__btn {
+    width: 46px; height: 46px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--bone);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color .25s var(--ease), background-color .25s var(--ease);
+  }
+  .mtj-rail__btn:hover { border-color: var(--bone); background: rgba(242, 239, 233, .06); }
+
+  .mtj-rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(276px, 30%);
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--pad-x);
+    padding: 4px var(--pad-x) 28px;
+    margin-inline: calc(var(--pad-x) * -1);
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+  }
+  .mtj-card {
+    scroll-snap-align: start;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--ink-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .3s var(--ease), transform .3s var(--ease);
+  }
+  .mtj-card:hover { border-color: rgba(242, 239, 233, .32); transform: translateY(-4px); }
+  .mtj-card__media { aspect-ratio: 4 / 3; }
+  .mtj-card__media img { width: 100%; height: 100%; object-fit: cover; }
+  .mtj-card__body { padding: 22px 22px 26px; }
+  .mtj-card__title { font-size: 1.1rem; font-weight: 600; margin: 0 0 8px; letter-spacing: -.012em; }
+  .mtj-card__text { color: var(--bone-dim); font-size: .94rem; line-height: 1.58; }
+
+  /* ---------- Schedule (timeline) ---------- */
+  .mtj-day { margin-top: 44px; }
+  .mtj-day:first-of-type { margin-top: 0; }
+  .mtj-day__label { padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .mtj-day__rows { list-style: none; margin: 0; padding: 0 0 0 clamp(16px, 3vw, 34px); border-left: 1px solid var(--line); }
+  .mtj-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: clamp(16px, 3vw, 40px);
+    padding: 26px 0;
+  }
+  .mtj-row + .mtj-row { border-top: 1px solid rgba(242, 239, 233, .06); }
+  .mtj-row::before {
+    content: "";
+    position: absolute;
+    left: calc(clamp(16px, 3vw, 34px) * -1 - 1px);
+    top: 34px;
+    width: 13px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .mtj-row__time { color: var(--accent); padding-top: 3px; }
+  .mtj-row__title { font-size: clamp(1.1rem, 1.7vw, 1.35rem); font-weight: 600; letter-spacing: -.015em; margin: 0; }
+  .mtj-row__text { margin-top: 8px; color: var(--bone-dim); line-height: 1.6; font-size: .96rem; max-width: 58ch; }
+
+  /* ---------- Book your seat ---------- */
+  .mtj-book__panel {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--ink-2);
+    padding: clamp(32px, 5vw, 68px);
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    gap: clamp(36px, 5vw, 72px);
+    align-items: center;
+  }
+  .mtj-book__panel::before {
+    content: "";
+    position: absolute;
+    inset: auto -12% -55% 45%;
+    height: 120%;
+    z-index: -1;
+    background: radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 72%);
+  }
+  .mtj-book__note { margin-top: 20px; color: var(--bone-dim); font-size: .92rem; line-height: 1.6; max-width: 44ch; }
+
+  .mtj-seats__grid {
+    display: grid;
+    grid-template-columns: repeat(27, 1fr);
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+  .mtj-seat {
+    aspect-ratio: 1;
+    border-radius: var(--r-mark);
+    background: rgba(242, 239, 233, .13);
+    transform: scale(.4);
+    opacity: 0;
+    transition: transform .5s var(--ease), opacity .5s var(--ease), background-color .5s var(--ease);
+    transition-delay: calc(var(--i) * 6ms);
+  }
+  .is-in .mtj-seat { transform: none; opacity: 1; }
+  .is-in .mtj-seat--taken { background: var(--accent); }
+  .mtj-seats__legend { display: flex; flex-wrap: wrap; gap: 20px; }
+  .mtj-seats__key { display: inline-flex; align-items: center; gap: 8px; }
+  .mtj-seats__swatch { width: 11px; height: 11px; border-radius: var(--r-mark); background: rgba(242, 239, 233, .13); }
+  .mtj-seats__swatch--taken { background: var(--accent); }
+
+  /* ---------- Sticky booking bar ---------- */
+  .mtj-sticky {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px clamp(16px, 4vw, 32px);
+    background: rgba(18, 24, 33, .9);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--line);
+    transform: translateY(110%);
+    transition: transform .45s var(--ease);
+  }
+  .mtj-sticky.is-visible { transform: none; }
+  .mtj-sticky__what { min-width: 0; }
+  .mtj-sticky__title { font-weight: 600; font-size: .98rem; margin: 0 0 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mtj-sticky .mtj__btn { padding: 13px 24px; font-size: .95rem; }
+  @media (prefers-reduced-transparency: reduce) {
+    .mtj-sticky { background: #121821; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1024px) {
+    .mtj-hero__grid,
+    .mtj-speaker__grid,
+    .mtj-book__panel { grid-template-columns: minmax(0, 1fr); }
+    .mtj-hero { min-height: 0; }
+    .mtj-hero__media { aspect-ratio: 16 / 10; order: -1; }
+    .mtj-hero__media::after { background: linear-gradient(180deg, rgba(11, 15, 20, .1), rgba(11, 15, 20, .55)); }
+    .mtj-speaker__portrait { max-width: 420px; }
+    .mtj-cell--a, .mtj-cell--b, .mtj-cell--c, .mtj-cell--d { grid-column: span 12; }
+    .mtj-rail { grid-auto-columns: minmax(258px, 78%); }
+    .mtj-rail__nav { display: none; }
+    .mtj-seats__grid { gap: 3px; }
+  }
+  @media (max-width: 620px) {
+    .mtj-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+    .mtj-row::before { top: 32px; }
+    .mtj-hero__cta .mtj__btn { flex: 1 1 auto; }
+    .mtj-sticky__what { display: none; }
+    .mtj-sticky { justify-content: stretch; }
+    .mtj-sticky .mtj__btn { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mtj *, .mtj *::before, .mtj *::after { animation: none !important; transition: none !important; }
+    .mtj [data-reveal] > *, .mtj-hero__copy > *, .mtj-hero__media, .mtj-seat { opacity: 1; transform: none; }
+    .mtj-seat--taken { background: var(--accent); }
+    .mtj-sticky { transform: none; }
+  }
+</style>
+
+<noscript>
   <style>
-    /* The theme wraps this section in .section, which adds vertical rhythm we do not want. */
-    #shopify-section-{{ section.id }} { padding: 0 !important; margin: 0 !important; }
-
-    /* ---------- Header and footer are hidden for this landing page only ---------- */
-    .shopify-section-group-header-group,
-    .shopify-section-group-footer-group,
-    #shopify-section-header,
-    #shopify-section-footer,
-    .announcement-bar,
-    body > header,
-    body > footer { display: none !important; }
-
-    body { background: #0B0F14; }
-
-    /* ---------- Tokens ---------- */
-    .mtj {
-      --ink:      #0B0F14;
-      --ink-2:    #121821;
-      --ink-3:    #19212B;
-      --bone:     #F2EFE9;
-      --bone-dim: #A2ABB6;
-      --line:     rgba(242, 239, 233, .12);
-      --accent:   {{ accent }};
-      --accent-soft: {{ accent }}1F;
-      --accent-ink:  #1A1204;
-
-      --r-card: 14px;
-      --r-pill: 999px;
-      --r-mark: 3px;
-
-      --pad-x: clamp(20px, 5vw, 72px);
-      --maxw: 1320px;
-      --ease: cubic-bezier(.16, 1, .3, 1);
-
-      font-family: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
-      color: var(--bone);
-      background: var(--ink);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .mtj *, .mtj *::before, .mtj *::after { box-sizing: border-box; }
-    .mtj img { display: block; max-width: 100%; height: auto; }
-    .mtj p { margin: 0; }
-
-    .mtj__wrap {
-      width: 100%;
-      max-width: var(--maxw);
-      margin-inline: auto;
-      padding-inline: var(--pad-x);
-    }
-
-    .mtj__h2 {
-      font-family: "Archivo", ui-sans-serif, system-ui, sans-serif;
-      font-variation-settings: "wdth" 110;
-      font-weight: 700;
-      letter-spacing: -.02em;
-      line-height: 1;
-      font-size: clamp(2rem, 4.4vw, 3.4rem);
-      margin: 0;
-      text-wrap: balance;
-    }
-
-    .mtj__lede {
-      margin-top: 24px;
-      max-width: 58ch;
-      font-size: clamp(1rem, 1.1vw, 1.115rem);
-      line-height: 1.62;
-      color: var(--bone-dim);
-    }
-
-    .mtj__mono {
-      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-      font-size: .72rem;
-      font-weight: 500;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--bone-dim);
-    }
-
-    .mtj__btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-      padding: 16px 32px;
-      border-radius: var(--r-pill);
-      border: 1px solid transparent;
-      font: 600 1rem/1 "Instrument Sans", system-ui, sans-serif;
-      letter-spacing: -.01em;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background-color .25s var(--ease), border-color .25s var(--ease), transform .16s var(--ease);
-    }
-    .mtj__btn--primary { background: var(--accent); color: var(--accent-ink); }
-    .mtj__btn--primary:hover { filter: brightness(1.08); }
-    .mtj__btn--ghost { border-color: rgba(242, 239, 233, .3); color: var(--bone); }
-    .mtj__btn--ghost:hover { border-color: var(--bone); background: rgba(242, 239, 233, .06); }
-    .mtj__btn:active { transform: translateY(1px); }
-
-    .mtj :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-
-    /* Scroll reveal, IntersectionObserver driven. */
-    .mtj [data-reveal] > * {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity .7s var(--ease), transform .7s var(--ease);
-      transition-delay: calc(var(--i, 0) * 70ms);
-    }
-    .mtj [data-reveal].is-in > * { opacity: 1; transform: none; }
-
-    /* ---------- Hero ---------- */
-    .mtj-hero {
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      min-height: 92dvh;
-      display: flex;
-      align-items: center;
-      padding-block: clamp(56px, 9vh, 96px) clamp(48px, 7vh, 80px);
-    }
-    .mtj-hero__glow {
-      position: absolute;
-      inset: -30% 0 auto -10%;
-      height: 90%;
-      z-index: -1;
-      pointer-events: none;
-      background: radial-gradient(48% 52% at 30% 20%, var(--accent-soft), transparent 70%);
-      animation: mtj-lights 1.4s var(--ease) both;
-    }
-    @keyframes mtj-lights { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: none; } }
-
-    .mtj-hero__grid {
-      display: grid;
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      gap: clamp(32px, 5vw, 72px);
-      align-items: center;
-    }
-
-    .mtj-hero__title {
-      font-family: "Archivo", ui-sans-serif, system-ui, sans-serif;
-      font-variation-settings: "wdth" 114;
-      font-weight: 700;
-      letter-spacing: -.028em;
-      line-height: .94;
-      font-size: clamp(2.7rem, 6.1vw, 5.4rem);
-      margin: 0;
-      text-wrap: balance;
-    }
-    .mtj-hero__kicker {
-      display: block;
-      font-size: .3em;
-      font-weight: 400;
-      font-variation-settings: "wdth" 100;
-      letter-spacing: -.005em;
-      color: var(--bone-dim);
-      margin-bottom: .5em;
-    }
-
-    .mtj-hero__meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 30px 0 0;
-      padding: 0;
-      list-style: none;
-    }
-    .mtj-hero__meta li {
-      border: 1px solid var(--line);
-      border-radius: var(--r-pill);
-      padding: 9px 16px;
-      background: rgba(242, 239, 233, .03);
-    }
-    .mtj-hero__meta li:first-child { border-color: var(--accent); color: var(--bone); }
-
-    .mtj-hero__sub {
-      margin-top: 28px;
-      max-width: 46ch;
-      font-size: clamp(1.02rem, 1.2vw, 1.18rem);
-      line-height: 1.55;
-      color: var(--bone-dim);
-    }
-
-    .mtj-hero__cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
-
-    .mtj-hero__media {
-      position: relative;
-      margin: 0;
-      border-radius: var(--r-card);
-      overflow: hidden;
-      aspect-ratio: 4 / 5;
-    }
-    .mtj-hero__media img { width: 100%; height: 100%; object-fit: cover; }
-    .mtj-hero__media::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(100deg, var(--ink) 2%, rgba(11, 15, 20, .3) 45%, rgba(11, 15, 20, .05) 100%);
-    }
-
-    .mtj-hero__copy > * { animation: mtj-rise .9s var(--ease) both; }
-    .mtj-hero__copy > *:nth-child(1) { animation-delay: .05s; }
-    .mtj-hero__copy > *:nth-child(2) { animation-delay: .16s; }
-    .mtj-hero__copy > *:nth-child(3) { animation-delay: .26s; }
-    .mtj-hero__copy > *:nth-child(4) { animation-delay: .36s; }
-    .mtj-hero__media { animation: mtj-rise 1s var(--ease) .2s both; }
-    @keyframes mtj-rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
-
-    /* ---------- Section rhythm ---------- */
-    .mtj-band { padding-block: clamp(72px, 11vh, 132px); }
-    .mtj-band--raised { background: var(--ink-2); }
-    .mtj-band__head { max-width: 62ch; margin-bottom: clamp(40px, 6vh, 64px); }
-
-    /* ---------- Why attend (bento, 4 cells) ---------- */
-    .mtj-why__grid {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 16px;
-    }
-    .mtj-cell {
-      border: 1px solid var(--line);
-      border-radius: var(--r-card);
-      background: var(--ink-2);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    .mtj-cell--a { grid-column: span 7; }
-    .mtj-cell--b { grid-column: span 5; background: var(--accent-soft); border-color: {{ accent }}40; }
-    .mtj-cell--c { grid-column: span 5; }
-    .mtj-cell--d { grid-column: span 7; }
-    .mtj-cell__media { aspect-ratio: 16 / 9; }
-    .mtj-cell__media img { width: 100%; height: 100%; object-fit: cover; }
-    .mtj-cell__body { padding: clamp(24px, 3vw, 36px); margin-top: auto; }
-    .mtj-cell--text .mtj-cell__body { margin-block: auto; }
-    .mtj-cell--text .mtj-cell__title { font-size: clamp(1.5rem, 2.6vw, 2.05rem); margin-bottom: 16px; }
-    .mtj-cell--text .mtj-cell__text { font-size: 1.02rem; }
-    .mtj-cell__title {
-      font-family: "Archivo", system-ui, sans-serif;
-      font-variation-settings: "wdth" 106;
-      font-weight: 700;
-      font-size: clamp(1.25rem, 1.9vw, 1.6rem);
-      letter-spacing: -.018em;
-      line-height: 1.12;
-      margin: 0 0 12px;
-    }
-    .mtj-cell__text { color: var(--bone-dim); line-height: 1.62; font-size: .98rem; }
-    .mtj-cell--b .mtj-cell__text { color: rgba(242, 239, 233, .78); }
-
-    /* ---------- Speaker ---------- */
-    .mtj-speaker__grid {
-      display: grid;
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      gap: clamp(32px, 5vw, 72px);
-      align-items: start;
-    }
-    .mtj-speaker__portrait {
-      position: relative;
-      margin: 0;
-      border-radius: var(--r-card);
-      overflow: hidden;
-      aspect-ratio: 4 / 5;
-      background: var(--ink-3);
-    }
-    .mtj-speaker__portrait img { width: 100%; height: 100%; object-fit: cover; }
-    .mtj-speaker__placeholder {
-      height: 100%;
-      display: grid;
-      place-content: center;
-      text-align: center;
-      gap: 8px;
-      padding: 24px;
-      border: 1px dashed var(--line);
-      border-radius: var(--r-card);
-    }
-    .mtj-speaker__eyebrow { display: block; margin-bottom: 18px; }
-    .mtj-speaker__name {
-      font-family: "Archivo", system-ui, sans-serif;
-      font-variation-settings: "wdth" 112;
-      font-weight: 700;
-      font-size: clamp(2.3rem, 5vw, 4rem);
-      letter-spacing: -.028em;
-      line-height: .95;
-      margin: 0;
-      text-wrap: balance;
-    }
-    .mtj-speaker__bio { margin-top: 24px; max-width: 60ch; color: var(--bone-dim); line-height: 1.68; }
-    .mtj-speaker__bio p + p { margin-top: 14px; }
-
-    .mtj-topics { margin: 40px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
-    .mtj-topics li {
-      display: grid;
-      grid-template-columns: 44px minmax(0, 1fr);
-      gap: 16px;
-      align-items: baseline;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--line);
-    }
-    .mtj-topics__n { color: var(--accent); }
-    .mtj-topics__t { font-size: 1.06rem; font-weight: 500; }
-
-    .mtj-quote {
-      margin: 36px 0 0;
-      padding: 24px 28px;
-      border-left: 2px solid var(--accent);
-      background: rgba(242, 239, 233, .03);
-      border-radius: 0 var(--r-card) var(--r-card) 0;
-    }
-    .mtj-quote p { font-size: 1.15rem; line-height: 1.5; }
-    .mtj-quote cite { display: block; margin-top: 12px; font-style: normal; }
-
-    /* ---------- Activities (horizontal rail) ---------- */
-    .mtj-rail__top { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
-    .mtj-rail__nav { display: flex; gap: 10px; flex-shrink: 0; }
-    .mtj-rail__btn {
-      width: 46px; height: 46px;
-      border-radius: var(--r-pill);
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--bone);
-      font-size: 1.1rem;
-      line-height: 1;
-      cursor: pointer;
-      transition: border-color .25s var(--ease), background-color .25s var(--ease);
-    }
-    .mtj-rail__btn:hover { border-color: var(--bone); background: rgba(242, 239, 233, .06); }
-
-    .mtj-rail {
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(276px, 30%);
-      gap: 16px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-padding-left: var(--pad-x);
-      padding: 4px var(--pad-x) 28px;
-      margin-inline: calc(var(--pad-x) * -1);
-      scrollbar-width: thin;
-      scrollbar-color: var(--line) transparent;
-    }
-    .mtj-card {
-      scroll-snap-align: start;
-      border: 1px solid var(--line);
-      border-radius: var(--r-card);
-      background: var(--ink-2);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: border-color .3s var(--ease), transform .3s var(--ease);
-    }
-    .mtj-card:hover { border-color: rgba(242, 239, 233, .32); transform: translateY(-4px); }
-    .mtj-card__media { aspect-ratio: 4 / 3; }
-    .mtj-card__media img { width: 100%; height: 100%; object-fit: cover; }
-    .mtj-card__body { padding: 22px 22px 26px; }
-    .mtj-card__title { font-size: 1.1rem; font-weight: 600; margin: 0 0 8px; letter-spacing: -.012em; }
-    .mtj-card__text { color: var(--bone-dim); font-size: .94rem; line-height: 1.58; }
-
-    /* ---------- Schedule (timeline) ---------- */
-    .mtj-day { margin-top: 44px; }
-    .mtj-day:first-of-type { margin-top: 0; }
-    .mtj-day__label { padding-bottom: 14px; border-bottom: 1px solid var(--line); }
-    .mtj-day__rows { list-style: none; margin: 0; padding: 0 0 0 clamp(16px, 3vw, 34px); border-left: 1px solid var(--line); }
-    .mtj-row {
-      position: relative;
-      display: grid;
-      grid-template-columns: 92px minmax(0, 1fr);
-      gap: clamp(16px, 3vw, 40px);
-      padding: 26px 0;
-    }
-    .mtj-row + .mtj-row { border-top: 1px solid rgba(242, 239, 233, .06); }
-    .mtj-row::before {
-      content: "";
-      position: absolute;
-      left: calc(clamp(16px, 3vw, 34px) * -1 - 1px);
-      top: 34px;
-      width: 13px;
-      height: 1px;
-      background: var(--accent);
-    }
-    .mtj-row__time { color: var(--accent); padding-top: 3px; }
-    .mtj-row__title { font-size: clamp(1.1rem, 1.7vw, 1.35rem); font-weight: 600; letter-spacing: -.015em; margin: 0; }
-    .mtj-row__text { margin-top: 8px; color: var(--bone-dim); line-height: 1.6; font-size: .96rem; max-width: 58ch; }
-
-    /* ---------- Booking ---------- */
-    .mtj-book__panel {
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: var(--r-card);
-      background: var(--ink-2);
-      padding: clamp(32px, 5vw, 68px);
-      display: grid;
-      grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
-      gap: clamp(36px, 5vw, 72px);
-      align-items: center;
-    }
-    .mtj-book__panel::before {
-      content: "";
-      position: absolute;
-      inset: auto -12% -55% 45%;
-      height: 120%;
-      z-index: -1;
-      background: radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 72%);
-    }
-    .mtj-book__note { margin-top: 20px; color: var(--bone-dim); font-size: .92rem; line-height: 1.6; max-width: 44ch; }
-
-    .mtj-seats__grid {
-      display: grid;
-      grid-template-columns: repeat(27, 1fr);
-      gap: 4px;
-      margin-bottom: 20px;
-    }
-    .mtj-seat {
-      aspect-ratio: 1;
-      border-radius: var(--r-mark);
-      background: rgba(242, 239, 233, .13);
-      transform: scale(.4);
-      opacity: 0;
-      transition: transform .5s var(--ease), opacity .5s var(--ease), background-color .5s var(--ease);
-      transition-delay: calc(var(--i) * 6ms);
-    }
-    .is-in .mtj-seat { transform: none; opacity: 1; }
-    .is-in .mtj-seat--taken { background: var(--accent); }
-    .mtj-seats__legend { display: flex; flex-wrap: wrap; gap: 20px; }
-    .mtj-seats__key { display: inline-flex; align-items: center; gap: 8px; }
-    .mtj-seats__swatch { width: 11px; height: 11px; border-radius: var(--r-mark); background: rgba(242, 239, 233, .13); }
-    .mtj-seats__swatch--taken { background: var(--accent); }
-
-    /* ---------- Sticky booking bar ---------- */
-    .mtj-sticky {
-      position: fixed;
-      inset: auto 0 0 0;
-      z-index: 40;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 12px clamp(16px, 4vw, 32px);
-      background: rgba(18, 24, 33, .9);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-top: 1px solid var(--line);
-      transform: translateY(110%);
-      transition: transform .45s var(--ease);
-    }
-    .mtj-sticky.is-visible { transform: none; }
-    .mtj-sticky__what { min-width: 0; }
-    .mtj-sticky__title { font-weight: 600; font-size: .98rem; margin: 0 0 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .mtj-sticky .mtj__btn { padding: 13px 24px; font-size: .95rem; }
-    @media (prefers-reduced-transparency: reduce) {
-      .mtj-sticky { background: #121821; backdrop-filter: none; -webkit-backdrop-filter: none; }
-    }
-
-    /* ---------- Responsive ---------- */
-    @media (max-width: 1024px) {
-      .mtj-hero__grid,
-      .mtj-speaker__grid,
-      .mtj-book__panel { grid-template-columns: minmax(0, 1fr); }
-      .mtj-hero { min-height: 0; }
-      .mtj-hero__media { aspect-ratio: 16 / 10; order: -1; }
-      .mtj-hero__media::after { background: linear-gradient(180deg, rgba(11, 15, 20, .1), rgba(11, 15, 20, .55)); }
-      .mtj-speaker__portrait { max-width: 420px; }
-      .mtj-cell--a, .mtj-cell--b, .mtj-cell--c, .mtj-cell--d { grid-column: span 12; }
-      .mtj-rail { grid-auto-columns: minmax(258px, 78%); }
-      .mtj-rail__nav { display: none; }
-      .mtj-seats__grid { grid-template-columns: repeat(27, 1fr); gap: 3px; }
-    }
-    @media (max-width: 620px) {
-      .mtj-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
-      .mtj-row::before { top: 32px; }
-      .mtj-hero__cta .mtj__btn { flex: 1 1 auto; }
-      .mtj-sticky__what { display: none; }
-      .mtj-sticky { justify-content: stretch; }
-      .mtj-sticky .mtj__btn { width: 100%; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .mtj *, .mtj *::before, .mtj *::after { animation: none !important; transition: none !important; }
-      .mtj [data-reveal] > *, .mtj-hero__copy > *, .mtj-hero__media, .mtj-seat { opacity: 1; transform: none; }
-      .mtj-seat--taken { background: var(--accent); }
-      .mtj-sticky { transform: none; }
-    }
+    .mtj [data-reveal] > * { opacity: 1; transform: none; }
+    .mtj .mtj-seat { opacity: 1; transform: none; }
+    .mtj .mtj-seat--taken { background: var(--accent); }
   </style>
+</noscript>
 
-  <noscript>
-    <style>
-      .mtj [data-reveal] > * { opacity: 1; transform: none; }
-      .mtj .mtj-seat { opacity: 1; transform: none; }
-      .mtj .mtj-seat--taken { background: var(--accent); }
-    </style>
-  </noscript>
+<div class="mtj" id="mtj-{{ section.id }}">
 
-  <div class="mtj" id="mtj-{{ section.id }}">
+  {%- comment -%} ---------------- 1. Hero ---------------- {%- endcomment -%}
+  <section class="mtj-hero" aria-labelledby="mtj-hero-title-{{ section.id }}">
+    <div class="mtj-hero__glow" aria-hidden="true"></div>
+    <div class="mtj__wrap mtj-hero__grid">
+      <div class="mtj-hero__copy">
+        <h1 class="mtj-hero__title" id="mtj-hero-title-{{ section.id }}">
+          <span class="mtj-hero__kicker">{{ ev_kicker }}</span>
+          {{ ev_title }}
+        </h1>
 
-    {%- comment -%} ---------------- 1. Hero ---------------- {%- endcomment -%}
-    <section class="mtj-hero" aria-labelledby="mtj-hero-title-{{ section.id }}">
-      <div class="mtj-hero__glow" aria-hidden="true"></div>
-      <div class="mtj__wrap mtj-hero__grid">
-        <div class="mtj-hero__copy">
-          <h1 class="mtj-hero__title" id="mtj-hero-title-{{ section.id }}">
-            {%- if section.settings.hero_kicker != blank -%}
-              <span class="mtj-hero__kicker">{{ section.settings.hero_kicker }}</span>
-            {%- endif -%}
-            {{ section.settings.hero_title }}
-          </h1>
+        <ul class="mtj-hero__meta mtj__mono">
+          <li>{{ ev_date }}</li>
+          <li>{{ ev_venue }}</li>
+          <li>{{ ev_entry }}</li>
+        </ul>
 
-          <ul class="mtj-hero__meta mtj__mono">
-            {%- if section.settings.event_date != blank -%}<li>{{ section.settings.event_date }}</li>{%- endif -%}
-            {%- if section.settings.event_venue != blank -%}<li>{{ section.settings.event_venue }}</li>{%- endif -%}
-            {%- if section.settings.event_entry != blank -%}<li>{{ section.settings.event_entry }}</li>{%- endif -%}
-          </ul>
+        <p class="mtj-hero__sub">{{ ev_sub }}</p>
 
-          <p class="mtj-hero__sub">{{ section.settings.hero_subtext }}</p>
+        <div class="mtj-hero__cta">
+          <a class="mtj__btn mtj__btn--primary" href="{{ ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
+          <a class="mtj__btn mtj__btn--ghost" href="#mtj-schedule-{{ section.id }}">See the schedule</a>
+        </div>
+      </div>
 
+      <figure class="mtj-hero__media">
+        <img src="{{ ev_hero_image }}" alt="The hall before the event begins" width="1000" height="1250" loading="eager" fetchpriority="high">
+      </figure>
+    </div>
+  </section>
+
+  {%- comment -%} ---------------- 2. Why this event ---------------- {%- endcomment -%}
+  <section class="mtj-band" aria-labelledby="mtj-why-{{ section.id }}">
+    <div class="mtj__wrap">
+      <div class="mtj-band__head" data-reveal>
+        <h2 class="mtj__h2" id="mtj-why-{{ section.id }}">Why come in person</h2>
+        <p class="mtj__lede" style="--i:1">The talk will be recorded, but the room is where the evening actually happens. Here is what a seat gets you.</p>
+      </div>
+
+      <div class="mtj-why__grid" data-reveal>
+        <article class="mtj-cell mtj-cell--a" style="--i:0">
+          <div class="mtj-cell__media">
+            <img src="https://picsum.photos/seed/hilm-full-hall-audience/900/506" alt="A full hall during a talk" width="900" height="506" loading="lazy">
+          </div>
+          <div class="mtj-cell__body">
+            <h3 class="mtj-cell__title">A full talk, start to finish</h3>
+            <p class="mtj-cell__text">Two hours with one speaker in one room, with nothing edited out and nothing cut short for time.</p>
+          </div>
+        </article>
+
+        <article class="mtj-cell mtj-cell--b mtj-cell--text" style="--i:1">
+          <div class="mtj-cell__body">
+            <h3 class="mtj-cell__title">Your question can be answered</h3>
+            <p class="mtj-cell__text">Add it when you register. The team shortlists questions and reads them from the stage in the last half hour.</p>
+          </div>
+        </article>
+
+        <article class="mtj-cell mtj-cell--c mtj-cell--text" style="--i:2">
+          <div class="mtj-cell__body">
+            <h3 class="mtj-cell__title">Entry is free</h3>
+            <p class="mtj-cell__text">Registration is about capacity, not price. There is no ticket cost and no upgrade tier.</p>
+          </div>
+        </article>
+
+        <article class="mtj-cell mtj-cell--d" style="--i:3">
+          <div class="mtj-cell__media">
+            <img src="https://picsum.photos/seed/hilm-venue-entrance-evening/900/506" alt="The venue entrance in the evening" width="900" height="506" loading="lazy">
+          </div>
+          <div class="mtj-cell__body">
+            <h3 class="mtj-cell__title">Planned for a long evening</h3>
+            <p class="mtj-cell__text">Parking, seating, water and step-free access are arranged before the doors open.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------------- 3. Guest speaker ---------------- {%- endcomment -%}
+  <section class="mtj-band mtj-band--raised" aria-labelledby="mtj-speaker-{{ section.id }}">
+    <div class="mtj__wrap mtj-speaker__grid">
+      <figure class="mtj-speaker__portrait" data-reveal>
+        {%- if ev_speaker_image != blank -%}
+          <img src="{{ ev_speaker_image }}" alt="{{ ev_title }}" width="900" height="1125" loading="lazy">
+        {%- else -%}
+          <div class="mtj-speaker__placeholder">
+            <span class="mtj__mono">Portrait</span>
+            <p class="mtj-cell__text">Set ev_speaker_image at the top of this section to your uploaded photograph.</p>
+          </div>
+        {%- endif -%}
+      </figure>
+
+      <div data-reveal>
+        <span class="mtj__mono mtj-speaker__eyebrow">Guest speaker</span>
+        <h2 class="mtj-speaker__name" id="mtj-speaker-{{ section.id }}" style="--i:1">{{ ev_title }}</h2>
+
+        <div class="mtj-speaker__bio" style="--i:2">
+          <p>Molana Tariq Jameel has spent decades speaking to audiences across Pakistan and abroad. His talks are known for plain language, an unhurried pace and examples drawn from ordinary daily life rather than abstractions.</p>
+          <p>This is his first full-length session with Hilm Institute, and the whole address will be delivered in one sitting.</p>
+        </div>
+
+        <ul class="mtj-topics" style="--i:3">
+          <li>
+            <span class="mtj-topics__n mtj__mono">1</span>
+            <span class="mtj-topics__t">Patience when plans fall apart</span>
+          </li>
+          <li>
+            <span class="mtj-topics__n mtj__mono">2</span>
+            <span class="mtj-topics__t">Speaking well and listening better</span>
+          </li>
+          <li>
+            <span class="mtj-topics__n mtj__mono">3</span>
+            <span class="mtj-topics__t">Carrying responsibility at home and at work</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------------- 4. Event activities ---------------- {%- endcomment -%}
+  <section class="mtj-band" aria-labelledby="mtj-activities-{{ section.id }}">
+    <div class="mtj__wrap">
+      <div class="mtj-rail__top mtj-band__head" style="max-width:none" data-reveal>
+        <div>
+          <h2 class="mtj__h2" id="mtj-activities-{{ section.id }}">What is happening on the day</h2>
+          <p class="mtj__lede">Beyond the address itself, the hall runs from mid afternoon until late evening.</p>
+        </div>
+        <div class="mtj-rail__nav" style="--i:1">
+          <button class="mtj-rail__btn" type="button" data-rail-prev aria-label="Show previous activities">&#8592;</button>
+          <button class="mtj-rail__btn" type="button" data-rail-next aria-label="Show next activities">&#8594;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mtj__wrap">
+      <div class="mtj-rail" data-rail tabindex="0" role="group" aria-label="What is happening at the event">
+        <article class="mtj-card">
+          <div class="mtj-card__media">
+            <img src="https://picsum.photos/seed/hilm-stage-lectern/640/480" alt="The stage and lectern" width="640" height="480" loading="lazy">
+          </div>
+          <div class="mtj-card__body">
+            <h3 class="mtj-card__title">The main address</h3>
+            <p class="mtj-card__text">The full talk, delivered in one sitting without an interval.</p>
+          </div>
+        </article>
+
+        <article class="mtj-card">
+          <div class="mtj-card__media">
+            <img src="https://picsum.photos/seed/hilm-audience-hands/640/480" alt="Audience members raising their hands" width="640" height="480" loading="lazy">
+          </div>
+          <div class="mtj-card__body">
+            <h3 class="mtj-card__title">Live questions</h3>
+            <p class="mtj-card__text">Shortlisted audience questions answered from the stage.</p>
+          </div>
+        </article>
+
+        <article class="mtj-card">
+          <div class="mtj-card__media">
+            <img src="https://picsum.photos/seed/hilm-books-table/640/480" alt="A table of books" width="640" height="480" loading="lazy">
+          </div>
+          <div class="mtj-card__body">
+            <h3 class="mtj-card__title">Reading table</h3>
+            <p class="mtj-card__text">Titles from the Hilm Institute reading list, available at the hall.</p>
+          </div>
+        </article>
+
+        <article class="mtj-card">
+          <div class="mtj-card__media">
+            <img src="https://picsum.photos/seed/hilm-courtyard-tea/640/480" alt="Tea served in a courtyard" width="640" height="480" loading="lazy">
+          </div>
+          <div class="mtj-card__body">
+            <h3 class="mtj-card__title">Tea and a light meal</h3>
+            <p class="mtj-card__text">Served in the courtyard once the hall clears.</p>
+          </div>
+        </article>
+
+        <article class="mtj-card">
+          <div class="mtj-card__media">
+            <img src="https://picsum.photos/seed/hilm-venue-gate/640/480" alt="The venue gate" width="640" height="480" loading="lazy">
+          </div>
+          <div class="mtj-card__body">
+            <h3 class="mtj-card__title">Assisted entry</h3>
+            <p class="mtj-card__text">Step-free routes and reserved seating, handled at Gate 2.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------------- 5. Schedule ---------------- {%- endcomment -%}
+  <section class="mtj-band mtj-band--raised" id="mtj-schedule-{{ section.id }}" aria-labelledby="mtj-schedule-h-{{ section.id }}">
+    <div class="mtj__wrap">
+      <div class="mtj-band__head" data-reveal>
+        <h2 class="mtj__h2" id="mtj-schedule-h-{{ section.id }}">Schedule</h2>
+        <p class="mtj__lede" style="--i:1">Times are local. Arrive before the doors close at 4:10 pm, since seating is filled in order of arrival.</p>
+      </div>
+
+      <div class="mtj-day" data-reveal>
+        <p class="mtj-day__label mtj__mono">Saturday 14 March</p>
+        <ul class="mtj-day__rows">
+          <li class="mtj-row">
+            <span class="mtj-row__time mtj__mono">15:30</span>
+            <div>
+              <h3 class="mtj-row__title">Doors and registration desk</h3>
+              <p class="mtj-row__text">Bring your confirmation code. Gate 2 is the step-free entrance.</p>
+            </div>
+          </li>
+          <li class="mtj-row">
+            <span class="mtj-row__time mtj__mono">16:15</span>
+            <div>
+              <h3 class="mtj-row__title">Welcome from Hilm Institute</h3>
+              <p class="mtj-row__text">A short introduction to the evening and to the speaker.</p>
+            </div>
+          </li>
+          <li class="mtj-row">
+            <span class="mtj-row__time mtj__mono">16:30</span>
+            <div>
+              <h3 class="mtj-row__title">The main address</h3>
+              <p class="mtj-row__text">{{ ev_title }}, delivered in one sitting.</p>
+            </div>
+          </li>
+          <li class="mtj-row">
+            <span class="mtj-row__time mtj__mono">18:20</span>
+            <div>
+              <h3 class="mtj-row__title">Live questions</h3>
+              <p class="mtj-row__text">Shortlisted questions submitted during registration.</p>
+            </div>
+          </li>
+          <li class="mtj-row">
+            <span class="mtj-row__time mtj__mono">19:00</span>
+            <div>
+              <h3 class="mtj-row__title">Tea and close</h3>
+              <p class="mtj-row__text">Refreshments in the courtyard. The hall clears by 20:00.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------------- 6. Book your seat ---------------- {%- endcomment -%}
+  <section class="mtj-band" aria-labelledby="mtj-book-{{ section.id }}">
+    <div class="mtj__wrap">
+      <div class="mtj-book__panel" data-reveal>
+        <div>
+          <h2 class="mtj__h2" id="mtj-book-{{ section.id }}">Book your seat</h2>
+          <p class="mtj__lede">Entry is free. Registration exists because the hall holds a fixed number of people, and it closes the moment the last block is taken.</p>
           <div class="mtj-hero__cta">
-            <a class="mtj__btn mtj__btn--primary" href="{{ booking_url }}" target="_blank" rel="noopener noreferrer">{{ cta_label }}</a>
-            <a class="mtj__btn mtj__btn--ghost" href="#mtj-schedule-{{ section.id }}">See the schedule</a>
+            <a class="mtj__btn mtj__btn--primary" href="{{ ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
           </div>
+          <p class="mtj-book__note">The button opens our registration partner in a new tab. You will get a confirmation code by SMS, which the desk scans at Gate 2.</p>
         </div>
 
-        <figure class="mtj-hero__media">
-          {%- if section.settings.hero_image != blank -%}
-            {{ section.settings.hero_image | image_url: width: 1200 | image_tag:
-               loading: 'eager', fetchpriority: 'high',
-               widths: '480,720,1000,1200',
-               sizes: '(min-width: 1025px) 40vw, 100vw',
-               alt: section.settings.hero_image.alt | default: 'The hall before the event begins' }}
-          {%- else -%}
-            <img src="https://picsum.photos/seed/hilm-auditorium-hall/1000/1250"
-                 alt="The hall before the event begins" width="1000" height="1250" loading="eager">
-          {%- endif -%}
-        </figure>
-      </div>
-    </section>
-
-    {%- comment -%} ---------------- 2. Why this event ---------------- {%- endcomment -%}
-    <section class="mtj-band" aria-labelledby="mtj-why-{{ section.id }}">
-      <div class="mtj__wrap">
-        <div class="mtj-band__head" data-reveal>
-          <h2 class="mtj__h2" id="mtj-why-{{ section.id }}">{{ section.settings.why_title }}</h2>
-          <p class="mtj__lede" style="--i:1">{{ section.settings.why_text }}</p>
-        </div>
-
-        <div class="mtj-why__grid" data-reveal>
-          {%- assign why_letters = 'a,b,c,d' | split: ',' -%}
-          {%- assign why_i = 0 -%}
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'reason' and why_i < 4 -%}
-              {%- assign letter = why_letters[why_i] -%}
-              {%- assign has_media = false -%}
-              {%- if block.settings.image != blank or block.settings.placeholder_seed != blank -%}
-                {%- assign has_media = true -%}
-              {%- endif -%}
-              <article class="mtj-cell mtj-cell--{{ letter }}{% unless has_media %} mtj-cell--text{% endunless %}" style="--i:{{ why_i }}" {{ block.shopify_attributes }}>
-                {%- if block.settings.image != blank -%}
-                  <div class="mtj-cell__media">
-                    {{ block.settings.image | image_url: width: 900 | image_tag:
-                       loading: 'lazy', widths: '480,720,900',
-                       sizes: '(min-width: 1025px) 45vw, 100vw',
-                       alt: block.settings.image.alt | default: block.settings.title }}
-                  </div>
-                {%- elsif block.settings.placeholder_seed != blank -%}
-                  <div class="mtj-cell__media">
-                    <img src="https://picsum.photos/seed/{{ block.settings.placeholder_seed }}/900/506"
-                         alt="{{ block.settings.title | escape }}" width="900" height="506" loading="lazy">
-                  </div>
-                {%- endif -%}
-                <div class="mtj-cell__body">
-                  <h3 class="mtj-cell__title">{{ block.settings.title }}</h3>
-                  <p class="mtj-cell__text">{{ block.settings.text }}</p>
-                </div>
-              </article>
-              {%- assign why_i = why_i | plus: 1 -%}
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-      </div>
-    </section>
-
-    {%- comment -%} ---------------- 3. Guest speaker ---------------- {%- endcomment -%}
-    <section class="mtj-band mtj-band--raised" aria-labelledby="mtj-speaker-{{ section.id }}">
-      <div class="mtj__wrap mtj-speaker__grid">
-        <figure class="mtj-speaker__portrait" data-reveal>
-          {%- if section.settings.speaker_image != blank -%}
-            {{ section.settings.speaker_image | image_url: width: 900 | image_tag:
-               loading: 'lazy', widths: '420,640,900',
-               sizes: '(min-width: 1025px) 34vw, 100vw',
-               alt: section.settings.speaker_image.alt | default: section.settings.speaker_name }}
-          {%- else -%}
-            <div class="mtj-speaker__placeholder">
-              <span class="mtj__mono">Portrait</span>
-              <p class="mtj-cell__text">Upload a photograph of the speaker in the theme editor.</p>
-            </div>
-          {%- endif -%}
-        </figure>
-
-        <div data-reveal>
-          <span class="mtj__mono mtj-speaker__eyebrow">{{ section.settings.speaker_eyebrow }}</span>
-          <h2 class="mtj-speaker__name" id="mtj-speaker-{{ section.id }}" style="--i:1">{{ section.settings.speaker_name }}</h2>
-
-          <div class="mtj-speaker__bio" style="--i:2">{{ section.settings.speaker_bio }}</div>
-
-          {%- assign topic_count = 0 -%}
-          {%- for block in section.blocks -%}{%- if block.type == 'topic' -%}{%- assign topic_count = topic_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
-
-          {%- if topic_count > 0 -%}
-            <ul class="mtj-topics" style="--i:3">
-              {%- assign t = 0 -%}
-              {%- for block in section.blocks -%}
-                {%- if block.type == 'topic' -%}
-                  {%- assign t = t | plus: 1 -%}
-                  <li {{ block.shopify_attributes }}>
-                    <span class="mtj-topics__n mtj__mono">{{ t }}</span>
-                    <span class="mtj-topics__t">{{ block.settings.title }}</span>
-                  </li>
-                {%- endif -%}
-              {%- endfor -%}
-            </ul>
-          {%- endif -%}
-
-          {%- if section.settings.speaker_quote != blank -%}
-            <blockquote class="mtj-quote" style="--i:4">
-              <p>{{ section.settings.speaker_quote }}</p>
-              {%- if section.settings.speaker_quote_source != blank -%}
-                <cite class="mtj__mono">{{ section.settings.speaker_quote_source }}</cite>
-              {%- endif -%}
-            </blockquote>
-          {%- endif -%}
-        </div>
-      </div>
-    </section>
-
-    {%- comment -%} ---------------- 4. Event activities ---------------- {%- endcomment -%}
-    <section class="mtj-band" aria-labelledby="mtj-activities-{{ section.id }}">
-      <div class="mtj__wrap">
-        <div class="mtj-rail__top mtj-band__head" style="max-width:none" data-reveal>
-          <div>
-            <h2 class="mtj__h2" id="mtj-activities-{{ section.id }}">{{ section.settings.activities_title }}</h2>
-            <p class="mtj__lede">{{ section.settings.activities_text }}</p>
+        <div style="--i:1">
+          <div class="mtj-seats__grid" aria-hidden="true">
+            {%- for i in (1..ev_seat_total) -%}
+              <span class="mtj-seat{% if forloop.index <= ev_seats_taken %} mtj-seat--taken{% endif %}" style="--i:{{ forloop.index0 }}"></span>
+            {%- endfor -%}
           </div>
-          <div class="mtj-rail__nav" style="--i:1">
-            <button class="mtj-rail__btn" type="button" data-rail-prev aria-label="Show previous activities">&#8592;</button>
-            <button class="mtj-rail__btn" type="button" data-rail-next aria-label="Show next activities">&#8594;</button>
+          <div class="mtj-seats__legend mtj__mono">
+            <span class="mtj-seats__key"><span class="mtj-seats__swatch mtj-seats__swatch--taken"></span>{{ ev_seat_percent }}% claimed</span>
+            <span class="mtj-seats__key"><span class="mtj-seats__swatch"></span>Still open</span>
           </div>
         </div>
       </div>
-
-      <div class="mtj__wrap">
-        <div class="mtj-rail" data-rail tabindex="0" role="group" aria-label="What is happening at the event">
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'activity' -%}
-              <article class="mtj-card" {{ block.shopify_attributes }}>
-                <div class="mtj-card__media">
-                  {%- if block.settings.image != blank -%}
-                    {{ block.settings.image | image_url: width: 640 | image_tag:
-                       loading: 'lazy', widths: '320,480,640', sizes: '300px',
-                       alt: block.settings.image.alt | default: block.settings.title }}
-                  {%- else -%}
-                    <img src="https://picsum.photos/seed/{{ block.settings.placeholder_seed | default: 'hilm-event' }}/640/480"
-                         alt="{{ block.settings.title | escape }}" width="640" height="480" loading="lazy">
-                  {%- endif -%}
-                </div>
-                <div class="mtj-card__body">
-                  <h3 class="mtj-card__title">{{ block.settings.title }}</h3>
-                  <p class="mtj-card__text">{{ block.settings.text }}</p>
-                </div>
-              </article>
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-      </div>
-    </section>
-
-    {%- comment -%} ---------------- 5. Schedule ---------------- {%- endcomment -%}
-    <section class="mtj-band mtj-band--raised" id="mtj-schedule-{{ section.id }}" aria-labelledby="mtj-schedule-h-{{ section.id }}">
-      <div class="mtj__wrap">
-        <div class="mtj-band__head" data-reveal>
-          <h2 class="mtj__h2" id="mtj-schedule-h-{{ section.id }}">{{ section.settings.schedule_title }}</h2>
-          <p class="mtj__lede" style="--i:1">{{ section.settings.schedule_text }}</p>
-        </div>
-
-        {%- assign open_day = false -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'day' -%}
-            {%- if open_day -%}</ul></div>{%- endif -%}
-            <div class="mtj-day" data-reveal {{ block.shopify_attributes }}>
-              <p class="mtj-day__label mtj__mono">{{ block.settings.label }}</p>
-              <ul class="mtj-day__rows">
-            {%- assign open_day = true -%}
-          {%- elsif block.type == 'session' and open_day -%}
-            <li class="mtj-row" {{ block.shopify_attributes }}>
-              <span class="mtj-row__time mtj__mono">{{ block.settings.time }}</span>
-              <div>
-                <h3 class="mtj-row__title">{{ block.settings.title }}</h3>
-                {%- if block.settings.text != blank -%}<p class="mtj-row__text">{{ block.settings.text }}</p>{%- endif -%}
-              </div>
-            </li>
-          {%- endif -%}
-        {%- endfor -%}
-        {%- if open_day -%}</ul></div>{%- endif -%}
-      </div>
-    </section>
-
-    {%- comment -%} ---------------- 6. Book your seat ---------------- {%- endcomment -%}
-    <section class="mtj-band" aria-labelledby="mtj-book-{{ section.id }}">
-      <div class="mtj__wrap">
-        <div class="mtj-book__panel" data-reveal>
-          <div>
-            <h2 class="mtj__h2" id="mtj-book-{{ section.id }}">{{ section.settings.book_title }}</h2>
-            <p class="mtj__lede">{{ section.settings.book_text }}</p>
-            <div class="mtj-hero__cta">
-              <a class="mtj__btn mtj__btn--primary" href="{{ booking_url }}" target="_blank" rel="noopener noreferrer">{{ cta_label }}</a>
-            </div>
-            <p class="mtj-book__note">{{ section.settings.book_note }}</p>
-          </div>
-
-          <div style="--i:1">
-            <div class="mtj-seats__grid" aria-hidden="true">
-              {%- for i in (1..seat_total) -%}
-                <span class="mtj-seat{% if forloop.index <= seats_claimed %} mtj-seat--taken{% endif %}" style="--i:{{ forloop.index0 }}"></span>
-              {%- endfor -%}
-            </div>
-            <div class="mtj-seats__legend mtj__mono">
-              <span class="mtj-seats__key"><span class="mtj-seats__swatch mtj-seats__swatch--taken"></span>{{ section.settings.claimed_percent }}% claimed</span>
-              <span class="mtj-seats__key"><span class="mtj-seats__swatch"></span>Still open</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {%- comment -%} ---------------- Sticky booking bar ---------------- {%- endcomment -%}
-    <div class="mtj-sticky" data-sticky-bar>
-      <div class="mtj-sticky__what">
-        <p class="mtj-sticky__title">{{ section.settings.hero_title }}</p>
-        <p class="mtj__mono">{{ section.settings.event_date }}</p>
-      </div>
-      <a class="mtj__btn mtj__btn--primary" href="{{ booking_url }}" target="_blank" rel="noopener noreferrer">{{ cta_label }}</a>
     </div>
+  </section>
+
+  {%- comment -%} ---------------- Sticky booking bar ---------------- {%- endcomment -%}
+  <div class="mtj-sticky" data-sticky-bar>
+    <div class="mtj-sticky__what">
+      <p class="mtj-sticky__title">{{ ev_title }}</p>
+      <p class="mtj__mono">{{ ev_date }}</p>
+    </div>
+    <a class="mtj__btn mtj__btn--primary" href="{{ ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
   </div>
+</div>
 
-  <script>
-    (function () {
-      var root = document.getElementById('mtj-{{ section.id }}');
-      if (!root) return;
+<script>
+  (function () {
+    var root = document.getElementById('mtj-{{ section.id }}');
+    if (!root) return;
 
-      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-      /* Reveal on scroll. IntersectionObserver only, never a scroll listener. */
-      var targets = root.querySelectorAll('[data-reveal]');
-      if (reduce.matches || !('IntersectionObserver' in window)) {
-        Array.prototype.forEach.call(targets, function (n) { n.classList.add('is-in'); });
-      } else {
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('is-in');
-            io.unobserve(entry.target);
-          });
-        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
-        Array.prototype.forEach.call(targets, function (n) { io.observe(n); });
-      }
-
-      /* Sticky booking bar appears once the hero has scrolled past. */
-      var hero = root.querySelector('.mtj-hero');
-      var bar = root.querySelector('[data-sticky-bar]');
-      if (hero && bar && 'IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          bar.classList.toggle('is-visible', !entries[0].isIntersecting);
-        }, { threshold: 0 }).observe(hero);
-      }
-
-      /* Activities rail controls. */
-      var rail = root.querySelector('[data-rail]');
-      if (rail) {
-        var step = function () { return Math.max(rail.clientWidth * 0.8, 280); };
-        var prev = root.querySelector('[data-rail-prev]');
-        var next = root.querySelector('[data-rail-next]');
-        if (prev) prev.addEventListener('click', function () { rail.scrollBy({ left: -step(), behavior: reduce.matches ? 'auto' : 'smooth' }); });
-        if (next) next.addEventListener('click', function () { rail.scrollBy({ left: step(), behavior: reduce.matches ? 'auto' : 'smooth' }); });
-      }
-    })();
-  </script>
-
-{%- else -%}
-
-  {{ 'section-main-page.css' | asset_url | stylesheet_tag }}
-
-  {%- style -%}
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    /* Reveal on scroll. IntersectionObserver only, never a scroll listener. */
+    var targets = root.querySelectorAll('[data-reveal]');
+    if (reduce.matches || !('IntersectionObserver' in window)) {
+      Array.prototype.forEach.call(targets, function (n) { n.classList.add('is-in'); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+      Array.prototype.forEach.call(targets, function (n) { io.observe(n); });
     }
 
-    @media screen and (min-width: 750px) {
-      .section-{{ section.id }}-padding {
-        padding-top: {{ section.settings.padding_top }}px;
-        padding-bottom: {{ section.settings.padding_bottom }}px;
-      }
+    /* Sticky booking bar appears once the hero has scrolled past. */
+    var hero = root.querySelector('.mtj-hero');
+    var bar = root.querySelector('[data-sticky-bar]');
+    if (hero && bar && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        bar.classList.toggle('is-visible', !entries[0].isIntersecting);
+      }, { threshold: 0 }).observe(hero);
     }
-  {%- endstyle -%}
 
-  <div class="page-width page-width--narrow section-{{ section.id }}-padding">
-    <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      {{ page.title | escape }}
-    </h1>
-    <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      {{ page.content }}
-    </div>
-  </div>
-
-{%- endif -%}
+    /* Activities rail controls. */
+    var rail = root.querySelector('[data-rail]');
+    if (rail) {
+      var step = function () { return Math.max(rail.clientWidth * 0.8, 280); };
+      var prev = root.querySelector('[data-rail-prev]');
+      var next = root.querySelector('[data-rail-next]');
+      if (prev) prev.addEventListener('click', function () { rail.scrollBy({ left: -step(), behavior: reduce.matches ? 'auto' : 'smooth' }); });
+      if (next) next.addEventListener('click', function () { rail.scrollBy({ left: step(), behavior: reduce.matches ? 'auto' : 'smooth' }); });
+    }
+  })();
+</script>
 
 {% schema %}
 {
@@ -845,26 +878,8 @@
   "class": "section",
   "settings": [
     {
-      "type": "select",
-      "id": "layout",
-      "label": "Page layout",
-      "info": "Set this to Event landing page only on the event template. Every other page must stay on Standard page.",
-      "options": [
-        {
-          "value": "standard",
-          "label": "Standard page"
-        },
-        {
-          "value": "event",
-          "label": "Event landing page"
-        }
-      ],
-      "default": "standard"
-    },
-    {
       "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading",
-      "info": "Standard page layout only."
+      "content": "t:sections.all.padding.section_padding_heading"
     },
     {
       "type": "range",
@@ -885,289 +900,6 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
-    },
-    {
-      "type": "header",
-      "content": "Event landing page"
-    },
-    {
-      "type": "color",
-      "id": "accent",
-      "label": "Accent colour",
-      "default": "#F5A524"
-    },
-    {
-      "type": "url",
-      "id": "booking_url",
-      "label": "Booking link (external site)"
-    },
-    {
-      "type": "text",
-      "id": "cta_label",
-      "label": "Booking button label",
-      "default": "Book your seat"
-    },
-    {
-      "type": "header",
-      "content": "Hero"
-    },
-    {
-      "type": "text",
-      "id": "hero_kicker",
-      "label": "Line above the title",
-      "default": "An evening with"
-    },
-    {
-      "type": "text",
-      "id": "hero_title",
-      "label": "Event headline",
-      "default": "Molana Tariq Jameel"
-    },
-    {
-      "type": "text",
-      "id": "event_date",
-      "label": "Date",
-      "default": "Saturday 14 March 2026"
-    },
-    {
-      "type": "text",
-      "id": "event_venue",
-      "label": "Venue",
-      "default": "Expo Centre, Lahore"
-    },
-    {
-      "type": "text",
-      "id": "event_entry",
-      "label": "Entry",
-      "default": "Free entry"
-    },
-    {
-      "type": "textarea",
-      "id": "hero_subtext",
-      "label": "Supporting line",
-      "default": "One talk, one hall, one evening. Doors open at 4 pm and entry is free with registration."
-    },
-    {
-      "type": "image_picker",
-      "id": "hero_image",
-      "label": "Hero image"
-    },
-    {
-      "type": "header",
-      "content": "Why this event"
-    },
-    {
-      "type": "text",
-      "id": "why_title",
-      "label": "Heading",
-      "default": "Why come in person"
-    },
-    {
-      "type": "textarea",
-      "id": "why_text",
-      "label": "Intro",
-      "default": "The talk will be recorded, but the room is where the evening actually happens. Here is what a seat gets you."
-    },
-    {
-      "type": "header",
-      "content": "Guest speaker"
-    },
-    {
-      "type": "text",
-      "id": "speaker_eyebrow",
-      "label": "Label",
-      "default": "Guest speaker"
-    },
-    {
-      "type": "text",
-      "id": "speaker_name",
-      "label": "Name",
-      "default": "Molana Tariq Jameel"
-    },
-    {
-      "type": "image_picker",
-      "id": "speaker_image",
-      "label": "Portrait"
-    },
-    {
-      "type": "richtext",
-      "id": "speaker_bio",
-      "label": "Biography",
-      "default": "<p>Molana Tariq Jameel has spent decades speaking to audiences across Pakistan and abroad. His talks are known for plain language, an unhurried pace and examples drawn from ordinary daily life rather than abstractions.</p><p>This is his first full-length session with Hilm Institute, and the whole address will be delivered in one sitting.</p>"
-    },
-    {
-      "type": "textarea",
-      "id": "speaker_quote",
-      "label": "Quote (use a verified quote only, leave empty otherwise)"
-    },
-    {
-      "type": "text",
-      "id": "speaker_quote_source",
-      "label": "Quote source"
-    },
-    {
-      "type": "header",
-      "content": "Event activities"
-    },
-    {
-      "type": "text",
-      "id": "activities_title",
-      "label": "Heading",
-      "default": "What is happening on the day"
-    },
-    {
-      "type": "textarea",
-      "id": "activities_text",
-      "label": "Intro",
-      "default": "Beyond the address itself, the hall runs from mid afternoon until late evening."
-    },
-    {
-      "type": "header",
-      "content": "Schedule"
-    },
-    {
-      "type": "text",
-      "id": "schedule_title",
-      "label": "Heading",
-      "default": "Schedule"
-    },
-    {
-      "type": "textarea",
-      "id": "schedule_text",
-      "label": "Intro",
-      "default": "Times are local. Arrive before the doors close at 4:10 pm, since seating is filled in order of arrival."
-    },
-    {
-      "type": "header",
-      "content": "Book your seat"
-    },
-    {
-      "type": "text",
-      "id": "book_title",
-      "label": "Heading",
-      "default": "Book your seat"
-    },
-    {
-      "type": "textarea",
-      "id": "book_text",
-      "label": "Text",
-      "default": "Entry is free. Registration exists because the hall holds a fixed number of people, and it closes the moment the last block is taken."
-    },
-    {
-      "type": "textarea",
-      "id": "book_note",
-      "label": "Small print",
-      "default": "The button opens our registration partner in a new tab. You will get a confirmation code by SMS, which the desk scans at Gate 2."
-    },
-    {
-      "type": "range",
-      "id": "claimed_percent",
-      "label": "Seats claimed",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "default": 68
-    }
-  ],
-  "blocks": [
-    {
-      "type": "reason",
-      "name": "Why: reason (max 4)",
-      "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title"
-        },
-        {
-          "type": "textarea",
-          "id": "text",
-          "label": "Text"
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image (optional)"
-        },
-        {
-          "type": "text",
-          "id": "placeholder_seed",
-          "label": "Placeholder image keyword",
-          "info": "Only used until you upload a real image. Leave empty for a text-only tile."
-        }
-      ]
-    },
-    {
-      "type": "topic",
-      "name": "Speaker: talk topic",
-      "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Topic"
-        }
-      ]
-    },
-    {
-      "type": "activity",
-      "name": "Activity card",
-      "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title"
-        },
-        {
-          "type": "textarea",
-          "id": "text",
-          "label": "Text"
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "text",
-          "id": "placeholder_seed",
-          "label": "Placeholder image keyword"
-        }
-      ]
-    },
-    {
-      "type": "day",
-      "name": "Schedule: day heading",
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "Saturday 14 March"
-        }
-      ]
-    },
-    {
-      "type": "session",
-      "name": "Schedule: session",
-      "settings": [
-        {
-          "type": "text",
-          "id": "time",
-          "label": "Time",
-          "default": "16:30"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title"
-        },
-        {
-          "type": "textarea",
-          "id": "text",
-          "label": "Detail"
-        }
-      ]
     }
   ]
 }
