@@ -25,35 +25,95 @@
 
 {%- comment -%}
   ==========================================================================
-  HILM INSTITUTE :: EVENT LANDING PAGE
-  Self-contained. Nothing above this comment was changed and no schema
-  settings are used, so all content is edited right here in the code.
+  ONE EVENING 26 :: EVENT LANDING PAGE
+  Nothing above this comment was changed. This block is self-contained and
+  uses no section settings, so the schema stays as it was.
 
-  Edit the details in the liquid block below. Longer copy (the four reason
-  tiles, the activity cards and the schedule rows) is edited directly in
-  the markup further down, where each item sits next to its own image URL.
+  ALL CONTENT LIVES IN THE LIQUID BLOCK BELOW. Lists use "|" between items
+  and "~" between the fields of one item, so everything stays editable in
+  one place.
+
+  Colour system (never hardcode a hex in the markup, use the tokens):
+    ink #071108 / forest #0E2B18 / moss #17512E      dark surfaces
+    paper #F4F1E6 / paper-dim #E5E0CD                light surfaces
+    acid #D8FF3E  primary accent   sun #FFC629  tickets and badges
+    lime #7BE85A  used twice on the whole page, no more
   ==========================================================================
 {%- endcomment -%}
 
 {%- liquid
-  # ---- Event details -------------------------------------------------
-  assign ev_accent       = '#F5A524'
-  assign ev_booking_url  = 'https://your-booking-site.com/mtj-lahore'
-  assign ev_cta          = 'Book your seat'
+  # ---------- Identity ------------------------------------------------
+  assign ev_handle    = '#ONEEVENING26'
+  assign ev_mark_1    = 'ONE'
+  assign ev_mark_2    = 'EVEN'
+  assign ev_mark_3    = 'ING'
+  assign ev_short     = 'ONE EV.'
+  assign ev_year      = '26'
+  assign ev_full_name = 'One Evening 26'
+  assign ev_date      = '14 MARCH 2026'
+  assign ev_venue     = 'EXPO CENTRE'
+  assign ev_city      = 'LAHORE'
 
-  assign ev_kicker = 'An evening with'
-  assign ev_title  = 'Molana Tariq Jameel'
-  assign ev_date   = 'Saturday 14 March 2026'
-  assign ev_venue  = 'Expo Centre, Lahore'
-  assign ev_entry  = 'Free entry'
-  assign ev_sub    = 'One talk, one hall, one evening. Doors open at 4 pm and entry is free with registration.'
+  assign ev_booking_url = 'https://your-booking-site.com/one-evening-26'
+  assign ev_cta         = 'Book your seat'
 
-  # Replace with your own image once uploaded, for example:
-  #   assign ev_hero_image = 'hero.jpg' | file_img_url: '1200x'
-  assign ev_hero_image    = 'https://picsum.photos/seed/hilm-auditorium-hall/1000/1250'
-  assign ev_speaker_image = ''
+  # ---------- Speakers :: name~credential~photo ------------------------
+  # TODO_CONTENT: replace the three "To be announced" rows as guests confirm.
+  assign ev_speakers = 'Molana Tariq Jameel~Guest speaker~|To be announced~Second guest~|To be announced~Third guest~|To be announced~Closing guest~' | split: '|'
 
-  # ---- Seat map ------------------------------------------------------
+  # ---------- Hook one -------------------------------------------------
+  assign ev_hook1_a       = 'You keep meaning to change.'
+  assign ev_hook1_script  = 'What if you gave it'
+  assign ev_hook1_b       = 'one evening?'
+  assign ev_video_poster  = 'https://picsum.photos/seed/one-evening-hall-wide/1280/720'
+  assign ev_video_url     = ''
+
+  # ---------- Benefits :: shared verb, then 12 endings -----------------
+  assign ev_benefit_verb = 'Leave'
+  assign ev_benefits = 'with one decision made, not twelve considered.|knowing what your next thirty days look like.|with the question you walked in carrying, answered.|without a phone in your hand for two hours.|having sat with people doing the same work.|with the talk in your handwriting, not a screenshot.|with a habit named and the first step already picked.|clearer about what matters this year and what does not.|having heard the whole argument, not the clipped version.|with the reading list you keep meaning to start.|with a reason to bring someone next year.|with your family knowing where you were and why.' | split: '|'
+
+  # ---------- Hook two -------------------------------------------------
+  assign ev_hook2_a       = 'How many times have you promised to change, and'
+  assign ev_hook2_accent  = 'gone back to the same week?'
+  assign ev_hook2_support = 'Registration takes a minute. The evening does the rest.'
+
+  # ---------- Tickets :: tier~price~inclusions;~url~featured ------------
+  assign ev_tickets = 'GENERAL~Free~Open seating, first come first seated;Doors from 15:30, Gate 2 is step free;Tea after the talk~~|RESERVED~PKR 2,500~Named seat in the first ten rows;Early entry at 15:00;Reading list booklet at the desk;Proceeds fund the institute~~yes|GROUP OF FIVE~PKR 10,000~Five named seats together;Early entry at 15:00;One parking pass at Gate 2;Five reading list booklets~~' | split: '|'
+
+  # ---------- About the event ------------------------------------------
+  assign ev_about_eyebrow = 'What is One Evening?'
+  assign ev_about_p1 = 'One Evening is a single sitting. One speaker, one hall, no interval and no edits. It runs from mid afternoon until the hall clears, and the whole address is delivered in one go rather than split into sessions you have to keep up with.'
+  assign ev_about_p2 = 'You leave with something written down. Every seat gets a booklet, the last half hour is given to questions the audience submitted, and nobody is asked to sign up for anything on the way out.'
+
+  # ---------- Gallery one :: url~alt ------------------------------------
+  assign ev_gallery1 = 'https://picsum.photos/seed/oe-crowd-1/900/1200~A full hall before the talk|https://picsum.photos/seed/oe-stage-2/1200/800~The stage from the back rows|https://picsum.photos/seed/oe-hands-3/800/800~Audience members with hands raised|https://picsum.photos/seed/oe-doors-4/1200/800~Doors opening at the venue|https://picsum.photos/seed/oe-books-5/800/1000~The reading table|https://picsum.photos/seed/oe-tea-6/1200/800~Tea served in the courtyard|https://picsum.photos/seed/oe-front-7/800/1000~The first ten rows|https://picsum.photos/seed/oe-lights-8/1200/800~House lights over the hall|https://picsum.photos/seed/oe-exit-9/900/900~The courtyard after the talk' | split: '|'
+  assign ev_gallery1_cta  = 'Last year in photos'
+  assign ev_gallery1_url  = 'https://your-booking-site.com/gallery'
+
+  # ---------- The organiser --------------------------------------------
+  assign ev_host_eyebrow  = 'Who is behind it'
+  assign ev_host_name     = 'HILM INSTITUTE'
+  assign ev_host_p1 = 'Hilm Institute has run reading groups and public talks in Lahore since 2019. <strong>We are not a media company.</strong> Nothing said in the hall is cut into clips, and nothing is put behind a paywall afterwards.'
+  assign ev_host_p2 = 'The institute is funded by reserved seats and by the people who come back every year. <strong>General entry stays free</strong> so that nobody is priced out of a room they wanted to be in.'
+  assign ev_host_p3 = 'One Evening is the largest thing we do. <strong>The rest of the year is small rooms</strong>, twenty people at a time, working through one book without a stage or a microphone.'
+  assign ev_host_photo    = 'https://picsum.photos/seed/oe-institute-portrait/1000/1250'
+
+  # ---------- Cause -----------------------------------------------------
+  assign ev_cause_title = 'WHERE THE MONEY GOES'
+  assign ev_cause_intro = 'Reserved seats are the only thing we charge for, and they pay for three things. There is no separate donation ask on this page, and there will not be one from the stage.'
+  assign ev_cause_items = 'The free seats.~Roughly two thirds of the hall costs nothing to enter, and reserved tickets cover that gap.|The small rooms.~Twenty seat reading groups run all year in Lahore, free to join, no application.|The booklets.~Every seat gets printed material to take home, which is the only thing most people keep.' | split: '|'
+  assign ev_cause_close_1 = 'NOBODY PAYS'
+  assign ev_cause_close_2 = 'TO BE IN THE ROOM.'
+
+  # ---------- Gallery two :: url~alt ------------------------------------
+  assign ev_gallery2 = 'https://picsum.photos/seed/oe-room-a/800/600~A reading group in session|https://picsum.photos/seed/oe-room-b/800/600~Books on a table|https://picsum.photos/seed/oe-room-c/800/600~Two people talking after a session|https://picsum.photos/seed/oe-room-d/800/600~A small room set for twenty|https://picsum.photos/seed/oe-room-e/800/600~Notes taken during a session|https://picsum.photos/seed/oe-room-f/800/600~The institute doorway' | split: '|'
+
+  # ---------- Footer :: label~url ---------------------------------------
+  assign ev_org        = 'HILM INSTITUTE'
+  assign ev_rights     = 'All rights reserved.'
+  assign ev_socials    = 'Instagram~https://instagram.com/|YouTube~https://youtube.com/|WhatsApp~https://wa.me/' | split: '|'
+
+  # ---------- Seat map ---------------------------------------------------
   assign ev_seat_total   = 189
   assign ev_seat_percent = 68
   assign ev_seats_taken  = ev_seat_percent | times: ev_seat_total | divided_by: 100
@@ -61,10 +121,10 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Instrument+Sans:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@700&family=Inter+Tight:wght@400;500;600;700&display=swap">
 
 <style>
-  /* Hides the theme header and footer on this page. */
+  /* Theme header and footer are hidden on this page. */
   .shopify-section-group-header-group,
   .shopify-section-group-footer-group,
   #shopify-section-header,
@@ -73,764 +133,829 @@
   body > header,
   body > footer { display: none !important; }
 
-  /* Hides the page title and rich text block above, so the hero comes first.
-     Delete this rule if you want the page title to show. */
+  /* Hides the page title and rich text block above so the hero opens the page.
+     Delete this rule if you want the page title back. */
   #shopify-section-{{ section.id }} .page-width--narrow.section-{{ section.id }}-padding { display: none; }
 
-  /* The theme wraps this section in .section, which adds vertical rhythm we do not want. */
   #shopify-section-{{ section.id }} { padding: 0 !important; margin: 0 !important; }
 
-  body { background: #0B0F14; }
+  html { overflow-x: clip; }
+  body { background: #071108; overflow-x: clip; }
 
-  /* ---------- Tokens ---------- */
-  .mtj {
-    --ink:      #0B0F14;
-    --ink-2:    #121821;
-    --ink-3:    #19212B;
-    --bone:     #F2EFE9;
-    --bone-dim: #A2ABB6;
-    --line:     rgba(242, 239, 233, .12);
-    --accent:   {{ ev_accent }};
-    --accent-soft: {{ ev_accent }}1F;
-    --accent-ink:  #1A1204;
+  /* ================= Tokens ================= */
+  .evt {
+    --ink:       #071108;
+    --forest:    #0E2B18;
+    --moss:      #17512E;
+    --paper:     #F4F1E6;
+    --paper-dim: #E5E0CD;
+    --acid:      #D8FF3E;
+    --sun:       #FFC629;
+    --lime:      #7BE85A;
+    --on-dark:   #F4F1E6;
+    --on-light:  #071108;
 
-    --r-card: 14px;
-    --r-pill: 999px;
-    --r-mark: 3px;
-
-    --pad-x: clamp(20px, 5vw, 72px);
-    --maxw: 1320px;
+    --pad-x: clamp(18px, 5vw, 72px);
+    --maxw: 1280px;
     --ease: cubic-bezier(.16, 1, .3, 1);
 
-    font-family: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    color: var(--bone);
+    --z-grain: 5;
+    --z-sticky: 40;
+
+    font-family: "Inter Tight", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    color: var(--on-dark);
     background: var(--ink);
     -webkit-font-smoothing: antialiased;
   }
 
-  .mtj *, .mtj *::before, .mtj *::after { box-sizing: border-box; }
-  .mtj img { display: block; max-width: 100%; height: auto; }
-  .mtj p { margin: 0; }
+  .evt *, .evt *::before, .evt *::after { box-sizing: border-box; }
+  .evt img { display: block; max-width: 100%; }
+  .evt :where(p) { margin: 0; }
 
-  .mtj__wrap {
+  .evt-sr {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap; border: 0;
+  }
+
+  .evt-wrap {
     width: 100%;
     max-width: var(--maxw);
     margin-inline: auto;
     padding-inline: var(--pad-x);
   }
 
-  .mtj__h2 {
-    font-family: "Archivo", ui-sans-serif, system-ui, sans-serif;
-    font-variation-settings: "wdth" 110;
-    font-weight: 700;
-    letter-spacing: -.02em;
-    line-height: 1;
-    font-size: clamp(2rem, 4.4vw, 3.4rem);
-    margin: 0;
-    text-wrap: balance;
-  }
-
-  .mtj__lede {
-    margin-top: 24px;
-    max-width: 58ch;
-    font-size: clamp(1rem, 1.1vw, 1.115rem);
-    line-height: 1.62;
-    color: var(--bone-dim);
-  }
-
-  .mtj__mono {
-    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-    font-size: .72rem;
-    font-weight: 500;
-    letter-spacing: .14em;
+  /* ================= Type ================= */
+  .evt-display {
+    font-family: "Anton", "Arial Narrow", system-ui, sans-serif;
+    font-weight: 400;
     text-transform: uppercase;
-    color: var(--bone-dim);
+    line-height: .82;
+    letter-spacing: -.02em;
   }
+  .evt-script { font-family: "Caveat", cursive; font-weight: 700; letter-spacing: 0; }
 
-  .mtj__btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  .evt-h2 { font-size: clamp(2rem, 6vw, 4.5rem); margin: 0; }
+  .evt-q  { font-size: clamp(1.6rem, 4vw, 3rem); line-height: 1.08; margin: 0; text-wrap: balance; }
+  .evt-body { font-size: clamp(1rem, 1.1vw, 1.125rem); line-height: 1.65; }
+  .evt-micro { font-size: .75rem; text-transform: uppercase; letter-spacing: .25em; font-weight: 600; }
+
+  /* ================= Buttons ================= */
+  .evt-btn {
+    display: inline-flex; align-items: center; justify-content: center;
     white-space: nowrap;
-    padding: 16px 32px;
-    border-radius: var(--r-pill);
-    border: 1px solid transparent;
-    font: 600 1rem/1 "Instrument Sans", system-ui, sans-serif;
-    letter-spacing: -.01em;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background-color .25s var(--ease), border-color .25s var(--ease), transform .16s var(--ease);
+    padding: 17px 34px;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    font: 700 .875rem/1 "Inter Tight", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: .12em;
+    text-decoration: none; cursor: pointer;
+    transition: transform .15s var(--ease), box-shadow .15s var(--ease), background-color .15s var(--ease);
   }
-  .mtj__btn--primary { background: var(--accent); color: var(--accent-ink); }
-  .mtj__btn--primary:hover { filter: brightness(1.08); }
-  .mtj__btn--ghost { border-color: rgba(242, 239, 233, .3); color: var(--bone); }
-  .mtj__btn--ghost:hover { border-color: var(--bone); background: rgba(242, 239, 233, .06); }
-  .mtj__btn:active { transform: translateY(1px); }
+  .evt-btn--acid { background: var(--acid); color: var(--ink); box-shadow: 0 0 0 rgba(0,0,0,0); }
+  .evt-btn--acid:hover { background: var(--sun); transform: translateY(-2px); box-shadow: 0 8px 0 var(--moss); }
+  .evt-btn--forest { background: var(--forest); color: var(--paper); }
+  .evt-btn--forest:hover { background: var(--moss); transform: translateY(-2px); box-shadow: 0 8px 0 var(--paper-dim); }
+  .evt-btn--sun { background: var(--sun); color: var(--ink); }
+  .evt-btn--sun:hover { transform: translateY(-2px); box-shadow: 0 8px 0 var(--forest); }
+  .evt-btn:active { transform: translateY(0); }
 
-  .mtj :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .evt :focus-visible { outline: 3px solid var(--acid); outline-offset: 2px; }
+  .evt-light :focus-visible { outline-color: var(--forest); }
 
-  /* Scroll reveal, IntersectionObserver driven. */
-  .mtj [data-reveal] > * {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity .7s var(--ease), transform .7s var(--ease);
+  /* ================= Grain ================= */
+  .evt-grain {
+    position: fixed; inset: 0;
+    z-index: var(--z-grain);
+    pointer-events: none;
+    opacity: .05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ================= Sticker label ================= */
+  .evt-sticker {
+    display: inline-block;
+    padding: 8px 18px 7px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 5px 5px 0 var(--ink);
+    font-family: "Anton", system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .01em;
+    line-height: 1;
+  }
+  .evt-sticker--acid { background: var(--acid); }
+  .evt-sticker--sun  { background: var(--sun); }
+  .evt-light .evt-sticker { box-shadow: 5px 5px 0 var(--forest); }
+
+  /* ================= Texture backdrop ================= */
+  .evt-backdrop {
+    position: absolute; inset: 0;
+    display: grid; place-content: center;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .evt-backdrop span {
+    font-family: "Anton", system-ui, sans-serif;
+    text-transform: uppercase;
+    font-size: clamp(6rem, 26vw, 26rem);
+    line-height: .8;
+    white-space: nowrap;
+    color: var(--moss);
+    opacity: .08;
+  }
+  .evt-backdrop--acid span { color: var(--acid); opacity: .16; }
+  .evt-backdrop--ink span  { color: var(--ink); opacity: .09; }
+
+  /* ================= Duotone ================= */
+  .evt-duo { position: relative; isolation: isolate; overflow: hidden; background: var(--ink); }
+  .evt-duo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.15); }
+  .evt-duo::before,
+  .evt-duo::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+  .evt-duo::before { background: var(--ink); mix-blend-mode: lighten; }
+  .evt-duo::after  { background: var(--acid); mix-blend-mode: darken; }
+  .evt-duo--lime::after { background: var(--lime); }
+
+  /* ================= Reveal ================= */
+  .evt [data-reveal] > * {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .6s var(--ease), transform .6s var(--ease);
     transition-delay: calc(var(--i, 0) * 70ms);
   }
-  .mtj [data-reveal].is-in > * { opacity: 1; transform: none; }
+  .evt [data-reveal].is-in > * { opacity: 1; transform: none; }
 
-  /* ---------- Hero ---------- */
-  .mtj-hero {
+  /* ================= Marquee ================= */
+  .evt-marquee {
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+    padding-block: clamp(14px, 2vw, 26px);
+    transform: skewY(-1.2deg);
+    border-block: 2px solid var(--moss);
+  }
+  .evt-marquee__row { display: flex; width: max-content; will-change: transform; }
+  .evt-marquee__row--a { animation: evt-slide 30s linear infinite; }
+  .evt-marquee__row--b { animation: evt-slide 34s linear infinite reverse; margin-top: -.1em; }
+  .evt-marquee__track { display: flex; flex-shrink: 0; }
+  .evt-marquee__item {
+    font-family: "Anton", system-ui, sans-serif;
+    text-transform: uppercase;
+    font-size: clamp(1.6rem, 4.6vw, 3.4rem);
+    line-height: 1;
+    padding-inline: .28em;
+    color: var(--on-dark);
+  }
+  .evt-marquee__item:nth-child(odd) { color: var(--acid); }
+  @keyframes evt-slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ================= 1. Hero ================= */
+  .evt-hero {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    min-height: 92dvh;
-    display: flex;
-    align-items: center;
-    padding-block: clamp(56px, 9vh, 96px) clamp(48px, 7vh, 80px);
+    background: var(--ink);
+    min-height: 100svh;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding-block: clamp(28px, 6vh, 64px) clamp(28px, 6vh, 56px);
   }
-  .mtj-hero__glow {
-    position: absolute;
-    inset: -30% 0 auto -10%;
-    height: 90%;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(48% 52% at 30% 20%, var(--accent-soft), transparent 70%);
-    animation: mtj-lights 1.4s var(--ease) both;
-  }
-  @keyframes mtj-lights { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: none; } }
-
-  .mtj-hero__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: clamp(32px, 5vw, 72px);
-    align-items: center;
-  }
-
-  .mtj-hero__title {
-    font-family: "Archivo", ui-sans-serif, system-ui, sans-serif;
-    font-variation-settings: "wdth" 114;
-    font-weight: 700;
-    letter-spacing: -.028em;
-    line-height: .94;
-    font-size: clamp(2.7rem, 6.1vw, 5.4rem);
-    margin: 0;
-    text-wrap: balance;
-  }
-  .mtj-hero__kicker {
-    display: block;
-    font-size: .3em;
-    font-weight: 400;
-    font-variation-settings: "wdth" 100;
-    letter-spacing: -.005em;
-    color: var(--bone-dim);
-    margin-bottom: .5em;
-  }
-
-  .mtj-hero__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 30px 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  .mtj-hero__meta li {
-    border: 1px solid var(--line);
-    border-radius: var(--r-pill);
-    padding: 9px 16px;
-    background: rgba(242, 239, 233, .03);
-  }
-  .mtj-hero__meta li:first-child { border-color: var(--accent); color: var(--bone); }
-
-  .mtj-hero__sub {
-    margin-top: 28px;
-    max-width: 46ch;
-    font-size: clamp(1.02rem, 1.2vw, 1.18rem);
-    line-height: 1.55;
-    color: var(--bone-dim);
-  }
-
-  .mtj-hero__cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
-
-  .mtj-hero__media {
+  .evt-hero__eyebrow { text-align: center; color: var(--acid); margin-bottom: clamp(28px, 6vh, 60px); }
+  .evt-hero__inner { position: relative; z-index: 1; text-align: center; }
+  .evt-hero__mark { margin: 0; }
+  .evt-hero__stack {
     position: relative;
-    margin: 0;
-    border-radius: var(--r-card);
-    overflow: hidden;
-    aspect-ratio: 4 / 5;
+    display: inline-block;
+    text-align: left;
+    font-size: clamp(4rem, 16vw, 15rem);
   }
-  .mtj-hero__media img { width: 100%; height: 100%; object-fit: cover; }
-  .mtj-hero__media::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(100deg, var(--ink) 2%, rgba(11, 15, 20, .3) 45%, rgba(11, 15, 20, .05) 100%);
-  }
+  .evt-hero__line { display: block; color: var(--on-dark); }
+  .evt-hero__year { color: var(--acid); }
 
-  .mtj-hero__copy > * { animation: mtj-rise .9s var(--ease) both; }
-  .mtj-hero__copy > *:nth-child(1) { animation-delay: .05s; }
-  .mtj-hero__copy > *:nth-child(2) { animation-delay: .16s; }
-  .mtj-hero__copy > *:nth-child(3) { animation-delay: .26s; }
-  .mtj-hero__copy > *:nth-child(4) { animation-delay: .36s; }
-  .mtj-hero__media { animation: mtj-rise 1s var(--ease) .2s both; }
-  @keyframes mtj-rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+  .evt-hero__meta {
+    margin-top: clamp(22px, 5vh, 44px);
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .evt-hero__meta span { color: var(--on-dark); }
+  .evt-hero__rule { width: min(220px, 50%); height: 2px; background: var(--moss); }
 
-  /* ---------- Section rhythm ---------- */
-  .mtj-band { padding-block: clamp(72px, 11vh, 132px); }
-  .mtj-band--raised { background: var(--ink-2); }
-  .mtj-band__head { max-width: 62ch; margin-bottom: clamp(40px, 6vh, 64px); }
-
-  /* ---------- Why come in person (bento, 4 cells) ---------- */
-  .mtj-why__grid {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 16px;
-  }
-  .mtj-cell {
-    border: 1px solid var(--line);
-    border-radius: var(--r-card);
-    background: var(--ink-2);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-  .mtj-cell--a { grid-column: span 7; }
-  .mtj-cell--b { grid-column: span 5; background: var(--accent-soft); border-color: {{ ev_accent }}40; }
-  .mtj-cell--c { grid-column: span 5; }
-  .mtj-cell--d { grid-column: span 7; }
-  .mtj-cell__media { aspect-ratio: 16 / 9; }
-  .mtj-cell__media img { width: 100%; height: 100%; object-fit: cover; }
-  .mtj-cell__body { padding: clamp(24px, 3vw, 36px); margin-top: auto; }
-  .mtj-cell--text .mtj-cell__body { margin-block: auto; }
-  .mtj-cell--text .mtj-cell__title { font-size: clamp(1.5rem, 2.6vw, 2.05rem); margin-bottom: 16px; }
-  .mtj-cell--text .mtj-cell__text { font-size: 1.02rem; }
-  .mtj-cell__title {
-    font-family: "Archivo", system-ui, sans-serif;
-    font-variation-settings: "wdth" 106;
-    font-weight: 700;
-    font-size: clamp(1.25rem, 1.9vw, 1.6rem);
-    letter-spacing: -.018em;
-    line-height: 1.12;
-    margin: 0 0 12px;
-  }
-  .mtj-cell__text { color: var(--bone-dim); line-height: 1.62; font-size: .98rem; }
-  .mtj-cell--b .mtj-cell__text { color: rgba(242, 239, 233, .78); }
-
-  /* ---------- Guest speaker ---------- */
-  .mtj-speaker__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: clamp(32px, 5vw, 72px);
-    align-items: start;
-  }
-  .mtj-speaker__portrait {
-    position: relative;
-    margin: 0;
-    border-radius: var(--r-card);
-    overflow: hidden;
-    aspect-ratio: 4 / 5;
-    background: var(--ink-3);
-  }
-  .mtj-speaker__portrait img { width: 100%; height: 100%; object-fit: cover; }
-  .mtj-speaker__placeholder {
-    height: 100%;
-    display: grid;
-    place-content: center;
-    text-align: center;
-    gap: 8px;
-    padding: 24px;
-    border: 1px dashed var(--line);
-    border-radius: var(--r-card);
-  }
-  .mtj-speaker__eyebrow { display: block; margin-bottom: 18px; }
-  .mtj-speaker__name {
-    font-family: "Archivo", system-ui, sans-serif;
-    font-variation-settings: "wdth" 112;
-    font-weight: 700;
-    font-size: clamp(2.3rem, 5vw, 4rem);
-    letter-spacing: -.028em;
-    line-height: .95;
-    margin: 0;
-    text-wrap: balance;
-  }
-  .mtj-speaker__bio { margin-top: 24px; max-width: 60ch; color: var(--bone-dim); line-height: 1.68; }
-  .mtj-speaker__bio p + p { margin-top: 14px; }
-
-  .mtj-topics { margin: 40px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
-  .mtj-topics li {
-    display: grid;
-    grid-template-columns: 44px minmax(0, 1fr);
-    gap: 16px;
-    align-items: baseline;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .mtj-topics__n { color: var(--accent); }
-  .mtj-topics__t { font-size: 1.06rem; font-weight: 500; }
-
-  /* ---------- Activities (horizontal rail) ---------- */
-  .mtj-rail__top { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
-  .mtj-rail__nav { display: flex; gap: 10px; flex-shrink: 0; }
-  .mtj-rail__btn {
-    width: 46px; height: 46px;
-    border-radius: var(--r-pill);
-    border: 1px solid var(--line);
-    background: transparent;
-    color: var(--bone);
-    font-size: 1.1rem;
-    line-height: 1;
-    cursor: pointer;
-    transition: border-color .25s var(--ease), background-color .25s var(--ease);
-  }
-  .mtj-rail__btn:hover { border-color: var(--bone); background: rgba(242, 239, 233, .06); }
-
-  .mtj-rail {
+  /* ================= 2. Speakers ================= */
+  .evt-speakers { background: var(--ink); padding-block: clamp(56px, 9vh, 112px); }
+  .evt-speakers__grid {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: minmax(276px, 30%);
-    gap: 16px;
+    grid-auto-columns: 74%;
+    gap: 14px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-padding-left: var(--pad-x);
-    padding: 4px var(--pad-x) 28px;
+    padding: 8px var(--pad-x) 34px;
     margin-inline: calc(var(--pad-x) * -1);
-    scrollbar-width: thin;
-    scrollbar-color: var(--line) transparent;
   }
-  .mtj-card {
-    scroll-snap-align: start;
-    border: 1px solid var(--line);
-    border-radius: var(--r-card);
-    background: var(--ink-2);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: border-color .3s var(--ease), transform .3s var(--ease);
+  .evt-guest { scroll-snap-align: start; }
+  .evt-guest__frame { position: relative; }
+  .evt-guest__media { aspect-ratio: 3 / 4; }
+  .evt-guest__initials {
+    height: 100%;
+    display: grid; place-content: center;
+    background: var(--moss);
+    color: var(--acid);
+    font-family: "Anton", system-ui, sans-serif;
+    font-size: clamp(3rem, 9vw, 5rem);
+    letter-spacing: .02em;
   }
-  .mtj-card:hover { border-color: rgba(242, 239, 233, .32); transform: translateY(-4px); }
-  .mtj-card__media { aspect-ratio: 4 / 3; }
-  .mtj-card__media img { width: 100%; height: 100%; object-fit: cover; }
-  .mtj-card__body { padding: 22px 22px 26px; }
-  .mtj-card__title { font-size: 1.1rem; font-weight: 600; margin: 0 0 8px; letter-spacing: -.012em; }
-  .mtj-card__text { color: var(--bone-dim); font-size: .94rem; line-height: 1.58; }
+  .evt-guest__label {
+    position: absolute; left: 50%; bottom: 0; z-index: 2;
+    transform: translate(-50%, 50%) rotate(var(--rot, -2deg));
+    font-size: clamp(.8rem, 2.2vw, 1.05rem);
+    white-space: nowrap;
+  }
+  .evt-guest__label b { font-weight: 400; }
+  .evt-guest__role { display: block; margin-top: 42px; text-align: center; color: var(--acid); }
 
-  /* ---------- Schedule (timeline) ---------- */
-  .mtj-day { margin-top: 44px; }
-  .mtj-day:first-of-type { margin-top: 0; }
-  .mtj-day__label { padding-bottom: 14px; border-bottom: 1px solid var(--line); }
-  .mtj-day__rows { list-style: none; margin: 0; padding: 0 0 0 clamp(16px, 3vw, 34px); border-left: 1px solid var(--line); }
-  .mtj-row {
-    position: relative;
-    display: grid;
-    grid-template-columns: 92px minmax(0, 1fr);
-    gap: clamp(16px, 3vw, 40px);
-    padding: 26px 0;
-  }
-  .mtj-row + .mtj-row { border-top: 1px solid rgba(242, 239, 233, .06); }
-  .mtj-row::before {
-    content: "";
-    position: absolute;
-    left: calc(clamp(16px, 3vw, 34px) * -1 - 1px);
-    top: 34px;
-    width: 13px;
-    height: 1px;
-    background: var(--accent);
-  }
-  .mtj-row__time { color: var(--accent); padding-top: 3px; }
-  .mtj-row__title { font-size: clamp(1.1rem, 1.7vw, 1.35rem); font-weight: 600; letter-spacing: -.015em; margin: 0; }
-  .mtj-row__text { margin-top: 8px; color: var(--bone-dim); line-height: 1.6; font-size: .96rem; max-width: 58ch; }
+  /* ================= 3 + 6. Hooks ================= */
+  .evt-hook { padding-block: clamp(64px, 11vh, 132px); text-align: center; }
+  .evt-hook--dark { background: var(--ink); }
+  .evt-hook--light { background: var(--paper); color: var(--on-light); }
+  .evt-hook__q { max-width: 22ch; margin-inline: auto; }
+  .evt-hook--dark .evt-hook__q { color: var(--on-dark); }
+  .evt-hook__script { color: var(--acid); font-size: 1.35em; display: inline-block; line-height: 1; padding-bottom: .08em; }
+  .evt-hook--light .evt-hook__accent { color: var(--forest); }
+  .evt-hook__support { margin-top: 20px; max-width: 46ch; margin-inline: auto; color: var(--forest); }
+  .evt-hook__cta { margin-top: clamp(30px, 5vh, 48px); }
 
-  /* ---------- Book your seat ---------- */
-  .mtj-book__panel {
+  .evt-video {
+    margin: clamp(40px, 7vh, 72px) auto 0;
+    max-width: 880px;
+    border: 6px solid var(--acid);
+    box-shadow: 14px 14px 0 var(--moss);
     position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: var(--r-card);
-    background: var(--ink-2);
-    padding: clamp(32px, 5vw, 68px);
+    display: block;
+    background: var(--ink);
+  }
+  .evt-video__media { aspect-ratio: 16 / 9; }
+  .evt-video__play {
+    position: absolute; inset: 0; margin: auto;
+    width: 84px; height: 84px;
+    display: grid; place-content: center;
+    border-radius: 999px;
+    background: var(--acid); color: var(--ink);
+    font-size: 1.6rem; line-height: 1;
+    border: 0;
+  }
+
+  /* ================= 5. Benefits ================= */
+  .evt-benefits { background: var(--paper); color: var(--on-light); padding-block: clamp(64px, 11vh, 132px); }
+  .evt-benefits__head { margin-bottom: clamp(32px, 5vh, 56px); }
+  .evt-benefits__list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 20px 56px;
+  }
+  .evt-benefits__list li { font-size: clamp(1rem, 1.15vw, 1.1rem); line-height: 1.5; }
+  .evt-benefits__list b { font-family: "Anton", system-ui, sans-serif; text-transform: uppercase; letter-spacing: .01em; color: var(--forest); font-weight: 400; margin-right: .35em; }
+
+  /* ================= 7. Tickets ================= */
+  .evt-tickets { position: relative; isolation: isolate; background: var(--paper); color: var(--on-light); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; }
+  .evt-tickets__head { position: relative; z-index: 1; text-align: center; margin-bottom: clamp(40px, 6vh, 68px); }
+  .evt-tickets__grid { position: relative; z-index: 1; display: grid; gap: 24px; }
+
+  .evt-ticket {
     display: grid;
-    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
-    gap: clamp(36px, 5vw, 72px);
+    grid-template-columns: 54px minmax(0, 1fr);
+    background: var(--paper);
+    border: 3px solid var(--forest);
+    position: relative;
+  }
+  .evt-ticket--featured {
+    background: var(--sun);
+    border-color: var(--ink);
+    order: -1;
+  }
+  .evt-ticket__stub {
+    border-right: 3px dashed var(--forest);
+    background: repeating-linear-gradient(180deg, var(--forest) 0 3px, transparent 3px 7px, var(--forest) 7px 9px, transparent 9px 15px);
+    background-clip: content-box;
+    padding: 26px 16px;
+  }
+  .evt-ticket--featured .evt-ticket__stub { border-right-color: var(--ink); background-image: repeating-linear-gradient(180deg, var(--ink) 0 3px, transparent 3px 7px, var(--ink) 7px 9px, transparent 9px 15px); }
+  .evt-ticket__notch {
+    position: absolute; left: 54px; width: 22px; height: 22px;
+    border-radius: 999px; background: var(--paper);
+    transform: translate(-50%, -50%);
+    border: 3px solid var(--forest);
+  }
+  .evt-ticket__notch--top { top: 0; }
+  .evt-ticket__notch--bottom { top: 100%; }
+  .evt-ticket--featured .evt-ticket__notch { border-color: var(--ink); }
+
+  .evt-ticket__body { padding: clamp(24px, 3vw, 34px); }
+  .evt-ticket__tier { font-size: clamp(1.5rem, 3vw, 2.1rem); margin: 0; color: var(--forest); }
+  .evt-ticket--featured .evt-ticket__tier { color: var(--ink); }
+  .evt-ticket__price { display: block; margin-top: 6px; font-size: 1.25rem; font-weight: 700; }
+  .evt-ticket__incl { list-style: none; margin: 22px 0 26px; padding: 0; display: grid; gap: 10px; }
+  .evt-ticket__incl li { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 10px; font-size: .95rem; line-height: 1.5; }
+  .evt-ticket__incl span:first-child { color: var(--forest); font-weight: 700; }
+  .evt-ticket--featured .evt-ticket__incl span:first-child { color: var(--ink); }
+
+  /* ================= 9. About ================= */
+  .evt-about { background: var(--forest); padding-block: clamp(64px, 11vh, 132px); }
+  .evt-about__grid { display: grid; gap: clamp(32px, 5vw, 72px); }
+  .evt-about__mark { font-size: clamp(3rem, 11vw, 7rem); color: var(--on-dark); margin: 14px 0 0; }
+  .evt-about__mark em { font-style: normal; color: var(--acid); }
+  .evt-about__copy p { max-width: 62ch; color: var(--on-dark); }
+  .evt-about__copy p + p { margin-top: 18px; }
+
+  /* ================= 10 + 13. Galleries ================= */
+  .evt-gallery { background: var(--ink); padding-block: clamp(48px, 8vh, 96px) clamp(48px, 8vh, 88px); }
+  .evt-mosaic {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 12vw;
+    grid-auto-flow: dense;
+    gap: 4px;
+  }
+  .evt-mosaic .evt-duo { grid-column: span 2; grid-row: span 1; }
+  .evt-mosaic .evt-duo:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .evt-mosaic .evt-duo:nth-child(2) { grid-column: span 4; grid-row: span 2; }
+  .evt-mosaic .evt-duo:nth-child(5) { grid-column: span 2; grid-row: span 2; }
+  .evt-mosaic .evt-duo:nth-child(8) { grid-column: span 4; }
+  .evt-gallery__cta { text-align: center; margin-top: clamp(32px, 5vh, 56px); }
+
+  .evt-strip__top { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
+  .evt-strip__nav { display: flex; gap: 10px; flex-shrink: 0; }
+  .evt-strip__btn {
+    width: 52px; height: 52px; border-radius: 999px;
+    border: 2px solid var(--moss); background: transparent; color: var(--acid);
+    font-size: 1.2rem; line-height: 1; cursor: pointer;
+    transition: background-color .2s var(--ease), border-color .2s var(--ease);
+  }
+  .evt-strip__btn:hover { background: var(--moss); border-color: var(--acid); }
+  .evt-strip {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 74%;
+    gap: 4px; overflow-x: auto; scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--pad-x);
+    padding-inline: var(--pad-x); margin-inline: calc(var(--pad-x) * -1);
+    padding-bottom: 12px;
+  }
+  .evt-strip .evt-duo { scroll-snap-align: start; aspect-ratio: 4 / 3; }
+
+  /* ================= 11. Organiser ================= */
+  .evt-host { background: var(--paper); color: var(--on-light); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; }
+  .evt-host__grid { display: grid; gap: clamp(32px, 5vw, 64px); align-items: center; }
+  .evt-host__eyebrow { font-size: clamp(1.6rem, 3.4vw, 2.4rem); color: var(--forest); display: block; margin-bottom: 14px; }
+  .evt-host__copy { margin-top: 30px; }
+  .evt-host__copy p { max-width: 58ch; }
+  .evt-host__copy p + p { margin-top: 16px; }
+  .evt-host__copy strong { color: var(--forest); }
+  .evt-host__media { aspect-ratio: 4 / 5; }
+
+  /* ================= 12. Cause ================= */
+  .evt-cause { position: relative; isolation: isolate; background: var(--acid); color: var(--ink); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; text-align: center; }
+  .evt-cause__inner { position: relative; z-index: 1; }
+  .evt-cause__intro { max-width: 58ch; margin: 28px auto 0; }
+  .evt-cause__list { list-style: none; margin: clamp(36px, 6vh, 56px) auto 0; padding: 0; max-width: 62ch; display: grid; gap: 22px; text-align: left; }
+  .evt-cause__list li { border-top: 2px solid var(--ink); padding-top: 16px; line-height: 1.55; }
+  .evt-cause__list b { font-family: "Anton", system-ui, sans-serif; font-weight: 400; text-transform: uppercase; margin-right: .4em; }
+  .evt-cause__close { margin-top: clamp(40px, 6vh, 64px); font-size: clamp(1.8rem, 6vw, 4rem); }
+
+  /* ================= Booking / seat map ================= */
+  .evt-book { background: var(--ink); padding-block: clamp(64px, 11vh, 132px); }
+  .evt-book__panel {
+    border: 3px solid var(--moss);
+    background: var(--forest);
+    padding: clamp(28px, 4vw, 56px);
+    display: grid; gap: clamp(32px, 4vw, 56px);
     align-items: center;
   }
-  .mtj-book__panel::before {
-    content: "";
-    position: absolute;
-    inset: auto -12% -55% 45%;
-    height: 120%;
-    z-index: -1;
-    background: radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 72%);
-  }
-  .mtj-book__note { margin-top: 20px; color: var(--bone-dim); font-size: .92rem; line-height: 1.6; max-width: 44ch; }
-
-  .mtj-seats__grid {
-    display: grid;
-    grid-template-columns: repeat(27, 1fr);
-    gap: 4px;
-    margin-bottom: 20px;
-  }
-  .mtj-seat {
-    aspect-ratio: 1;
-    border-radius: var(--r-mark);
-    background: rgba(242, 239, 233, .13);
-    transform: scale(.4);
-    opacity: 0;
+  .evt-book__note { margin-top: 18px; max-width: 44ch; font-size: .92rem; line-height: 1.6; color: var(--on-dark); opacity: .8; }
+  .evt-seats { display: grid; grid-template-columns: repeat(27, 1fr); gap: 3px; margin-bottom: 18px; }
+  .evt-seat {
+    aspect-ratio: 1; border-radius: 2px;
+    background: rgba(244, 241, 230, .16);
+    transform: scale(.4); opacity: 0;
     transition: transform .5s var(--ease), opacity .5s var(--ease), background-color .5s var(--ease);
     transition-delay: calc(var(--i) * 6ms);
   }
-  .is-in .mtj-seat { transform: none; opacity: 1; }
-  .is-in .mtj-seat--taken { background: var(--accent); }
-  .mtj-seats__legend { display: flex; flex-wrap: wrap; gap: 20px; }
-  .mtj-seats__key { display: inline-flex; align-items: center; gap: 8px; }
-  .mtj-seats__swatch { width: 11px; height: 11px; border-radius: var(--r-mark); background: rgba(242, 239, 233, .13); }
-  .mtj-seats__swatch--taken { background: var(--accent); }
+  .is-in .evt-seat { transform: none; opacity: 1; }
+  .is-in .evt-seat--taken { background: var(--acid); }
+  .evt-seats__legend { display: flex; flex-wrap: wrap; gap: 18px; }
+  .evt-seats__key { display: inline-flex; align-items: center; gap: 8px; }
+  .evt-seats__sw { width: 11px; height: 11px; border-radius: 2px; background: rgba(244, 241, 230, .16); }
+  .evt-seats__sw--taken { background: var(--acid); }
 
-  /* ---------- Sticky booking bar ---------- */
-  .mtj-sticky {
-    position: fixed;
-    inset: auto 0 0 0;
-    z-index: 40;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 12px clamp(16px, 4vw, 32px);
-    background: rgba(18, 24, 33, .9);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-top: 1px solid var(--line);
+  /* ================= 14. Footer ================= */
+  .evt-footer { background: var(--ink); border-top: 2px solid var(--moss); padding-block: 40px; }
+  .evt-footer__grid { display: grid; gap: 22px; align-items: center; text-align: center; }
+  .evt-footer__mark { font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--on-dark); }
+  .evt-footer__mark em { font-style: normal; color: var(--acid); }
+  .evt-footer__socials { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  .evt-footer__socials a { color: var(--on-dark); text-decoration: none; border-bottom: 2px solid var(--moss); padding-bottom: 2px; }
+  .evt-footer__socials a:hover { color: var(--acid); border-color: var(--acid); }
+  .evt-footer__rights { color: var(--on-dark); opacity: .7; font-size: .8rem; }
+
+  /* ================= 15. Sticky mobile CTA ================= */
+  .evt-sticky {
+    position: fixed; inset: auto 0 0 0;
+    z-index: var(--z-sticky);
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    background: var(--acid); color: var(--ink);
+    padding: 12px clamp(14px, 4vw, 24px);
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    border-top: 3px solid var(--ink);
     transform: translateY(110%);
-    transition: transform .45s var(--ease);
+    transition: transform .35s var(--ease);
   }
-  .mtj-sticky.is-visible { transform: none; }
-  .mtj-sticky__what { min-width: 0; }
-  .mtj-sticky__title { font-weight: 600; font-size: .98rem; margin: 0 0 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .mtj-sticky .mtj__btn { padding: 13px 24px; font-size: .95rem; }
-  @media (prefers-reduced-transparency: reduce) {
-    .mtj-sticky { background: #121821; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .evt-sticky.is-visible { transform: none; }
+  .evt-sticky__when { font-weight: 700; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; }
+  .evt-sticky .evt-btn { padding: 12px 22px; background: var(--ink); color: var(--acid); }
+  .evt-sticky .evt-btn:hover { background: var(--forest); box-shadow: none; transform: none; }
+  @media (min-width: 1024px) { .evt-sticky { display: none; } }
+
+  /* ================= Responsive ================= */
+  @media (min-width: 640px) {
+    .evt-hero__stack { padding-right: 1.05em; }
+    .evt-hero__year { position: absolute; right: 0; bottom: .02em; font-size: 1.5em; line-height: .82; z-index: 2; }
+    .evt-hero__meta { flex-direction: row; gap: 22px; }
+    .evt-hero__rule { width: 64px; }
+    .evt-benefits__list {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(6, auto);
+      grid-auto-flow: column;
+    }
+    .evt-benefits__list li:nth-child(-n+6) { padding-right: 32px; border-right: 2px solid var(--paper-dim); }
+    .evt-speakers__grid { grid-auto-columns: 44%; }
+    .evt-strip { grid-auto-columns: 44%; }
+    .evt-footer__grid { grid-template-columns: auto 1fr auto; text-align: left; }
+    .evt-footer__socials { justify-content: center; }
+    .evt-footer__rights { text-align: right; }
   }
 
-  /* ---------- Responsive ---------- */
-  @media (max-width: 1024px) {
-    .mtj-hero__grid,
-    .mtj-speaker__grid,
-    .mtj-book__panel { grid-template-columns: minmax(0, 1fr); }
-    .mtj-hero { min-height: 0; }
-    .mtj-hero__media { aspect-ratio: 16 / 10; order: -1; }
-    .mtj-hero__media::after { background: linear-gradient(180deg, rgba(11, 15, 20, .1), rgba(11, 15, 20, .55)); }
-    .mtj-speaker__portrait { max-width: 420px; }
-    .mtj-cell--a, .mtj-cell--b, .mtj-cell--c, .mtj-cell--d { grid-column: span 12; }
-    .mtj-rail { grid-auto-columns: minmax(258px, 78%); }
-    .mtj-rail__nav { display: none; }
-    .mtj-seats__grid { gap: 3px; }
+  @media (min-width: 1024px) {
+    .evt-speakers__grid {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      overflow: visible;
+      padding-inline: 0; margin-inline: 0;
+    }
+    .evt-guest:nth-child(2) { transform: translateY(16px); }
+    .evt-guest:nth-child(3) { transform: translateY(-16px); }
+    .evt-guest:nth-child(4) { transform: translateY(10px); }
+    .evt-tickets__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; gap: 28px; }
+    .evt-ticket { transform: rotate(1deg); }
+    .evt-ticket--featured { order: 0; transform: scale(1.05) rotate(-2deg); margin-top: 34px; z-index: 2; }
+    .evt-about__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
+    .evt-host__grid { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); }
+    .evt-host__media { margin-right: calc(var(--pad-x) * -1 - ((100vw - var(--maxw)) / 2)); aspect-ratio: 5 / 4; }
+    .evt-book__panel { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); }
+    .evt-strip { grid-auto-columns: 30%; }
+    .evt-mosaic { grid-auto-rows: 9vw; }
   }
-  @media (max-width: 620px) {
-    .mtj-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
-    .mtj-row::before { top: 32px; }
-    .mtj-hero__cta .mtj__btn { flex: 1 1 auto; }
-    .mtj-sticky__what { display: none; }
-    .mtj-sticky { justify-content: stretch; }
-    .mtj-sticky .mtj__btn { width: 100%; }
+
+  @media (max-width: 400px) {
+    .evt-btn { padding: 15px 22px; font-size: .8rem; letter-spacing: .08em; }
+    .evt-marquee__item { font-size: 1.4rem; }
+    .evt-ticket { grid-template-columns: 42px minmax(0, 1fr); }
+    .evt-ticket__notch { left: 42px; }
+  }
+
+  /* Hero year parallax, scroll driven, no scroll listener. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) and (min-width: 640px) {
+      .evt-hero__year {
+        animation: evt-drift linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 90%;
+      }
+      @keyframes evt-drift { to { transform: translateY(-14%); } }
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .mtj *, .mtj *::before, .mtj *::after { animation: none !important; transition: none !important; }
-    .mtj [data-reveal] > *, .mtj-hero__copy > *, .mtj-hero__media, .mtj-seat { opacity: 1; transform: none; }
-    .mtj-seat--taken { background: var(--accent); }
-    .mtj-sticky { transform: none; }
+    .evt *, .evt *::before, .evt *::after { animation: none !important; transition-duration: .01ms !important; }
+    .evt [data-reveal] > *, .evt-seat { opacity: 1; transform: none; }
+    .evt-seat--taken { background: var(--acid); }
+    .evt-marquee__row { animation: none; }
+    .evt-sticky { transform: none; }
   }
 </style>
 
 <noscript>
   <style>
-    .mtj [data-reveal] > * { opacity: 1; transform: none; }
-    .mtj .mtj-seat { opacity: 1; transform: none; }
-    .mtj .mtj-seat--taken { background: var(--accent); }
+    .evt [data-reveal] > * { opacity: 1; transform: none; }
+    .evt .evt-seat { opacity: 1; transform: none; }
+    .evt .evt-seat--taken { background: var(--acid); }
   </style>
 </noscript>
 
-<div class="mtj" id="mtj-{{ section.id }}">
-
-  {%- comment -%} ---------------- 1. Hero ---------------- {%- endcomment -%}
-  <section class="mtj-hero" aria-labelledby="mtj-hero-title-{{ section.id }}">
-    <div class="mtj-hero__glow" aria-hidden="true"></div>
-    <div class="mtj__wrap mtj-hero__grid">
-      <div class="mtj-hero__copy">
-        <h1 class="mtj-hero__title" id="mtj-hero-title-{{ section.id }}">
-          <span class="mtj-hero__kicker">{{ ev_kicker }}</span>
-          {{ ev_title }}
-        </h1>
-
-        <ul class="mtj-hero__meta mtj__mono">
-          <li>{{ ev_date }}</li>
-          <li>{{ ev_venue }}</li>
-          <li>{{ ev_entry }}</li>
-        </ul>
-
-        <p class="mtj-hero__sub">{{ ev_sub }}</p>
-
-        <div class="mtj-hero__cta">
-          <a class="mtj__btn mtj__btn--primary" href="{{ ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
-          <a class="mtj__btn mtj__btn--ghost" href="#mtj-schedule-{{ section.id }}">See the schedule</a>
+{%- capture ev_marquee -%}
+  <div class="evt-marquee" aria-hidden="true">
+    <div class="evt-marquee__row evt-marquee__row--a">
+      {%- for t in (1..2) -%}
+        <div class="evt-marquee__track">
+          {%- for i in (1..6) -%}
+            <span class="evt-marquee__item">{{ ev_full_name | upcase }} ///</span>
+          {%- endfor -%}
         </div>
-      </div>
-
-      <figure class="mtj-hero__media">
-        <img src="{{ ev_hero_image }}" alt="The hall before the event begins" width="1000" height="1250" loading="eager" fetchpriority="high">
-      </figure>
+      {%- endfor -%}
     </div>
-  </section>
+    <div class="evt-marquee__row evt-marquee__row--b">
+      {%- for t in (1..2) -%}
+        <div class="evt-marquee__track">
+          {%- for i in (1..6) -%}
+            <span class="evt-marquee__item">{{ ev_date }} /// {{ ev_city }} ///</span>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endcapture -%}
 
-  {%- comment -%} ---------------- 2. Why this event ---------------- {%- endcomment -%}
-  <section class="mtj-band" aria-labelledby="mtj-why-{{ section.id }}">
-    <div class="mtj__wrap">
-      <div class="mtj-band__head" data-reveal>
-        <h2 class="mtj__h2" id="mtj-why-{{ section.id }}">Why come in person</h2>
-        <p class="mtj__lede" style="--i:1">The talk will be recorded, but the room is where the evening actually happens. Here is what a seat gets you.</p>
-      </div>
+<div class="evt" id="evt-{{ section.id }}">
+  <div class="evt-grain" aria-hidden="true"></div>
 
-      <div class="mtj-why__grid" data-reveal>
-        <article class="mtj-cell mtj-cell--a" style="--i:0">
-          <div class="mtj-cell__media">
-            <img src="https://picsum.photos/seed/hilm-full-hall-audience/900/506" alt="A full hall during a talk" width="900" height="506" loading="lazy">
-          </div>
-          <div class="mtj-cell__body">
-            <h3 class="mtj-cell__title">A full talk, start to finish</h3>
-            <p class="mtj-cell__text">Two hours with one speaker in one room, with nothing edited out and nothing cut short for time.</p>
-          </div>
-        </article>
+  {%- comment -%} ============ 1. Hero ============ {%- endcomment -%}
+  <section class="evt-hero" aria-labelledby="evt-h1-{{ section.id }}">
+    <div class="evt-backdrop" aria-hidden="true"><span>{{ ev_mark_2 }}{{ ev_mark_3 }}</span></div>
 
-        <article class="mtj-cell mtj-cell--b mtj-cell--text" style="--i:1">
-          <div class="mtj-cell__body">
-            <h3 class="mtj-cell__title">Your question can be answered</h3>
-            <p class="mtj-cell__text">Add it when you register. The team shortlists questions and reads them from the stage in the last half hour.</p>
-          </div>
-        </article>
+    <div class="evt-wrap evt-hero__inner">
+      <p class="evt-micro evt-hero__eyebrow">{{ ev_handle }}</p>
 
-        <article class="mtj-cell mtj-cell--c mtj-cell--text" style="--i:2">
-          <div class="mtj-cell__body">
-            <h3 class="mtj-cell__title">Entry is free</h3>
-            <p class="mtj-cell__text">Registration is about capacity, not price. There is no ticket cost and no upgrade tier.</p>
-          </div>
-        </article>
+      <h1 class="evt-hero__mark" id="evt-h1-{{ section.id }}">
+        <span class="evt-sr">{{ ev_full_name }}, {{ ev_date }}, {{ ev_venue }}, {{ ev_city }}</span>
+        <span class="evt-hero__stack evt-display" aria-hidden="true">
+          <span class="evt-hero__line">{{ ev_mark_1 }}</span>
+          <span class="evt-hero__line">{{ ev_mark_2 }}</span>
+          <span class="evt-hero__line">{{ ev_mark_3 }}<span class="evt-hero__year">{{ ev_year }}</span></span>
+        </span>
+      </h1>
 
-        <article class="mtj-cell mtj-cell--d" style="--i:3">
-          <div class="mtj-cell__media">
-            <img src="https://picsum.photos/seed/hilm-venue-entrance-evening/900/506" alt="The venue entrance in the evening" width="900" height="506" loading="lazy">
-          </div>
-          <div class="mtj-cell__body">
-            <h3 class="mtj-cell__title">Planned for a long evening</h3>
-            <p class="mtj-cell__text">Parking, seating, water and step-free access are arranged before the doors open.</p>
-          </div>
-        </article>
+      <div class="evt-hero__meta evt-micro">
+        <span>{{ ev_date }}</span>
+        <span class="evt-hero__rule" aria-hidden="true"></span>
+        <span>{{ ev_venue }} // {{ ev_city }}</span>
       </div>
     </div>
   </section>
 
-  {%- comment -%} ---------------- 3. Guest speaker ---------------- {%- endcomment -%}
-  <section class="mtj-band mtj-band--raised" aria-labelledby="mtj-speaker-{{ section.id }}">
-    <div class="mtj__wrap mtj-speaker__grid">
-      <figure class="mtj-speaker__portrait" data-reveal>
-        {%- if ev_speaker_image != blank -%}
-          <img src="{{ ev_speaker_image }}" alt="{{ ev_title }}" width="900" height="1125" loading="lazy">
-        {%- else -%}
-          <div class="mtj-speaker__placeholder">
-            <span class="mtj__mono">Portrait</span>
-            <p class="mtj-cell__text">Set ev_speaker_image at the top of this section to your uploaded photograph.</p>
-          </div>
+  {%- comment -%} ============ 2. Guests ============ {%- endcomment -%}
+  <section class="evt-speakers" aria-labelledby="evt-guests-{{ section.id }}">
+    <div class="evt-wrap">
+      <h2 class="evt-sr" id="evt-guests-{{ section.id }}">Who is speaking</h2>
+      <div class="evt-speakers__grid" data-reveal>
+        {%- for row in ev_speakers -%}
+          {%- assign f = row | split: '~' -%}
+          {%- assign full = f[0] | default: 'To be announced' -%}
+          {%- assign parts = full | split: ' ' -%}
+          {%- assign rots = '-2deg,1.5deg,-1deg,2deg' | split: ',' -%}
+          <article class="evt-guest" style="--i:{{ forloop.index0 }}">
+            <div class="evt-guest__frame">
+            <div class="evt-duo evt-guest__media">
+              {%- if f[2] != blank -%}
+                <img src="{{ f[2] }}" alt="{{ full | escape }}" width="900" height="1200" loading="lazy">
+              {%- else -%}
+                {%- capture initials -%}{%- for w in parts -%}{{ w | slice: 0 | upcase }}{%- endfor -%}{%- endcapture -%}
+                <div class="evt-guest__initials" role="img" aria-label="{{ full | escape }}">{{ initials | slice: 0, 3 }}</div>
+              {%- endif -%}
+            </div>
+            <span class="evt-sticker evt-guest__label" style="--rot:{{ rots[forloop.index0] }}">
+              <b>{{ parts[0] | upcase }}</b>{%- for w in parts offset: 1 -%}{{ w | upcase }}{%- endfor -%}
+            </span>
+            </div>
+            <span class="evt-micro evt-guest__role">{{ f[1] }}</span>
+          </article>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============ 3. Hook one ============ {%- endcomment -%}
+  <section class="evt-hook evt-hook--dark" aria-labelledby="evt-hook1-{{ section.id }}">
+    <div class="evt-wrap" data-reveal>
+      <h2 class="evt-q evt-hook__q" id="evt-hook1-{{ section.id }}">
+        {{ ev_hook1_a }}
+        <span class="evt-script evt-hook__script">{{ ev_hook1_script }}</span>
+        {{ ev_hook1_b }}
+      </h2>
+
+      <p class="evt-hook__cta" style="--i:1">
+        <a class="evt-btn evt-btn--acid" href="#evt-tickets-{{ section.id }}">{{ ev_cta }}</a>
+      </p>
+
+      <figure class="evt-video" style="--i:2">
+        <div class="evt-duo evt-video__media">
+          <img src="{{ ev_video_poster }}" alt="The hall filling before the talk" width="1280" height="720" loading="lazy">
+        </div>
+        {%- if ev_video_url != blank -%}
+          <a class="evt-video__play" href="{{ ev_video_url }}" target="_blank" rel="noopener noreferrer" aria-label="Play the film from last year">&#9654;</a>
         {%- endif -%}
       </figure>
+    </div>
+  </section>
 
+  {{ ev_marquee }}
+
+  {%- comment -%} ============ 5. Benefits ============ {%- endcomment -%}
+  <section class="evt-benefits evt-light" aria-labelledby="evt-benefits-{{ section.id }}">
+    <div class="evt-wrap">
+      <div class="evt-benefits__head" data-reveal>
+        <span class="evt-sticker" style="transform:rotate(-1.5deg);font-size:clamp(1.1rem,2.6vw,1.6rem)">WHAT YOU WALK OUT WITH</span>
+        <h2 class="evt-sr" id="evt-benefits-{{ section.id }}">What you walk out with</h2>
+      </div>
+      <ul class="evt-benefits__list" data-reveal>
+        {%- for line in ev_benefits -%}
+          <li style="--i:{{ forloop.index0 | modulo: 6 }}"><b>{{ ev_benefit_verb }}</b>{{ line }}</li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </section>
+
+  {%- comment -%} ============ 6. Hook two ============ {%- endcomment -%}
+  <section class="evt-hook evt-hook--light evt-light" aria-labelledby="evt-hook2-{{ section.id }}">
+    <div class="evt-wrap" data-reveal>
+      <h2 class="evt-q evt-hook__q" id="evt-hook2-{{ section.id }}">
+        {{ ev_hook2_a }} <span class="evt-hook__accent">{{ ev_hook2_accent }}</span>
+      </h2>
+      <p class="evt-body evt-hook__support" style="--i:1">{{ ev_hook2_support }}</p>
+      <p class="evt-hook__cta" style="--i:2">
+        <a class="evt-btn evt-btn--forest" href="#evt-tickets-{{ section.id }}">{{ ev_cta }}</a>
+      </p>
+    </div>
+  </section>
+
+  {%- comment -%} ============ 7. Tickets ============ {%- endcomment -%}
+  <section class="evt-tickets evt-light" id="evt-tickets-{{ section.id }}" aria-labelledby="evt-tickets-h-{{ section.id }}">
+    <div class="evt-backdrop evt-backdrop--acid" aria-hidden="true"><span>SEATS</span></div>
+
+    <div class="evt-wrap">
+      <div class="evt-tickets__head" data-reveal>
+        <span class="evt-sticker" style="transform:rotate(1.5deg);font-size:clamp(1.4rem,3.4vw,2.2rem)">TICKETS</span>
+        <h2 class="evt-sr" id="evt-tickets-h-{{ section.id }}">Tickets</h2>
+      </div>
+
+      <div class="evt-tickets__grid" data-reveal>
+        {%- for row in ev_tickets -%}
+          {%- assign t = row | split: '~' -%}
+          {%- assign incl = t[2] | split: ';' -%}
+          {%- assign is_feat = false -%}
+          {%- if t[4] == 'yes' -%}{%- assign is_feat = true -%}{%- endif -%}
+          <article class="evt-ticket{% if is_feat %} evt-ticket--featured{% endif %}" style="--i:{{ forloop.index0 }}">
+            <span class="evt-ticket__notch evt-ticket__notch--top" aria-hidden="true"></span>
+            <span class="evt-ticket__notch evt-ticket__notch--bottom" aria-hidden="true"></span>
+            <div class="evt-ticket__stub" aria-hidden="true"></div>
+            <div class="evt-ticket__body">
+              <h3 class="evt-ticket__tier evt-display">{{ t[0] }}</h3>
+              <span class="evt-ticket__price">{{ t[1] }}</span>
+              <ul class="evt-ticket__incl">
+                {%- for item in incl -%}
+                  <li><span aria-hidden="true">&#10003;</span><span>{{ item }}</span></li>
+                {%- endfor -%}
+              </ul>
+              <a class="evt-btn {% if is_feat %}evt-btn--forest{% else %}evt-btn--sun{% endif %}"
+                 href="{{ t[3] | default: ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {{ ev_marquee }}
+
+  {%- comment -%} ============ 9. About the event ============ {%- endcomment -%}
+  <section class="evt-about" aria-labelledby="evt-about-{{ section.id }}">
+    <div class="evt-wrap evt-about__grid">
       <div data-reveal>
-        <span class="mtj__mono mtj-speaker__eyebrow">Guest speaker</span>
-        <h2 class="mtj-speaker__name" id="mtj-speaker-{{ section.id }}" style="--i:1">{{ ev_title }}</h2>
-
-        <div class="mtj-speaker__bio" style="--i:2">
-          <p>Molana Tariq Jameel has spent decades speaking to audiences across Pakistan and abroad. His talks are known for plain language, an unhurried pace and examples drawn from ordinary daily life rather than abstractions.</p>
-          <p>This is his first full-length session with Hilm Institute, and the whole address will be delivered in one sitting.</p>
-        </div>
-
-        <ul class="mtj-topics" style="--i:3">
-          <li>
-            <span class="mtj-topics__n mtj__mono">1</span>
-            <span class="mtj-topics__t">Patience when plans fall apart</span>
-          </li>
-          <li>
-            <span class="mtj-topics__n mtj__mono">2</span>
-            <span class="mtj-topics__t">Speaking well and listening better</span>
-          </li>
-          <li>
-            <span class="mtj-topics__n mtj__mono">3</span>
-            <span class="mtj-topics__t">Carrying responsibility at home and at work</span>
-          </li>
-        </ul>
+        <span class="evt-sticker evt-sticker--acid" style="transform:rotate(-2deg);font-size:clamp(.95rem,2.2vw,1.25rem)">{{ ev_about_eyebrow | upcase }}</span>
+        <p class="evt-about__mark evt-display" id="evt-about-{{ section.id }}" style="--i:1">{{ ev_short }}<em>{{ ev_year }}</em></p>
+      </div>
+      <div class="evt-about__copy evt-body" data-reveal>
+        <p>{{ ev_about_p1 }}</p>
+        <p style="--i:1">{{ ev_about_p2 }}</p>
       </div>
     </div>
   </section>
 
-  {%- comment -%} ---------------- 4. Event activities ---------------- {%- endcomment -%}
-  <section class="mtj-band" aria-labelledby="mtj-activities-{{ section.id }}">
-    <div class="mtj__wrap">
-      <div class="mtj-rail__top mtj-band__head" style="max-width:none" data-reveal>
+  {%- comment -%} ============ 10. Gallery ============ {%- endcomment -%}
+  <section class="evt-gallery" aria-labelledby="evt-gal1-{{ section.id }}">
+    <h2 class="evt-sr" id="evt-gal1-{{ section.id }}">Photographs from the hall</h2>
+    <div class="evt-mosaic">
+      {%- for row in ev_gallery1 -%}
+        {%- assign g = row | split: '~' -%}
+        <div class="evt-duo"><img src="{{ g[0] }}" alt="{{ g[1] | escape }}" width="900" height="900" loading="lazy"></div>
+      {%- endfor -%}
+    </div>
+    <div class="evt-gallery__cta">
+      <a class="evt-btn evt-btn--sun" href="{{ ev_gallery1_url }}" target="_blank" rel="noopener noreferrer">{{ ev_gallery1_cta }}</a>
+    </div>
+  </section>
+
+  {%- comment -%} ============ 11. The organiser ============ {%- endcomment -%}
+  <section class="evt-host evt-light" aria-labelledby="evt-host-{{ section.id }}">
+    <div class="evt-wrap evt-host__grid">
+      <div data-reveal>
+        <span class="evt-script evt-host__eyebrow">{{ ev_host_eyebrow }}</span>
+        <span class="evt-sticker" style="transform:rotate(-1.5deg);font-size:clamp(1.3rem,3.2vw,2rem)">{{ ev_host_name }}</span>
+        <h2 class="evt-sr" id="evt-host-{{ section.id }}">{{ ev_host_name }}</h2>
+        <div class="evt-host__copy evt-body" style="--i:1">
+          <p>{{ ev_host_p1 }}</p>
+          <p>{{ ev_host_p2 }}</p>
+          <p>{{ ev_host_p3 }}</p>
+        </div>
+      </div>
+      <div class="evt-duo evt-duo--lime evt-host__media" data-reveal>
+        <img src="{{ ev_host_photo }}" alt="A reading group at the institute" width="1000" height="1250" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============ 12. Cause ============ {%- endcomment -%}
+  <section class="evt-cause evt-light" aria-labelledby="evt-cause-{{ section.id }}">
+    <div class="evt-backdrop evt-backdrop--ink" aria-hidden="true"><span>{{ ev_short }}{{ ev_year }}</span></div>
+    <div class="evt-wrap evt-cause__inner" data-reveal>
+      <span class="evt-sticker" style="transform:rotate(1.5deg);font-size:clamp(1.2rem,3vw,1.9rem)">{{ ev_cause_title }}</span>
+      <h2 class="evt-sr" id="evt-cause-{{ section.id }}">{{ ev_cause_title }}</h2>
+      <p class="evt-body evt-cause__intro" style="--i:1">{{ ev_cause_intro }}</p>
+      <ul class="evt-cause__list evt-body" style="--i:2">
+        {%- for row in ev_cause_items -%}
+          {%- assign c = row | split: '~' -%}
+          <li><b>{{ c[0] }}</b>{{ c[1] }}</li>
+        {%- endfor -%}
+      </ul>
+      <p class="evt-cause__close evt-display" style="--i:3">{{ ev_cause_close_1 }}<br>{{ ev_cause_close_2 }}</p>
+    </div>
+  </section>
+
+  {%- comment -%} ============ 13. Community strip ============ {%- endcomment -%}
+  <section class="evt-gallery" aria-labelledby="evt-gal2-{{ section.id }}">
+    <div class="evt-wrap">
+      <div class="evt-strip__top">
+        <h2 class="evt-h2 evt-display" id="evt-gal2-{{ section.id }}">THE SMALL<br>ROOMS</h2>
+        <div class="evt-strip__nav">
+          <button class="evt-strip__btn" type="button" data-strip-prev aria-label="Scroll photographs left">&#8592;</button>
+          <button class="evt-strip__btn" type="button" data-strip-next aria-label="Scroll photographs right">&#8594;</button>
+        </div>
+      </div>
+      <div class="evt-strip" data-strip tabindex="0" role="group" aria-label="Photographs from the reading groups">
+        {%- for row in ev_gallery2 -%}
+          {%- assign g = row | split: '~' -%}
+          <div class="evt-duo"><img src="{{ g[0] }}" alt="{{ g[1] | escape }}" width="800" height="600" loading="lazy"></div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============ Booking ============ {%- endcomment -%}
+  <section class="evt-book" aria-labelledby="evt-book-{{ section.id }}">
+    <div class="evt-wrap">
+      <div class="evt-book__panel" data-reveal>
         <div>
-          <h2 class="mtj__h2" id="mtj-activities-{{ section.id }}">What is happening on the day</h2>
-          <p class="mtj__lede">Beyond the address itself, the hall runs from mid afternoon until late evening.</p>
+          <h2 class="evt-h2 evt-display" id="evt-book-{{ section.id }}">THE HALL IS<br>FILLING UP</h2>
+          <p class="evt-body evt-book__note">General entry is free and always will be. Registration closes the moment the last block of seats goes, and the desk scans your code at Gate 2.</p>
+          <p style="margin-top:28px">
+            <a class="evt-btn evt-btn--acid" href="{{ ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
+          </p>
         </div>
-        <div class="mtj-rail__nav" style="--i:1">
-          <button class="mtj-rail__btn" type="button" data-rail-prev aria-label="Show previous activities">&#8592;</button>
-          <button class="mtj-rail__btn" type="button" data-rail-next aria-label="Show next activities">&#8594;</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="mtj__wrap">
-      <div class="mtj-rail" data-rail tabindex="0" role="group" aria-label="What is happening at the event">
-        <article class="mtj-card">
-          <div class="mtj-card__media">
-            <img src="https://picsum.photos/seed/hilm-stage-lectern/640/480" alt="The stage and lectern" width="640" height="480" loading="lazy">
-          </div>
-          <div class="mtj-card__body">
-            <h3 class="mtj-card__title">The main address</h3>
-            <p class="mtj-card__text">The full talk, delivered in one sitting without an interval.</p>
-          </div>
-        </article>
-
-        <article class="mtj-card">
-          <div class="mtj-card__media">
-            <img src="https://picsum.photos/seed/hilm-audience-hands/640/480" alt="Audience members raising their hands" width="640" height="480" loading="lazy">
-          </div>
-          <div class="mtj-card__body">
-            <h3 class="mtj-card__title">Live questions</h3>
-            <p class="mtj-card__text">Shortlisted audience questions answered from the stage.</p>
-          </div>
-        </article>
-
-        <article class="mtj-card">
-          <div class="mtj-card__media">
-            <img src="https://picsum.photos/seed/hilm-books-table/640/480" alt="A table of books" width="640" height="480" loading="lazy">
-          </div>
-          <div class="mtj-card__body">
-            <h3 class="mtj-card__title">Reading table</h3>
-            <p class="mtj-card__text">Titles from the Hilm Institute reading list, available at the hall.</p>
-          </div>
-        </article>
-
-        <article class="mtj-card">
-          <div class="mtj-card__media">
-            <img src="https://picsum.photos/seed/hilm-courtyard-tea/640/480" alt="Tea served in a courtyard" width="640" height="480" loading="lazy">
-          </div>
-          <div class="mtj-card__body">
-            <h3 class="mtj-card__title">Tea and a light meal</h3>
-            <p class="mtj-card__text">Served in the courtyard once the hall clears.</p>
-          </div>
-        </article>
-
-        <article class="mtj-card">
-          <div class="mtj-card__media">
-            <img src="https://picsum.photos/seed/hilm-venue-gate/640/480" alt="The venue gate" width="640" height="480" loading="lazy">
-          </div>
-          <div class="mtj-card__body">
-            <h3 class="mtj-card__title">Assisted entry</h3>
-            <p class="mtj-card__text">Step-free routes and reserved seating, handled at Gate 2.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  {%- comment -%} ---------------- 5. Schedule ---------------- {%- endcomment -%}
-  <section class="mtj-band mtj-band--raised" id="mtj-schedule-{{ section.id }}" aria-labelledby="mtj-schedule-h-{{ section.id }}">
-    <div class="mtj__wrap">
-      <div class="mtj-band__head" data-reveal>
-        <h2 class="mtj__h2" id="mtj-schedule-h-{{ section.id }}">Schedule</h2>
-        <p class="mtj__lede" style="--i:1">Times are local. Arrive before the doors close at 4:10 pm, since seating is filled in order of arrival.</p>
-      </div>
-
-      <div class="mtj-day" data-reveal>
-        <p class="mtj-day__label mtj__mono">Saturday 14 March</p>
-        <ul class="mtj-day__rows">
-          <li class="mtj-row">
-            <span class="mtj-row__time mtj__mono">15:30</span>
-            <div>
-              <h3 class="mtj-row__title">Doors and registration desk</h3>
-              <p class="mtj-row__text">Bring your confirmation code. Gate 2 is the step-free entrance.</p>
-            </div>
-          </li>
-          <li class="mtj-row">
-            <span class="mtj-row__time mtj__mono">16:15</span>
-            <div>
-              <h3 class="mtj-row__title">Welcome from Hilm Institute</h3>
-              <p class="mtj-row__text">A short introduction to the evening and to the speaker.</p>
-            </div>
-          </li>
-          <li class="mtj-row">
-            <span class="mtj-row__time mtj__mono">16:30</span>
-            <div>
-              <h3 class="mtj-row__title">The main address</h3>
-              <p class="mtj-row__text">{{ ev_title }}, delivered in one sitting.</p>
-            </div>
-          </li>
-          <li class="mtj-row">
-            <span class="mtj-row__time mtj__mono">18:20</span>
-            <div>
-              <h3 class="mtj-row__title">Live questions</h3>
-              <p class="mtj-row__text">Shortlisted questions submitted during registration.</p>
-            </div>
-          </li>
-          <li class="mtj-row">
-            <span class="mtj-row__time mtj__mono">19:00</span>
-            <div>
-              <h3 class="mtj-row__title">Tea and close</h3>
-              <p class="mtj-row__text">Refreshments in the courtyard. The hall clears by 20:00.</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  {%- comment -%} ---------------- 6. Book your seat ---------------- {%- endcomment -%}
-  <section class="mtj-band" aria-labelledby="mtj-book-{{ section.id }}">
-    <div class="mtj__wrap">
-      <div class="mtj-book__panel" data-reveal>
-        <div>
-          <h2 class="mtj__h2" id="mtj-book-{{ section.id }}">Book your seat</h2>
-          <p class="mtj__lede">Entry is free. Registration exists because the hall holds a fixed number of people, and it closes the moment the last block is taken.</p>
-          <div class="mtj-hero__cta">
-            <a class="mtj__btn mtj__btn--primary" href="{{ ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
-          </div>
-          <p class="mtj-book__note">The button opens our registration partner in a new tab. You will get a confirmation code by SMS, which the desk scans at Gate 2.</p>
-        </div>
-
         <div style="--i:1">
-          <div class="mtj-seats__grid" aria-hidden="true">
+          <div class="evt-seats" aria-hidden="true">
             {%- for i in (1..ev_seat_total) -%}
-              <span class="mtj-seat{% if forloop.index <= ev_seats_taken %} mtj-seat--taken{% endif %}" style="--i:{{ forloop.index0 }}"></span>
+              <span class="evt-seat{% if forloop.index <= ev_seats_taken %} evt-seat--taken{% endif %}" style="--i:{{ forloop.index0 }}"></span>
             {%- endfor -%}
           </div>
-          <div class="mtj-seats__legend mtj__mono">
-            <span class="mtj-seats__key"><span class="mtj-seats__swatch mtj-seats__swatch--taken"></span>{{ ev_seat_percent }}% claimed</span>
-            <span class="mtj-seats__key"><span class="mtj-seats__swatch"></span>Still open</span>
-          </div>
+          <p class="evt-seats__legend evt-micro">
+            <span class="evt-seats__key"><span class="evt-seats__sw evt-seats__sw--taken"></span>{{ ev_seat_percent }}% claimed</span>
+            <span class="evt-seats__key"><span class="evt-seats__sw"></span>Still open</span>
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  {%- comment -%} ---------------- Sticky booking bar ---------------- {%- endcomment -%}
-  <div class="mtj-sticky" data-sticky-bar>
-    <div class="mtj-sticky__what">
-      <p class="mtj-sticky__title">{{ ev_title }}</p>
-      <p class="mtj__mono">{{ ev_date }}</p>
+  {{ ev_marquee }}
+
+  {%- comment -%} ============ 14. Footer ============ {%- endcomment -%}
+  <footer class="evt-footer">
+    <div class="evt-wrap evt-footer__grid">
+      <p class="evt-footer__mark evt-display">{{ ev_short }}<em>{{ ev_year }}</em></p>
+      <nav class="evt-footer__socials evt-micro" aria-label="Social links">
+        {%- for row in ev_socials -%}
+          {%- assign s = row | split: '~' -%}
+          <a href="{{ s[1] }}" target="_blank" rel="noopener noreferrer">{{ s[0] }}</a>
+        {%- endfor -%}
+      </nav>
+      <p class="evt-footer__rights">&copy; {{ 'now' | date: '%Y' }} {{ ev_org }}. {{ ev_rights }}</p>
     </div>
-    <a class="mtj__btn mtj__btn--primary" href="{{ ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
+  </footer>
+
+  {%- comment -%} ============ 15. Sticky mobile CTA ============ {%- endcomment -%}
+  <div class="evt-sticky" data-sticky>
+    <span class="evt-sticky__when">{{ ev_date }}</span>
+    <a class="evt-btn" href="{{ ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
   </div>
 </div>
 
 <script>
   (function () {
-    var root = document.getElementById('mtj-{{ section.id }}');
+    var root = document.getElementById('evt-{{ section.id }}');
     if (!root) return;
 
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -846,27 +971,28 @@
           entry.target.classList.add('is-in');
           io.unobserve(entry.target);
         });
-      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
       Array.prototype.forEach.call(targets, function (n) { io.observe(n); });
     }
 
-    /* Sticky booking bar appears once the hero has scrolled past. */
-    var hero = root.querySelector('.mtj-hero');
-    var bar = root.querySelector('[data-sticky-bar]');
+    /* Sticky bar appears once the hero has scrolled out. */
+    var hero = root.querySelector('.evt-hero');
+    var bar = root.querySelector('[data-sticky]');
     if (hero && bar && 'IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
         bar.classList.toggle('is-visible', !entries[0].isIntersecting);
       }, { threshold: 0 }).observe(hero);
     }
 
-    /* Activities rail controls. */
-    var rail = root.querySelector('[data-rail]');
-    if (rail) {
-      var step = function () { return Math.max(rail.clientWidth * 0.8, 280); };
-      var prev = root.querySelector('[data-rail-prev]');
-      var next = root.querySelector('[data-rail-next]');
-      if (prev) prev.addEventListener('click', function () { rail.scrollBy({ left: -step(), behavior: reduce.matches ? 'auto' : 'smooth' }); });
-      if (next) next.addEventListener('click', function () { rail.scrollBy({ left: step(), behavior: reduce.matches ? 'auto' : 'smooth' }); });
+    /* Community strip controls. */
+    var strip = root.querySelector('[data-strip]');
+    if (strip) {
+      var step = function () { return Math.max(strip.clientWidth * 0.85, 260); };
+      var behavior = reduce.matches ? 'auto' : 'smooth';
+      var prev = root.querySelector('[data-strip-prev]');
+      var next = root.querySelector('[data-strip-next]');
+      if (prev) prev.addEventListener('click', function () { strip.scrollBy({ left: -step(), behavior: behavior }); });
+      if (next) next.addEventListener('click', function () { strip.scrollBy({ left: step(), behavior: behavior }); });
     }
   })();
 </script>
