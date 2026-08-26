@@ -1,7 +1,7 @@
 {
   "sections": {
     "main": {
-      "type": "mtj-event-landing",
+      "type": "main-page",
       "blocks": {
         "reason-1": {
           "type": "reason",
@@ -159,6 +159,7 @@
         "session-5"
       ],
       "settings": {
+        "layout": "event",
         "booking_url": "https://your-booking-site.com/mtj-lahore"
       }
     }
