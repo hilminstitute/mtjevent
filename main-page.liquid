@@ -65,7 +65,7 @@
   assign ev_hook1_a       = 'You already have the energy.'
   assign ev_hook1_script  = 'What you need is'
   assign ev_hook1_b       = 'somewhere to point it.'
-  assign ev_video_poster  = 'https://picsum.photos/seed/yes26-hall-wide/1280/720'
+  assign ev_video_poster  = 'hilm-aikw-letters.jpg'
   assign ev_video_url     = ''
 
   # ---------- Benefits :: shared verb, then six endings ----------------
@@ -85,8 +85,10 @@
   assign ev_about_p1 = 'One full day built around a single question: what are you going to do with the next twelve months? Four tracks run from morning to evening, on work, service, learning and character, and every session ends with something you write down rather than something you applaud.'
   assign ev_about_p2 = 'Hilm Institute runs it because young people in Lahore are not short of ambition. They are short of a room where somebody older tells them the truth, and short of a plan small enough to start on Monday.'
 
-  # ---------- Gallery one :: url~alt ------------------------------------
-  assign ev_gallery1 = 'https://picsum.photos/seed/yes-crowd-1/900/1200~A full hall at the summit|https://picsum.photos/seed/yes-stage-2/1200/800~The main stage from the back rows|https://picsum.photos/seed/yes-hands-3/800/800~Delegates with hands raised during questions|https://picsum.photos/seed/yes-doors-4/1200/800~Registration desk at the venue|https://picsum.photos/seed/yes-books-5/800/1000~Workbooks laid out before the doors open|https://picsum.photos/seed/yes-tea-6/1200/800~Lunch served in the courtyard|https://picsum.photos/seed/yes-front-7/800/1000~A breakout track in session|https://picsum.photos/seed/yes-lights-8/1200/800~House lights over the main hall|https://picsum.photos/seed/yes-exit-9/900/900~Delegates talking after the closing session' | split: '|'
+  # ---------- Gallery one :: filename~alt --------------------------------
+  # Nine photographs from the hall. The first, fifth and eighth run double
+  # width, so put your most horizontal shots in those three positions.
+  assign ev_gallery1 = 'hilm-group-photo.jpg~Everyone on stage for the closing group photograph|hilm-hall-wide.jpg~The auditorium seen from the back, every row taken|hilm-certificate-handover.jpg~A certificate handed over on stage|hilm-audience-front.jpg~The front rows during the ceremony|hilm-graduate.jpg~A graduate receiving his certificate|hilm-speaker-seated.jpg~A speaker addressing the hall from the stage|hilm-guest-front-row.jpg~A guest seated in the reserved front row|hilm-speaker-robe.jpg~A speaker at the podium|hilm-speaker-podium.jpg~An address from the podium' | split: '|'
   assign ev_gallery1_cta  = 'Last year in photos'
   assign ev_gallery1_url  = 'https://your-booking-site.com/gallery'
 
@@ -96,7 +98,7 @@
   assign ev_host_p1 = 'Hilm means forbearance, the steadiness that lets a person think before reacting. <strong>That is the whole brief.</strong> The institute exists to build character first and capability second, on the view that the second is wasted without the first.'
   assign ev_host_p2 = 'We have run reading groups, mentoring circles and public talks in Lahore since 2019. <strong>Everything we run is free or close to it</strong>, and nothing is put behind a paywall afterwards.'
   assign ev_host_p3 = 'The summit is the one day a year all of it comes into a single hall. <strong>The rest of the year is small rooms</strong>, twenty people at a time, working through one book or one skill without a stage or a microphone.'
-  assign ev_host_photo    = 'https://picsum.photos/seed/yes-institute-room/1000/1250'
+  assign ev_host_photo    = 'hilm-courtyard-prayer.jpg'
 
   # ---------- Cause -----------------------------------------------------
   assign ev_cause_title = 'WHERE THE TICKET GOES'
@@ -105,13 +107,18 @@
   assign ev_cause_close_1 = 'AMBITION IS NOT'
   assign ev_cause_close_2 = 'THE MISSING PART.'
 
-  # ---------- Gallery two :: url~alt ------------------------------------
-  assign ev_gallery2 = 'https://picsum.photos/seed/yes-room-a/800/600~A mentoring circle in session|https://picsum.photos/seed/yes-room-b/800/600~Books on a table|https://picsum.photos/seed/yes-room-c/800/600~Two people talking after a session|https://picsum.photos/seed/yes-room-d/800/600~A small room set for twenty|https://picsum.photos/seed/yes-room-e/800/600~Notes taken during a session|https://picsum.photos/seed/yes-room-f/800/600~The institute doorway' | split: '|'
+  # ---------- Gallery two :: filename~alt --------------------------------
+  assign ev_gallery2 = 'hilm-study-desk.jpg~A student reading at a low desk|hilm-students.jpg~Students seated together during a session|hilm-attendee.jpg~An attendee watching the stage|hilm-dua.jpg~Closing supplication at the podium' | split: '|'
 
   # ---------- Footer :: label~url ---------------------------------------
   assign ev_org        = 'HILM INSTITUTE'
   assign ev_rights     = 'All rights reserved.'
   assign ev_socials    = 'Instagram~https://instagram.com/|YouTube~https://youtube.com/|WhatsApp~https://wa.me/' | split: '|'
+
+  # ---------- Imagery ----------------------------------------------------
+  # Upload every filename above to Shopify admin, Content then Files.
+  # Set ev_duotone to false to show the two galleries in full colour.
+  assign ev_duotone = true
 
   # ---------- Seat map ---------------------------------------------------
   assign ev_seat_total   = 189
@@ -270,12 +277,12 @@
 
   /* ================= Duotone ================= */
   .evt-duo { position: relative; isolation: isolate; overflow: hidden; background: var(--ink); }
-  .evt-duo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.15); }
-  .evt-duo::before,
-  .evt-duo::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
-  .evt-duo::before { background: var(--ink); mix-blend-mode: lighten; }
-  .evt-duo::after  { background: var(--acid); mix-blend-mode: darken; }
-  .evt-duo--lime::after { background: var(--lime); }
+  .evt-duo img { width: 100%; height: 100%; object-fit: cover; }
+  .evt-duo--tint img { filter: grayscale(1) contrast(1.15); }
+  .evt-duo--tint::before,
+  .evt-duo--tint::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+  .evt-duo--tint::before { background: var(--ink); mix-blend-mode: lighten; }
+  .evt-duo--tint::after  { background: var(--acid); mix-blend-mode: darken; }
 
   /* ================= Reveal ================= */
   .evt [data-reveal] > * {
@@ -502,16 +509,12 @@
   .evt-gallery { background: var(--ink); padding-block: clamp(48px, 8vh, 96px) clamp(48px, 8vh, 88px); }
   .evt-mosaic {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-auto-rows: 12vw;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-flow: dense;
     gap: 4px;
   }
-  .evt-mosaic .evt-duo { grid-column: span 2; grid-row: span 1; }
-  .evt-mosaic .evt-duo:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-  .evt-mosaic .evt-duo:nth-child(2) { grid-column: span 4; grid-row: span 2; }
-  .evt-mosaic .evt-duo:nth-child(5) { grid-column: span 2; grid-row: span 2; }
-  .evt-mosaic .evt-duo:nth-child(8) { grid-column: span 4; }
+  .evt-mosaic .evt-duo { aspect-ratio: 3 / 4; }
+  .evt-mosaic .evt-duo--wide { grid-column: span 2; aspect-ratio: 3 / 2; }
   .evt-gallery__cta { text-align: center; margin-top: clamp(32px, 5vh, 56px); }
 
   .evt-strip__top { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
@@ -530,7 +533,7 @@
     padding-inline: var(--pad-x); margin-inline: calc(var(--pad-x) * -1);
     padding-bottom: 12px;
   }
-  .evt-strip .evt-duo { scroll-snap-align: start; aspect-ratio: 4 / 3; }
+  .evt-strip .evt-duo { scroll-snap-align: start; aspect-ratio: 3 / 4; }
 
   /* ================= 11. Organiser ================= */
   .evt-host { background: var(--paper); color: var(--on-light); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; }
@@ -625,6 +628,7 @@
     .evt-guest:nth-child(2) { transform: translateY(16px); }
     .evt-guest:nth-child(3) { transform: translateY(-16px); }
     .evt-guest:nth-child(4) { transform: translateY(10px); }
+    .evt-mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .evt-tickets__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 40px; }
     .evt-ticket { transform: rotate(1deg); margin-top: 30px; }
     .evt-ticket--featured { order: 0; transform: scale(1.04) rotate(-1.5deg); margin-top: 0; z-index: 2; }
@@ -632,8 +636,7 @@
     .evt-host__grid { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); }
     .evt-host__media { margin-right: calc(var(--pad-x) * -1 - ((100vw - var(--maxw)) / 2)); aspect-ratio: 5 / 4; }
     .evt-book__panel { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); }
-    .evt-strip { grid-auto-columns: 30%; }
-    .evt-mosaic { grid-auto-rows: 9vw; }
+    .evt-strip { grid-auto-columns: 32%; }
   }
 
   @media (max-width: 400px) {
@@ -733,7 +736,7 @@
           {%- assign rots = '-2deg,1.5deg,-1deg,2deg' | split: ',' -%}
           <article class="evt-guest" style="--i:{{ forloop.index0 }}">
             <div class="evt-guest__frame">
-            <div class="evt-duo evt-guest__media">
+            <div class="evt-duo{% if ev_duotone %} evt-duo--tint{% endif %} evt-guest__media">
               {%- if f[2] != blank -%}
                 <img src="{{ f[2] }}" alt="{{ full | escape }}" width="900" height="1200" loading="lazy">
               {%- else -%}
@@ -767,7 +770,10 @@
 
       <figure class="evt-video" style="--i:2">
         <div class="evt-duo evt-video__media">
-          <img src="{{ ev_video_poster }}" alt="The hall filling before the talk" width="1280" height="720" loading="lazy">
+          {%- assign poster_src = ev_video_poster | file_img_url: '1400x' -%}
+          {%- if poster_src != blank -%}
+            <img src="{{ poster_src }}" alt="The stage before the doors open" width="1400" height="788" loading="lazy">
+          {%- endif -%}
         </div>
         {%- if ev_video_url != blank -%}
           <a class="evt-video__play" href="{{ ev_video_url }}" target="_blank" rel="noopener noreferrer" aria-label="Play the film from last year">&#9654;</a>
@@ -870,7 +876,18 @@
     <div class="evt-mosaic">
       {%- for row in ev_gallery1 -%}
         {%- assign g = row | split: '~' -%}
-        <div class="evt-duo"><img src="{{ g[0] }}" alt="{{ g[1] | escape }}" width="900" height="900" loading="lazy"></div>
+        {%- assign src = g[0] | file_img_url: '1200x' -%}
+        {%- assign wide = false -%}
+        {%- if forloop.index == 1 or forloop.index == 5 or forloop.index == 8 -%}
+          {%- assign wide = true -%}
+        {%- endif -%}
+        <div class="evt-duo{% if ev_duotone %} evt-duo--tint{% endif %}{% if wide %} evt-duo--wide{% endif %}">
+          {%- if src != blank -%}
+            <img src="{{ src }}" alt="{{ g[1] | escape }}"
+                 width="{% if wide %}1200{% else %}900{% endif %}"
+                 height="{% if wide %}800{% else %}1200{% endif %}" loading="lazy">
+          {%- endif -%}
+        </div>
       {%- endfor -%}
     </div>
     <div class="evt-gallery__cta">
@@ -891,8 +908,11 @@
           <p>{{ ev_host_p3 }}</p>
         </div>
       </div>
-      <div class="evt-duo evt-duo--lime evt-host__media" data-reveal>
-        <img src="{{ ev_host_photo }}" alt="A reading group at the institute" width="1000" height="1250" loading="lazy">
+      <div class="evt-duo evt-host__media" data-reveal>
+        {%- assign host_src = ev_host_photo | file_img_url: '1200x' -%}
+        {%- if host_src != blank -%}
+          <img src="{{ host_src }}" alt="Congregational prayer in the courtyard at the institute" width="1200" height="1500" loading="lazy">
+        {%- endif -%}
       </div>
     </div>
   </section>
@@ -927,7 +947,12 @@
       <div class="evt-strip" data-strip tabindex="0" role="group" aria-label="Photographs from the reading groups">
         {%- for row in ev_gallery2 -%}
           {%- assign g = row | split: '~' -%}
-          <div class="evt-duo"><img src="{{ g[0] }}" alt="{{ g[1] | escape }}" width="800" height="600" loading="lazy"></div>
+          {%- assign src = g[0] | file_img_url: '800x' -%}
+          <div class="evt-duo{% if ev_duotone %} evt-duo--tint{% endif %}">
+            {%- if src != blank -%}
+              <img src="{{ src }}" alt="{{ g[1] | escape }}" width="800" height="1067" loading="lazy">
+            {%- endif -%}
+          </div>
         {%- endfor -%}
       </div>
     </div>
