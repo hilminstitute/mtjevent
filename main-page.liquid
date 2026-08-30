@@ -51,6 +51,7 @@
   assign ev_short     = 'Y.E.S.'
   assign ev_full_name = 'Youth Empowerment Summit 26'
   assign ev_date      = '14 NOVEMBER 2026'
+  assign ev_time      = '6:30 PM'
   assign ev_venue     = 'EXPO CENTRE'
   assign ev_city      = 'LAHORE'
 
@@ -58,8 +59,9 @@
   assign ev_cta         = 'Book your seat'
 
   # ---------- Speakers :: name~role~photo ------------------------------
-  # TODO_CONTENT: replace the three "To be announced" rows as speakers confirm.
-  assign ev_speakers = 'Molana Tariq Jameel~Keynote~https://cdn.shopify.com/s/files/1/0754/9013/2214/files/Gemini_Generated_Image_tp1bfhtp1bfhtp1b.jpg?v=1788079912|To be announced~Work and craft~https://cdn.shopify.com/s/files/1/0754/9013/2214/files/Gemini_Generated_Image_qh4f2iqh4f2iqh4f.jpg?v=1788079911|To be announced~Service and community~https://cdn.shopify.com/s/files/1/0754/9013/2214/files/Gemini_Generated_Image_q3se70q3se70q3se.jpg?v=1788079910|To be announced~Closing session~https://cdn.shopify.com/s/files/1/0754/9013/2214/files/Gemini_Generated_Image_m9z0drm9z0drm9z0.jpg?v=1788079908' | split: '|'
+  # TODO_CONTENT: fill in each name as the speaker is confirmed, and paste a
+  # portrait URL into the third field to swap the initials tile for a photo.
+  assign ev_speakers = 'To be announced~Keynote~|To be announced~Work and craft~|To be announced~Service and community~' | split: '|'
 
   # ---------- Hook one -------------------------------------------------
   assign ev_hook1_a       = 'You already have the energy.'
@@ -326,26 +328,51 @@
     min-height: 100svh;
     display: flex; flex-direction: column;
     justify-content: center;
-    padding-block: clamp(28px, 6vh, 64px) clamp(28px, 6vh, 56px);
+    padding-block: clamp(20px, 4vh, 44px) clamp(20px, 4vh, 40px);
   }
-  .evt-hero__eyebrow { text-align: center; color: var(--acid); margin-bottom: clamp(28px, 6vh, 60px); }
-  .evt-hero__inner { position: relative; z-index: 1; text-align: center; }
+  .evt-hero__eyebrow { text-align: center; color: var(--acid); margin-bottom: clamp(12px, 2vh, 24px); }
+  .evt-hero__inner { position: relative; z-index: 1; margin-block: auto; text-align: center; max-width: none; --pad-x: clamp(10px, 2vw, 28px); }
   .evt-hero__mark { margin: 0; }
+  /* Sized to the longest line, EMPOWERMENT, so the mark runs the full width of
+     a phone, and capped by viewport height on wide screens where three lines at
+     full width would push the date below the fold. */
   .evt-hero__stack {
     position: relative;
     display: inline-block;
     text-align: left;
-    font-size: clamp(2rem, 10vw, 8rem);
+    font-size: max(2.6rem, min(27vw, 26vh));
   }
   .evt-hero__line { display: block; color: var(--on-dark); }
   .evt-hero__year { color: var(--acid); display: inline-block; font-size: 1.12em; margin-left: .04em; vertical-align: baseline; }
 
-  .evt-hero__meta {
-    margin-top: clamp(22px, 5vh, 44px);
-    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  /* Date, time and place as one solid block, the loudest object after the mark. */
+  .evt-hero__facts {
+    margin-top: clamp(20px, 3vh, 34px);
+    display: inline-flex;
+    flex-direction: column;
+    background: var(--acid);
+    color: var(--ink);
+    box-shadow: 10px 10px 0 var(--moss);
+    text-align: center;
   }
-  .evt-hero__meta span { color: var(--on-dark); }
-  .evt-hero__rule { width: min(220px, 50%); height: 2px; background: var(--moss); }
+  .evt-fact {
+    font-family: "Anton", "Arial Narrow", system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    line-height: 1;
+    font-size: clamp(1.5rem, 4.2vw, 2.3rem);
+    padding: 15px clamp(18px, 4vw, 34px);
+    border-bottom: 3px solid var(--ink);
+  }
+  .evt-fact:last-child { border-bottom: 0; }
+
+  .evt-marquee--hero {
+    padding-top: clamp(20px, 3.5vh, 38px);
+    border-block: 0;
+    border-top: 2px solid var(--moss);
+    background: none;
+  }
+  .evt-marquee--hero .evt-marquee__item { font-size: clamp(1.05rem, 2.5vw, 1.8rem); }
 
   /* ================= 2. Speakers ================= */
   .evt-speakers { background: var(--ink); padding-block: clamp(56px, 9vh, 112px); }
@@ -613,14 +640,16 @@
   .evt-sticky__when { font-weight: 700; font-size: 1.2rem; letter-spacing: .04em; text-transform: uppercase; }
   .evt-sticky .evt-btn { padding: 12px 22px; background: var(--ink); color: var(--acid); }
   .evt-sticky .evt-btn:hover { background: var(--forest); box-shadow: none; transform: none; }
+  @media (max-width: 520px) { .evt-sticky__time { display: none; } }
   @media (min-width: 1024px) { .evt-sticky { display: none; } }
 
   /* ================= Responsive ================= */
   @media (min-width: 640px) {
     .evt-video { max-width: 720px; }
     .evt-video__media { aspect-ratio: 1 / 1; }
-    .evt-hero__meta { flex-direction: row; gap: 22px; }
-    .evt-hero__rule { width: 64px; }
+    .evt-hero__facts { flex-direction: row; align-items: stretch; }
+    .evt-fact { border-bottom: 0; border-right: 3px solid var(--ink); }
+    .evt-fact:last-child { border-right: 0; }
     .evt-speakers__grid { grid-auto-columns: 44%; }
     .evt-strip { grid-auto-columns: 44%; }
     .evt-footer__grid { grid-template-columns: auto 1fr auto; text-align: left; }
@@ -631,9 +660,11 @@
   @media (min-width: 1024px) {
     .evt-speakers__grid {
       grid-auto-flow: row;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-width: 940px; margin-inline: auto;
+      gap: 28px;
       overflow: visible;
-      padding-inline: 0; margin-inline: 0;
+      padding-inline: 0;
     }
     .evt-guest:nth-child(2) { transform: translateY(16px); }
     .evt-guest:nth-child(3) { transform: translateY(-16px); }
@@ -702,7 +733,21 @@
       {%- for t in (1..2) -%}
         <div class="evt-marquee__track">
           {%- for i in (1..6) -%}
-            <span class="evt-marquee__item">{{ ev_date }} /// {{ ev_city }} ///</span>
+            <span class="evt-marquee__item">{{ ev_date }} /// {{ ev_time }} /// {{ ev_city }} ///</span>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endcapture -%}
+
+{%- capture ev_marquee_hero -%}
+  <div class="evt-marquee evt-marquee--hero" aria-hidden="true">
+    <div class="evt-marquee__row evt-marquee__row--a">
+      {%- for t in (1..2) -%}
+        <div class="evt-marquee__track">
+          {%- for i in (1..4) -%}
+            <span class="evt-marquee__item">{{ ev_full_name | upcase }} /// {{ ev_date }} /// {{ ev_time }} /// {{ ev_venue }} // {{ ev_city }} ///</span>
           {%- endfor -%}
         </div>
       {%- endfor -%}
@@ -721,7 +766,7 @@
       <p class="evt-micro evt-hero__eyebrow">{{ ev_handle }}</p>
 
       <h1 class="evt-hero__mark" id="evt-h1-{{ section.id }}">
-        <span class="evt-sr">{{ ev_full_name }}, {{ ev_date }}, {{ ev_venue }}, {{ ev_city }}</span>
+        <span class="evt-sr">{{ ev_full_name }}, {{ ev_date }}, {{ ev_time }}, {{ ev_venue }}, {{ ev_city }}</span>
         <span class="evt-hero__stack evt-display" aria-hidden="true">
           <span class="evt-hero__line">{{ ev_mark_1 }}</span>
           <span class="evt-hero__line">{{ ev_mark_2 }}</span>
@@ -729,12 +774,14 @@
         </span>
       </h1>
 
-      <div class="evt-hero__meta evt-micro">
-        <span>{{ ev_date }}</span>
-        <span class="evt-hero__rule" aria-hidden="true"></span>
-        <span>{{ ev_venue }} // {{ ev_city }}</span>
+      <div class="evt-hero__facts">
+        <span class="evt-fact">{{ ev_date }}</span>
+        <span class="evt-fact">{{ ev_time }}</span>
+        <span class="evt-fact">{{ ev_venue }} // {{ ev_city }}</span>
       </div>
     </div>
+
+    {{ ev_marquee_hero }}
   </section>
 
   {%- comment -%} ============ 2. Guests ============ {%- endcomment -%}
@@ -752,6 +799,9 @@
             <div class="evt-duo evt-guest__media">
               {%- if f[2] != blank -%}
                 <img src="{{ f[2] }}&width=800" alt="{{ full | escape }}" width="900" height="1200" loading="lazy">
+              {%- elsif full == 'To be announced' -%}
+                {%- comment -%} No name yet, so the tile carries the slot number rather than repeating the sticker. {%- endcomment -%}
+                <div class="evt-guest__initials" role="img" aria-label="Speaker {{ forloop.index }}, to be announced">0{{ forloop.index }}</div>
               {%- else -%}
                 {%- capture initials -%}{%- for w in parts -%}{{ w | slice: 0 | upcase }}{%- endfor -%}{%- endcapture -%}
                 <div class="evt-guest__initials" role="img" aria-label="{{ full | escape }}">{{ initials | slice: 0, 3 }}</div>
@@ -1016,7 +1066,7 @@
 
   {%- comment -%} ============ 15. Sticky mobile CTA ============ {%- endcomment -%}
   <div class="evt-sticky" data-sticky>
-    <span class="evt-sticky__when">{{ ev_date }}</span>
+    <span class="evt-sticky__when">{{ ev_date }}<span class="evt-sticky__time"> // {{ ev_time }}</span></span>
     <a class="evt-btn" href="{{ ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
   </div>
 </div>
