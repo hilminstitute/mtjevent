@@ -65,7 +65,7 @@
   assign ev_hook1_a       = 'You already have the energy.'
   assign ev_hook1_script  = 'What you need is'
   assign ev_hook1_b       = 'somewhere to point it.'
-  assign ev_video_poster  = 'hilm-aikw-letters.jpg'
+  assign ev_video_poster  = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DJI_20260823010913_0042_D_3_JPG.jpg?v=1788016491'
   assign ev_video_url     = ''
 
   # ---------- Benefits :: shared verb, then six endings ----------------
@@ -88,7 +88,7 @@
   # ---------- Gallery one :: filename~alt --------------------------------
   # Nine photographs from the hall. The first, fifth and eighth run double
   # width, so put your most horizontal shots in those three positions.
-  assign ev_gallery1 = 'hilm-group-photo.jpg~Everyone on stage for the closing group photograph|hilm-hall-wide.jpg~The auditorium seen from the back, every row taken|hilm-certificate-handover.jpg~A certificate handed over on stage|hilm-audience-front.jpg~The front rows during the ceremony|hilm-graduate.jpg~A graduate receiving his certificate|hilm-speaker-seated.jpg~A speaker addressing the hall from the stage|hilm-guest-front-row.jpg~A guest seated in the reserved front row|hilm-speaker-robe.jpg~A speaker at the podium|hilm-speaker-podium.jpg~An address from the podium' | split: '|'
+  assign ev_gallery1 = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC03902_JPG.jpg?v=1788016552~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8834_2_JPG.jpg?v=1788016515~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8818_2_JPG.jpg?v=1788016514~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8802_2_JPG.jpg?v=1788016514~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8697_2_JPG.jpg?v=1788016511~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8816_2_JPG.jpg?v=1788016505~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8900_2_JPG.jpg?v=1788016503~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8767_2_JPG.jpg?v=1788016493~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC03911_2_JPG.jpg?v=1788016491~A moment from the graduation ceremony' | split: '|'
   assign ev_gallery1_cta  = 'Last year in photos'
   assign ev_gallery1_url  = 'https://your-booking-site.com/gallery'
 
@@ -98,7 +98,7 @@
   assign ev_host_p1 = 'Hilm means forbearance, the steadiness that lets a person think before reacting. <strong>That is the whole brief.</strong> The institute exists to build character first and capability second, on the view that the second is wasted without the first.'
   assign ev_host_p2 = 'We have run reading groups, mentoring circles and public talks in Lahore since 2019. <strong>Everything we run is free or close to it</strong>, and nothing is put behind a paywall afterwards.'
   assign ev_host_p3 = 'The summit is the one day a year all of it comes into a single hall. <strong>The rest of the year is small rooms</strong>, twenty people at a time, working through one book or one skill without a stage or a microphone.'
-  assign ev_host_photo    = 'hilm-courtyard-prayer.jpg'
+  assign ev_host_photo    = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC9036_2_JPG.jpg?v=1788016452'
 
   # ---------- Cause -----------------------------------------------------
   assign ev_cause_title = 'WHERE THE TICKET GOES'
@@ -108,7 +108,7 @@
   assign ev_cause_close_2 = 'THE MISSING PART.'
 
   # ---------- Gallery two :: filename~alt --------------------------------
-  assign ev_gallery2 = 'hilm-study-desk.jpg~A student reading at a low desk|hilm-students.jpg~Students seated together during a session|hilm-attendee.jpg~An attendee watching the stage|hilm-dua.jpg~Closing supplication at the podium' | split: '|'
+  assign ev_gallery2 = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC03913_2_JPG.jpg?v=1788016470~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8959_2_JPG.jpg?v=1788016461~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC03909_2_JPG.jpg?v=1788016460~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8856_2_JPG.jpg?v=1788016454~A moment from the graduation ceremony' | split: '|'
 
   # ---------- Footer :: label~url ---------------------------------------
   assign ev_org        = 'HILM INSTITUTE'
@@ -116,7 +116,8 @@
   assign ev_socials    = 'Instagram~https://instagram.com/|YouTube~https://youtube.com/|WhatsApp~https://wa.me/' | split: '|'
 
   # ---------- Imagery ----------------------------------------------------
-  # Upload every filename above to Shopify admin, Content then Files.
+  # Every image is a full Shopify CDN URL. To swap one, replace the URL in
+  # place and update the description after the "~" so it matches the photo.
   # Set ev_duotone to false to show the two galleries in full colour.
   assign ev_duotone = true
 
@@ -770,7 +771,7 @@
 
       <figure class="evt-video" style="--i:2">
         <div class="evt-duo evt-video__media">
-          {%- assign poster_src = ev_video_poster | file_img_url: '1400x' -%}
+          {%- assign poster_src = ev_video_poster | append: '&width=1400' -%}
           {%- if poster_src != blank -%}
             <img src="{{ poster_src }}" alt="The stage before the doors open" width="1400" height="788" loading="lazy">
           {%- endif -%}
@@ -876,7 +877,7 @@
     <div class="evt-mosaic">
       {%- for row in ev_gallery1 -%}
         {%- assign g = row | split: '~' -%}
-        {%- assign src = g[0] | file_img_url: '1200x' -%}
+        {%- assign src = g[0] | append: '&width=1200' -%}
         {%- assign wide = false -%}
         {%- if forloop.index == 1 or forloop.index == 5 or forloop.index == 8 -%}
           {%- assign wide = true -%}
@@ -909,7 +910,7 @@
         </div>
       </div>
       <div class="evt-duo evt-host__media" data-reveal>
-        {%- assign host_src = ev_host_photo | file_img_url: '1200x' -%}
+        {%- assign host_src = ev_host_photo | append: '&width=1200' -%}
         {%- if host_src != blank -%}
           <img src="{{ host_src }}" alt="Congregational prayer in the courtyard at the institute" width="1200" height="1500" loading="lazy">
         {%- endif -%}
@@ -947,7 +948,7 @@
       <div class="evt-strip" data-strip tabindex="0" role="group" aria-label="Photographs from the reading groups">
         {%- for row in ev_gallery2 -%}
           {%- assign g = row | split: '~' -%}
-          {%- assign src = g[0] | file_img_url: '800x' -%}
+          {%- assign src = g[0] | append: '&width=800' -%}
           <div class="evt-duo{% if ev_duotone %} evt-duo--tint{% endif %}">
             {%- if src != blank -%}
               <img src="{{ src }}" alt="{{ g[1] | escape }}" width="800" height="1067" loading="lazy">
