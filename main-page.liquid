@@ -59,7 +59,7 @@
 
   # ---------- Speakers :: name~role~photo ------------------------------
   # TODO_CONTENT: replace the three "To be announced" rows as speakers confirm.
-  assign ev_speakers = 'Molana Tariq Jameel~Keynote~|To be announced~Work and craft~|To be announced~Service and community~|To be announced~Closing session~' | split: '|'
+  assign ev_speakers = 'Molana Tariq Jameel~Keynote~https://cdn.shopify.com/s/files/1/0754/9013/2214/files/Gemini_Generated_Image_tp1bfhtp1bfhtp1b.jpg?v=1788079912|To be announced~Work and craft~https://cdn.shopify.com/s/files/1/0754/9013/2214/files/Gemini_Generated_Image_qh4f2iqh4f2iqh4f.jpg?v=1788079911|To be announced~Service and community~https://cdn.shopify.com/s/files/1/0754/9013/2214/files/Gemini_Generated_Image_q3se70q3se70q3se.jpg?v=1788079910|To be announced~Closing session~https://cdn.shopify.com/s/files/1/0754/9013/2214/files/Gemini_Generated_Image_m9z0drm9z0drm9z0.jpg?v=1788079908' | split: '|'
 
   # ---------- Hook one -------------------------------------------------
   assign ev_hook1_a       = 'You already have the energy.'
@@ -205,8 +205,8 @@
 
   .evt-h2 { font-size: clamp(2rem, 6vw, 4.5rem); margin: 0; }
   .evt-q  { font-size: clamp(1.6rem, 4vw, 3rem); line-height: 1.08; margin: 0; text-wrap: balance; }
-  .evt-body { font-size: clamp(1.08rem, 1.25vw, 1.28rem); line-height: 1.68; }
-  .evt-micro { font-size: .9rem; text-transform: uppercase; letter-spacing: .2em; font-weight: 600; }
+  .evt-body { font-size: clamp(1.33rem, 1.5vw, 1.53rem); line-height: 1.62; }
+  .evt-micro { font-size: 1.15rem; text-transform: uppercase; letter-spacing: .14em; font-weight: 600; }
 
   /* ================= Buttons ================= */
   .evt-btn {
@@ -215,7 +215,7 @@
     padding: 17px 34px;
     border-radius: 999px;
     border: 2px solid transparent;
-    font: 700 .875rem/1 "Inter Tight", system-ui, sans-serif;
+    font: 700 1rem/1 "Inter Tight", system-ui, sans-serif;
     text-transform: uppercase; letter-spacing: .12em;
     text-decoration: none; cursor: pointer;
     transition: transform .15s var(--ease), box-shadow .15s var(--ease), background-color .15s var(--ease);
@@ -362,7 +362,11 @@
   }
   .evt-guest { scroll-snap-align: start; }
   .evt-guest__frame { position: relative; }
-  .evt-guest__media { aspect-ratio: 3 / 4; }
+  .evt-guest__media {
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-dim) 100%);
+  }
+  .evt-guest__media img { mix-blend-mode: multiply; }
   .evt-guest__initials {
     height: 100%;
     display: grid; place-content: center;
@@ -375,11 +379,14 @@
   .evt-guest__label {
     position: absolute; left: 50%; bottom: 0; z-index: 2;
     transform: translate(-50%, 50%) rotate(var(--rot, -2deg));
-    font-size: clamp(.95rem, 2.3vw, 1.2rem);
-    white-space: nowrap;
+    max-width: calc(100% + 24px);
+    font-size: clamp(1.2rem, 2.6vw, 1.45rem);
+    line-height: 1.08;
+    text-align: center;
+    text-wrap: balance;
   }
   .evt-guest__label b { font-weight: 400; }
-  .evt-guest__role { display: block; margin-top: 42px; text-align: center; color: var(--acid); }
+  .evt-guest__role { display: block; margin-top: 56px; text-align: center; color: var(--acid); }
 
   /* ================= 3 + 6. Hooks ================= */
   .evt-hook { padding-block: clamp(64px, 11vh, 132px); text-align: center; }
@@ -389,7 +396,7 @@
   .evt-hook--dark .evt-hook__q { color: var(--on-dark); }
   .evt-hook__script { color: var(--acid); font-size: 1.35em; display: inline-block; line-height: 1; padding-bottom: .08em; }
   .evt-hook--light .evt-hook__accent { color: var(--forest); }
-  .evt-hook__support { margin-top: 22px; max-width: 46ch; margin-inline: auto; color: var(--forest); font-size: clamp(1.15rem, 1.5vw, 1.4rem); }
+  .evt-hook__support { margin-top: 22px; max-width: 46ch; margin-inline: auto; color: var(--forest); font-size: clamp(1.4rem, 1.7vw, 1.65rem); }
   .evt-hook__cta { margin-top: clamp(30px, 5vh, 48px); }
 
   .evt-video {
@@ -421,8 +428,8 @@
     border-top: 2px solid var(--paper-dim);
   }
   .evt-benefits__list li {
-    font-size: clamp(1.15rem, 2.3vw, 1.7rem);
-    line-height: 1.35;
+    font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+    line-height: 1.32;
     padding: clamp(18px, 2.4vw, 28px) 0;
     border-bottom: 2px solid var(--paper-dim);
     text-wrap: pretty;
@@ -482,17 +489,17 @@
     align-self: flex-start;
     background: var(--forest); color: var(--paper);
     padding: 8px 15px;
-    font-size: .82rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .14em;
+    font-size: 1.05rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
     margin-bottom: 20px;
   }
   .evt-ticket--featured .evt-ticket__badge { background: var(--ink); color: var(--sun); }
   .evt-ticket__tier { font-size: clamp(1.7rem, 3.4vw, 2.6rem); margin: 0; color: var(--forest); }
   .evt-ticket--featured .evt-ticket__tier { color: var(--ink); }
   .evt-ticket__price { font-size: clamp(2.8rem, 6.5vw, 4.4rem); margin: 12px 0 0; color: var(--ink); }
-  .evt-ticket__note { margin-top: 10px; font-size: .95rem; line-height: 1.5; opacity: .75; }
+  .evt-ticket__note { margin-top: 12px; font-size: 1.2rem; line-height: 1.5; opacity: .75; }
   .evt-ticket__incl { list-style: none; margin: 28px 0 34px; padding: 0; display: grid; gap: 13px; }
-  .evt-ticket__incl li { display: flex; gap: 12px; font-size: 1.06rem; line-height: 1.5; }
+  .evt-ticket__incl li { display: flex; gap: 12px; font-size: 1.31rem; line-height: 1.45; }
   .evt-ticket__incl li > span:first-child { flex: 0 0 auto; font-weight: 700; color: var(--forest); }
   .evt-ticket--featured .evt-ticket__incl li > span:first-child { color: var(--ink); }
   .evt-ticket__incl li > span:last-child { min-width: 0; }
@@ -564,7 +571,7 @@
     display: grid; gap: clamp(32px, 4vw, 56px);
     align-items: center;
   }
-  .evt-book__note { margin-top: 20px; max-width: 46ch; font-size: 1.04rem; line-height: 1.6; color: var(--on-dark); opacity: .8; }
+  .evt-book__note { margin-top: 20px; max-width: 46ch; font-size: 1.29rem; line-height: 1.6; color: var(--on-dark); opacity: .8; }
   .evt-seats { display: grid; grid-template-columns: repeat(27, 1fr); gap: 3px; margin-bottom: 18px; }
   .evt-seat {
     aspect-ratio: 1; border-radius: 2px;
@@ -588,7 +595,7 @@
   .evt-footer__socials { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
   .evt-footer__socials a { color: var(--on-dark); text-decoration: none; border-bottom: 2px solid var(--moss); padding-bottom: 2px; }
   .evt-footer__socials a:hover { color: var(--acid); border-color: var(--acid); }
-  .evt-footer__rights { color: var(--on-dark); opacity: .75; font-size: .92rem; }
+  .evt-footer__rights { color: var(--on-dark); opacity: .75; font-size: 1.17rem; }
 
   /* ================= 15. Sticky mobile CTA ================= */
   .evt-sticky {
@@ -603,7 +610,7 @@
     transition: transform .35s var(--ease);
   }
   .evt-sticky.is-visible { transform: none; }
-  .evt-sticky__when { font-weight: 700; font-size: .95rem; letter-spacing: .06em; text-transform: uppercase; }
+  .evt-sticky__when { font-weight: 700; font-size: 1.2rem; letter-spacing: .04em; text-transform: uppercase; }
   .evt-sticky .evt-btn { padding: 12px 22px; background: var(--ink); color: var(--acid); }
   .evt-sticky .evt-btn:hover { background: var(--forest); box-shadow: none; transform: none; }
   @media (min-width: 1024px) { .evt-sticky { display: none; } }
@@ -643,9 +650,12 @@
   }
 
   @media (max-width: 400px) {
-    .evt-btn { padding: 15px 22px; font-size: .8rem; letter-spacing: .08em; }
+    .evt-btn { padding: 15px 20px; font-size: .92rem; letter-spacing: .06em; }
+    .evt-micro { font-size: 1rem; letter-spacing: .1em; }
     .evt-marquee__item { font-size: 1.4rem; }
-    .evt-sticky__when { font-size: .8rem; letter-spacing: .06em; }
+    .evt-sticky { gap: 10px; padding-inline: 12px; }
+    .evt-sticky__when { font-size: .95rem; letter-spacing: .02em; }
+    .evt-sticky .evt-btn { padding: 12px 14px; font-size: .86rem; letter-spacing: .04em; }
   }
 
   /* Hero year parallax, scroll driven, no scroll listener. */
@@ -739,16 +749,17 @@
           {%- assign rots = '-2deg,1.5deg,-1deg,2deg' | split: ',' -%}
           <article class="evt-guest" style="--i:{{ forloop.index0 }}">
             <div class="evt-guest__frame">
-            <div class="evt-duo{% if ev_duotone %} evt-duo--tint{% endif %} evt-guest__media">
+            <div class="evt-duo evt-guest__media">
               {%- if f[2] != blank -%}
-                <img src="{{ f[2] }}" alt="{{ full | escape }}" width="900" height="1200" loading="lazy">
+                <img src="{{ f[2] }}&width=800" alt="{{ full | escape }}" width="900" height="1200" loading="lazy">
               {%- else -%}
                 {%- capture initials -%}{%- for w in parts -%}{{ w | slice: 0 | upcase }}{%- endfor -%}{%- endcapture -%}
                 <div class="evt-guest__initials" role="img" aria-label="{{ full | escape }}">{{ initials | slice: 0, 3 }}</div>
               {%- endif -%}
             </div>
+            {%- assign rest = full | remove_first: parts[0] | strip -%}
             <span class="evt-sticker evt-guest__label" style="--rot:{{ rots[forloop.index0] }}">
-              <b>{{ parts[0] | upcase }}</b>{%- for w in parts offset: 1 -%}{{ w | upcase }}{%- endfor -%}
+              <b>{{ parts[0] | upcase }}</b> {{ rest | upcase }}
             </span>
             </div>
             <span class="evt-micro evt-guest__role">{{ f[1] }}</span>
