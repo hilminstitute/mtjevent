@@ -332,17 +332,29 @@
   }
   .evt-hero__eyebrow { text-align: center; color: var(--acid); margin-bottom: clamp(12px, 2vh, 24px); }
   .evt-hero__inner { position: relative; z-index: 1; margin-block: auto; text-align: center; max-width: none; --pad-x: clamp(10px, 2vw, 28px); }
-  .evt-hero__mark { margin: 0; }
-  /* Sized to the longest line, EMPOWERMENT, so the mark runs the full width of
-     a phone, and capped by viewport height on wide screens where three lines at
-     full width would push the date below the fold. */
+  .evt-hero__mark { margin: 0; min-width: 0; }
+  /* The script below measures the longest line and sets --evt-fit so the mark
+     fills the column exactly, whatever font actually loads. The value here is
+     the no-script fallback: deliberately conservative, since a guess that is
+     too wide is what breaks a word across two lines. */
   .evt-hero__stack {
     position: relative;
     display: inline-block;
+    max-width: 100%;
     text-align: left;
-    font-size: max(2.6rem, min(27vw, 26vh));
+    font-size: var(--evt-fit, max(2.4rem, min(23vw, 26vh)));
   }
-  .evt-hero__line { display: block; color: var(--on-dark); }
+  /* One word per line, always. The host theme sets overflow-wrap: break-word
+     globally, which would otherwise split EMPOWERMENT mid-word on a phone. */
+  .evt-hero__line {
+    display: block;
+    width: fit-content;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    hyphens: none;
+    color: var(--on-dark);
+  }
   .evt-hero__year { color: var(--acid); display: inline-block; font-size: 1.12em; margin-left: .04em; vertical-align: baseline; }
 
   /* Date, time and place as one solid block, the loudest object after the mark. */
@@ -620,7 +632,13 @@
   .evt-footer__mark { font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--on-dark); }
   .evt-footer__mark em { font-style: normal; color: var(--acid); }
   .evt-footer__socials { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-  .evt-footer__socials a { color: var(--on-dark); text-decoration: none; border-bottom: 2px solid var(--moss); padding-bottom: 2px; }
+  /* inline-flex plus min-height keeps the link a 44px tap target without
+     stretching the underline past the word */
+  .evt-footer__socials a {
+    display: inline-flex; align-items: center; min-height: 44px;
+    color: var(--on-dark); text-decoration: none;
+    border-bottom: 2px solid var(--moss); padding-bottom: 2px;
+  }
   .evt-footer__socials a:hover { color: var(--acid); border-color: var(--acid); }
   .evt-footer__rights { color: var(--on-dark); opacity: .75; font-size: 1.17rem; }
 
@@ -1092,6 +1110,34 @@
       }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
       Array.prototype.forEach.call(targets, function (n) { io.observe(n); });
     }
+
+    /* Fit the hero mark to its column. Measured at a known size and scaled, so
+       it is correct for Anton, for the fallback face, and for any screen. */
+    var mark = root.querySelector('.evt-hero__stack');
+    var lines = mark ? mark.querySelectorAll('.evt-hero__line') : [];
+    function fitMark() {
+      if (!mark || !lines.length) return;
+      var column = mark.parentElement;
+      mark.style.setProperty('--evt-fit', '100px');
+      var widest = 0;
+      Array.prototype.forEach.call(lines, function (n) {
+        widest = Math.max(widest, n.getBoundingClientRect().width);
+      });
+      if (!widest) { mark.style.removeProperty('--evt-fit'); return; }
+      var room = column.clientWidth - 2;
+      var size = 100 * (room / widest);
+      /* Three lines at .82 leading must still leave the date block on screen. */
+      size = Math.min(size, window.innerHeight * 0.26);
+      mark.style.setProperty('--evt-fit', Math.max(size, 26) + 'px');
+    }
+    fitMark();
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(fitMark); }
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(fitMark).observe(mark ? mark.parentElement : root);
+    } else {
+      window.addEventListener('resize', fitMark);
+    }
+    window.addEventListener('orientationchange', fitMark);
 
     /* Sticky bar appears once the hero has scrolled out. */
     var hero = root.querySelector('.evt-hero');
