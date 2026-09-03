@@ -73,10 +73,6 @@
   # ---------- Benefits :: shared verb, then six endings ----------------
   assign ev_benefits = 'EMPOWERMENT THROUGH REAL ROLE MODELS. |EMPOWERMENT THROUGH THE QUR’AN. |REAL WOMEN EMPOWERMENT. |EMPOWERMENT THROUGH ENTREPRENEURSHIP.' | split: '|'
 
-  # ---------- Hook two -------------------------------------------------
-  assign ev_hook2_a       = 'How many years have you promised yourself you had come out a different person?'
-  assign ev_hook2_support = 'Registration takes a minute. Seats are released in blocks and close when the hall is full.'
-
   # ---------- Tickets :: tier~price~inclusions;~url~featured~badge~note -
   assign ev_tickets = 'EARLY BIRD~PKR 1,500~Entry to all five sessions;Tea and refreshments in the courtyard~~yes~Save PKR 500~Price goes to PKR 2,000 after 14 October' | split: '|'
 
@@ -397,28 +393,45 @@
   }
   .evt-marquee--hero .evt-marquee__item { font-size: clamp(1.05rem, 2.5vw, 1.8rem); }
 
-  /* ================= 2. Speakers ================= */
+  /* ================= 2. Speakers =================
+     One speaker at a time, centred, at every width. The section pins for one
+     screen of scroll per speaker; the markers behind the stage are what the
+     observer watches, so the sequence needs no scroll listener. */
   .evt-speakers { background: var(--ink); }
-  .evt-speakers__track { position: relative; }
-  .evt-speakers__stage { padding-block: clamp(56px, 9vh, 112px); }
-  .evt-speakers__head { text-align: center; margin-bottom: clamp(26px, 4vh, 46px); }
-  .evt-speakers__steps { display: none; }
-
-  .evt-speakers__grid {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 74%;
-    gap: 14px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-left: var(--pad-x);
-    padding: 8px var(--pad-x) 34px;
-    margin-inline: calc(var(--pad-x) * -1);
+  .evt-speakers__track { position: relative; height: calc(6 * var(--evt-step)); }
+  .evt-speakers__stage {
+    position: sticky; top: 0;
+    height: 100svh;
+    display: grid; align-content: center;
+    overflow: hidden;
   }
-  .evt-guest { scroll-snap-align: start; min-width: 0; }
-  .evt-guest__frame { position: relative; }
+  .evt-speakers__head { text-align: center; margin-bottom: clamp(14px, 2.6vh, 32px); }
+  .evt-speakers__steps { position: absolute; inset: 0; z-index: -1; }
+  .evt-speakers__step { display: block; height: var(--evt-step); }
+
+  /* Every card sits in the same grid cell, so only the active one is seen. */
+  .evt-speakers__grid { display: grid; justify-items: center; }
+  .evt-guest {
+    grid-area: 1 / 1;
+    width: 100%;
+    max-width: 420px;
+    min-width: 0;
+    text-align: center;
+    opacity: 0; visibility: hidden;
+    transform: translateY(26px) scale(.97);
+    transition: opacity .5s var(--ease), transform .5s var(--ease), visibility 0s linear .5s;
+  }
+  .evt-guest.is-shown {
+    opacity: 1; visibility: visible; transform: none;
+    transition: opacity .5s var(--ease), transform .5s var(--ease), visibility 0s;
+  }
+  .evt-guest__frame { position: relative; display: flex; flex-direction: column; align-items: center; }
+  /* Sized by height rather than width, so a short phone never pushes the
+     description off the bottom of the pinned stage. */
   .evt-guest__media {
+    height: clamp(150px, 33svh, 400px);
     aspect-ratio: 3 / 4;
+    width: auto; max-width: 100%;
     background: linear-gradient(180deg, var(--paper) 0%, var(--paper-dim) 100%);
   }
   .evt-guest__media img { mix-blend-mode: multiply; }
@@ -428,33 +441,52 @@
     background: var(--moss);
     color: var(--acid);
     font-family: "Anton", system-ui, sans-serif;
-    font-size: clamp(3rem, 9vw, 5rem);
+    font-size: clamp(2.6rem, 7vw, 4.4rem);
     letter-spacing: .02em;
   }
   .evt-guest__label {
-    position: absolute; left: 50%; bottom: 0; z-index: 2;
-    transform: translate(-50%, 50%) rotate(var(--rot, -2deg));
-    max-width: calc(100% + 24px);
-    font-size: clamp(1.2rem, 2.6vw, 1.45rem);
+    position: static;
+    transform: rotate(var(--rot, -2deg));
+    margin-top: -20px;
+    max-width: 100%;
+    font-size: clamp(1.1rem, 3.2vw, 1.5rem);
     line-height: 1.08;
     text-align: center;
     text-wrap: balance;
   }
   .evt-guest__label b { font-weight: 400; }
   .evt-guest__topic {
-    display: block; margin-top: 56px;
-    text-align: center; color: var(--acid);
-    text-wrap: balance;
+    display: block; margin-top: clamp(16px, 2.4vh, 28px);
+    color: var(--acid); text-wrap: balance;
   }
   .evt-guest__desc {
-    margin-top: 12px;
-    text-align: center;
+    margin-top: 11px;
     color: var(--on-dark);
-    opacity: .82;
-    font-size: clamp(1.12rem, 1.15vw, 1.24rem);
+    opacity: .84;
+    font-size: clamp(1.1rem, 1.2vw, 1.26rem);
     line-height: 1.5;
     text-wrap: pretty;
   }
+
+  /* Which of the five, so the sequence never reads as a dead end. */
+  .evt-speakers__dots { display: flex; justify-content: center; gap: 9px; margin-top: clamp(20px, 3vh, 38px); }
+  .evt-speakers__dot { width: 30px; height: 4px; background: var(--moss); transition: background-color .4s var(--ease); }
+  .evt-speakers__dot.is-on { background: var(--acid); }
+
+  /* Fallback for reduced motion, no script, or no observer: a plain list with
+     every speaker visible and nothing pinned. */
+  .evt-speakers__track--flow { height: auto; }
+  .evt-speakers__track--flow .evt-speakers__stage {
+    position: static; height: auto; overflow: visible;
+    padding-block: clamp(56px, 9vh, 112px);
+  }
+  .evt-speakers__track--flow .evt-speakers__steps,
+  .evt-speakers__track--flow .evt-speakers__dots { display: none; }
+  .evt-speakers__track--flow .evt-speakers__grid { grid-auto-flow: row; gap: clamp(44px, 7vh, 84px); }
+  .evt-speakers__track--flow .evt-guest {
+    grid-area: auto; opacity: 1; visibility: visible; transform: none;
+  }
+  .evt-speakers__track--flow .evt-guest__media { height: clamp(200px, 40vw, 400px); }
 
   /* ================= 3 + 6. Hooks ================= */
   .evt-hook { padding-block: clamp(64px, 11vh, 132px); text-align: center; }
@@ -723,47 +755,12 @@
   }
 
   @media (min-width: 1024px) {
-    /* The speakers section pins for one screen of scroll per speaker. The
-       markers below the stage are what the observer watches, so the sequence
-       needs no scroll listener and no measurement. */
-    .evt-speakers__track { height: calc(6 * var(--evt-step)); }
-    .evt-speakers__stage {
-      position: sticky; top: 0;
-      height: 100svh;
-      display: grid; align-content: center;
-      padding-block: 0;
-    }
-    .evt-speakers__steps { display: block; position: absolute; inset: 0; z-index: -1; }
-    .evt-speakers__step { display: block; height: var(--evt-step); }
-
-    .evt-speakers__grid {
-      grid-auto-flow: row;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: clamp(16px, 1.8vw, 26px);
-      overflow: visible;
-      padding: 0;
-      margin-inline: 0;
-    }
-    .evt-guest {
-      opacity: 0;
-      transform: translateY(34px) scale(.96);
-      transition: opacity .6s var(--ease), transform .6s var(--ease);
-    }
-    .evt-guest.is-shown { opacity: 1; transform: none; }
-    /* Five narrow columns wrap these names onto three or four lines, so the
-       sticker sits in the flow here rather than hanging off the photo, and
-       the topic below it can never be covered. */
-    .evt-guest__frame { display: flex; flex-direction: column; align-items: center; }
-    .evt-guest__media { width: 100%; }
-    .evt-guest__label {
-      position: static;
-      transform: rotate(var(--rot, -2deg));
-      margin-top: -20px;
-      max-width: 100%;
-      font-size: clamp(1rem, 1.15vw, 1.2rem);
-    }
-    .evt-guest__topic { margin-top: 18px; font-size: 1.05rem; letter-spacing: .1em; }
-    .evt-guest__desc { margin-top: 10px; }
+    /* The single card can afford more room on a large screen. */
+    .evt-guest { max-width: 560px; }
+    .evt-guest__media { height: clamp(220px, 42svh, 460px); }
+    .evt-guest__label { margin-top: -26px; font-size: clamp(1.3rem, 1.6vw, 1.7rem); }
+    .evt-guest__topic { font-size: 1.25rem; letter-spacing: .12em; }
+    .evt-guest__desc { font-size: 1.35rem; }
 
     .evt-mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .evt-ticket--featured { transform: rotate(-1.2deg); }
@@ -803,9 +800,10 @@
     .evt-sticky { transform: none; }
     /* The pinned speaker sequence collapses to a plain, fully visible list. */
     .evt-speakers__track { height: auto; }
-    .evt-speakers__stage { position: static; height: auto; padding-block: clamp(56px, 9vh, 112px); }
-    .evt-speakers__steps { display: none; }
-    .evt-guest { opacity: 1; transform: none; }
+    .evt-speakers__stage { position: static; height: auto; overflow: visible; padding-block: clamp(56px, 9vh, 112px); }
+    .evt-speakers__steps, .evt-speakers__dots { display: none; }
+    .evt-speakers__grid { grid-auto-flow: row; gap: clamp(44px, 7vh, 84px); }
+    .evt-guest { grid-area: auto; opacity: 1; visibility: visible; transform: none; }
   }
 </style>
 
@@ -815,9 +813,10 @@
     .evt .evt-seat { opacity: 1; transform: none; }
     .evt .evt-seat--taken { background: var(--acid); }
     .evt .evt-speakers__track { height: auto; }
-    .evt .evt-speakers__stage { position: static; height: auto; padding-block: clamp(56px, 9vh, 112px); }
-    .evt .evt-speakers__steps { display: none; }
-    .evt .evt-guest { opacity: 1; transform: none; }
+    .evt .evt-speakers__stage { position: static; height: auto; overflow: visible; padding-block: clamp(56px, 9vh, 112px); }
+    .evt .evt-speakers__steps, .evt .evt-speakers__dots { display: none; }
+    .evt .evt-speakers__grid { grid-auto-flow: row; gap: clamp(44px, 7vh, 84px); }
+    .evt .evt-guest { grid-area: auto; opacity: 1; visibility: visible; transform: none; }
   </style>
 </noscript>
 
@@ -896,7 +895,20 @@
             <span class="evt-sticker evt-sticker--acid" style="transform:rotate(-1.5deg);font-size:clamp(1.1rem,2.6vw,1.6rem)">WHO IS SPEAKING</span>
             <h2 class="evt-sr" id="evt-guests-{{ section.id }}">Who is speaking</h2>
           </div>
-          <div class="evt-speakers__grid" data-speaker-grid>
+
+          {%- comment -%}
+            Only one card is visible at a time, so the full line up is also
+            written out once for screen readers and the visual sequence below
+            is hidden from them.
+          {%- endcomment -%}
+          <ul class="evt-sr">
+            {%- for row in ev_speakers -%}
+              {%- assign sr = row | split: '~' -%}
+              <li>{{ sr[0] }}. {{ sr[1] }}. {{ sr[3] }}</li>
+            {%- endfor -%}
+          </ul>
+
+          <div class="evt-speakers__grid" data-speaker-grid aria-hidden="true">
             {%- for row in ev_speakers -%}
               {%- assign f = row | split: '~' -%}
               {%- assign full = f[0] | default: 'To be announced' -%}
@@ -920,6 +932,12 @@
                 <span class="evt-micro evt-guest__topic">{{ f[1] }}</span>
                 <p class="evt-guest__desc">{{ f[3] }}</p>
               </article>
+            {%- endfor -%}
+          </div>
+
+          <div class="evt-speakers__dots" aria-hidden="true">
+            {%- for row in ev_speakers -%}
+              <span class="evt-speakers__dot" data-speaker-dot></span>
             {%- endfor -%}
           </div>
         </div>
@@ -980,17 +998,6 @@
           <li style="--i:{{ forloop.index0 | modulo: 6 }}">{{ line }}</li>
         {%- endfor -%}
       </ul>
-    </div>
-  </section>
-
-  {%- comment -%} ============ 6. Hook two ============ {%- endcomment -%}
-  <section class="evt-hook evt-hook--light evt-light" aria-labelledby="evt-hook2-{{ section.id }}">
-    <div class="evt-wrap" data-reveal>
-      <h2 class="evt-q evt-hook__q" id="evt-hook2-{{ section.id }}">{{ ev_hook2_a }}</h2>
-      <p class="evt-body evt-hook__support" style="--i:1">{{ ev_hook2_support }}</p>
-      <p class="evt-hook__cta" style="--i:2">
-        <a class="evt-btn evt-btn--forest" href="#evt-tickets-{{ section.id }}">{{ ev_cta }}</a>
-      </p>
     </div>
   </section>
 
@@ -1194,30 +1201,40 @@
     if (!root) return;
 
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var wide = window.matchMedia('(min-width: 1024px)');
     var hasIO = 'IntersectionObserver' in window;
 
-    /* Speakers. Above 1024px the section pins and one card appears per screen
-       of scroll, left to right. Below that, or with motion reduced, the cards
-       fall back to the ordinary reveal used everywhere else on the page. */
+    /* Speakers. The section pins at every width and shows exactly one speaker
+       at a time, centred, changing once per screen of scroll. Each marker is a
+       screen tall, so whichever one is crossing the middle of the view names
+       the speaker to show, forwards and backwards alike. */
     var cards = root.querySelectorAll('[data-speaker-card]');
     var steps = root.querySelectorAll('[data-speaker-step]');
-    var grid = root.querySelector('[data-speaker-grid]');
-    var pinned = wide.matches && !reduce.matches && hasIO && steps.length > 0;
+    var dots = root.querySelectorAll('[data-speaker-dot]');
+    var speakerTrack = root.querySelector('[data-speaker-track]');
+    var sequenced = !reduce.matches && hasIO && steps.length > 0;
 
-    if (pinned) {
+    function showSpeaker(n) {
+      Array.prototype.forEach.call(cards, function (card, i) {
+        card.classList.toggle('is-shown', i === n);
+      });
+      Array.prototype.forEach.call(dots, function (dot, i) {
+        dot.classList.toggle('is-on', i === n);
+      });
+    }
+
+    if (sequenced) {
+      /* The first speaker is up before any marker has reached the middle,
+         so the stage is never blank on the way in. */
+      showSpeaker(0);
       var stepIO = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
-          var upto = parseInt(entry.target.getAttribute('data-speaker-step'), 10);
-          Array.prototype.forEach.call(cards, function (card, i) {
-            card.classList.toggle('is-shown', i <= upto);
-          });
+          showSpeaker(parseInt(entry.target.getAttribute('data-speaker-step'), 10));
         });
       }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
       Array.prototype.forEach.call(steps, function (n) { stepIO.observe(n); });
-    } else if (grid) {
-      grid.setAttribute('data-reveal', '');
+    } else if (speakerTrack) {
+      speakerTrack.classList.add('evt-speakers__track--flow');
     }
 
     /* Reveal on scroll. IntersectionObserver only, never a scroll listener. */
