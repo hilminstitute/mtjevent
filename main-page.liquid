@@ -50,9 +50,9 @@
   assign ev_year      = '26'
   assign ev_short     = 'Y.E.S.'
   assign ev_full_name = 'Youth Empowerment Summit 26'
-  assign ev_date      = '14 NOVEMBER 2026'
+  assign ev_date      = '14TH NOVEMBER 2026'
   assign ev_time      = '6:30 PM'
-  assign ev_venue     = 'EXPO CENTRE'
+  assign ev_venue     = 'EXPO CENTRE, AUDITORIUM 1'
   assign ev_city      = 'LAHORE'
 
   assign ev_booking_url = 'https://your-booking-site.com/yes26'
@@ -70,8 +70,9 @@
   assign ev_video_poster  = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC9036_2_JPG.jpg?v=1788189380'
   assign ev_video_url     = ''
 
-  # ---------- Benefits :: shared verb, then six endings ----------------
-  assign ev_benefits = 'EMPOWERMENT THROUGH REAL ROLE MODELS. |EMPOWERMENT THROUGH THE QUR’AN. |REAL WOMEN EMPOWERMENT. |EMPOWERMENT THROUGH ENTREPRENEURSHIP.' | split: '|'
+  # ---------- What you walk out with -----------------------------------
+  # This section reads ev_speakers above: one topic, its description and the
+  # speaker who gives it, revealed one at a time as the section is scrolled.
 
   # ---------- Tickets :: tier~price~inclusions;~url~featured~badge~note -
   assign ev_tickets = 'EARLY BIRD~PKR 1,500~Entry to all five sessions;Tea and refreshments in the courtyard~~yes~Save PKR 500~Price goes to PKR 2,000 after 14 October' | split: '|'
@@ -86,8 +87,6 @@
   # Nine photographs from the hall. The first, fifth and eighth run double
   # width, so put your most horizontal shots in those three positions.
   assign ev_gallery1 = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/WhatsApp_Image_2026-08-31_at_9.50.29_AM.jpg?v=1788197957~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8834_2_JPG.jpg?v=1788194407~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8818_2_JPG.jpg?v=1788016514~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8802_2_JPG.jpg?v=1788016514~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8697_2_JPG.jpg?v=1788016511~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8816_2_JPG.jpg?v=1788016505~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8900_2_JPG.jpg?v=1788016503~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8767_2_JPG.jpg?v=1788197839~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8802_2_JPG.jpg?v=1788016514~A moment from the graduation ceremony' | split: '|'
-  assign ev_gallery1_cta  = 'Last year in photos'
-  assign ev_gallery1_url  = 'https://your-booking-site.com/gallery'
 
   # ---------- The organiser --------------------------------------------
   assign ev_host_eyebrow  = 'Who is behind it'
@@ -95,12 +94,13 @@
   assign ev_host_p1 = 'HILM Institute was founded by Hazrat Dr. Shahid Avais Sahab (RA) to teach Islamic sciences to people the traditional route had quietly written off — students with degrees to finish, professionals with jobs to keep, parents with no free evenings. Our mission is to nurture hearts that are connected to Allah ﷻ, shaped by the character and teachings of the Prophet ﷺ and guided by the Quran, Sunnah and Tazkiyah al-Nafs. Our vision is what this summit is for: to form visionary leaders who can carry the renaissance of Islam in their own generation. We teach Dars-e-Nizami and Alima programmes across our Lahore campuses and online to students in the UK, the USA and the UAE. This summit is the front door.'
   assign ev_host_photo    = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DJI_20260823010913_0042_D_3_JPG.jpg?v=1788016491'
 
-  # ---------- Cause -----------------------------------------------------
-  assign ev_cause_title = 'WHERE THE TICKET GOES'
-  assign ev_cause_intro = 'Tickets cover the day and fund the year. There is no separate donation ask on this page, and there will not be one from the stage.'
-  assign ev_cause_items = 'The scholarship seats.~One seat in four is given free to students who apply, paid for by the tickets that are sold.|The mentoring circles.~Twenty seat groups run all year in Lahore, free to join, with no application fee.|The workbooks.~Every delegate leaves with printed material, which is the thing most people still have a year later.' | split: '|'
-  assign ev_cause_close_1 = 'AMBITION IS NOT'
-  assign ev_cause_close_2 = 'THE MISSING PART.'
+  # ---------- Film ------------------------------------------------------
+  # TODO_CONTENT: paste the YouTube video id here, the part after "v=" in the
+  # watch URL, for example dQw4w9WgXcQ. The section stays hidden until it is
+  # filled in. Browsers only allow autoplay when a video is muted, so it
+  # starts muted with the controls left on.
+  assign ev_film_id    = ''
+  assign ev_film_title = 'Youth Empowerment Summit 26'
 
   # ---------- Gallery two :: filename~alt --------------------------------
   assign ev_gallery2 = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC03913_2_JPG.jpg?v=1788016470~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8834_2_JPG.jpg?v=1788194407~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC03909_2_JPG.jpg?v=1788016460~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8856_2_JPG.jpg?v=1788016454~A moment from the graduation ceremony' | split: '|'
@@ -394,11 +394,8 @@
   .evt-marquee--hero .evt-marquee__item { font-size: clamp(1.05rem, 2.5vw, 1.8rem); }
 
   /* ================= 2. Speakers ================= */
-  .evt-speakers { background: var(--ink); }
-  .evt-speakers__track { position: relative; }
-  .evt-speakers__stage { padding-block: clamp(56px, 9vh, 112px); }
+  .evt-speakers { background: var(--ink); padding-block: clamp(56px, 9vh, 112px); }
   .evt-speakers__head { text-align: center; margin-bottom: clamp(26px, 4vh, 46px); }
-  .evt-speakers__steps { display: none; }
 
   .evt-speakers__grid {
     display: grid;
@@ -462,20 +459,6 @@
     text-wrap: balance;
   }
   .evt-guest__label b { font-weight: 400; }
-  .evt-guest__topic {
-    display: block; margin-top: 56px;
-    text-align: center; color: var(--acid);
-    text-wrap: balance;
-  }
-  .evt-guest__desc {
-    margin-top: 12px;
-    text-align: center;
-    color: var(--on-dark);
-    opacity: .82;
-    font-size: clamp(1.12rem, 1.15vw, 1.24rem);
-    line-height: 1.5;
-    text-wrap: pretty;
-  }
 
   /* ================= 3 + 6. Hooks ================= */
   .evt-hook { padding-block: clamp(64px, 11vh, 132px); text-align: center; }
@@ -518,20 +501,81 @@
     border: 0;
   }
 
-  /* ================= 5. Benefits ================= */
-  .evt-benefits { background: var(--paper); color: var(--on-light); padding-block: clamp(64px, 11vh, 132px); }
-  .evt-benefits__head { margin-bottom: clamp(32px, 5vh, 56px); }
-  .evt-benefits__list {
-    list-style: none; margin: 0; padding: 0;
-    display: grid;
-    border-top: 2px solid var(--paper-dim);
+  /* ================= 5. What you walk out with =================
+     One topic at a time, centred. The section pins for a screen of scroll per
+     topic; the markers behind the stage are what the observer watches, so the
+     sequence needs no scroll listener. */
+  .evt-walk { background: var(--paper); color: var(--on-light); }
+  .evt-walk__track { position: relative; height: calc(6 * var(--evt-step)); }
+  .evt-walk__stage {
+    position: sticky; top: 0;
+    height: 100svh;
+    display: grid; align-content: center;
+    overflow: hidden;
   }
-  .evt-benefits__list li {
-    font-size: clamp(1.35rem, 2.4vw, 1.9rem);
-    line-height: 1.32;
-    padding: clamp(18px, 2.4vw, 28px) 0;
-    border-bottom: 2px solid var(--paper-dim);
+  .evt-walk__head { text-align: center; margin-bottom: clamp(20px, 3.6vh, 44px); }
+  .evt-walk__steps { position: absolute; inset: 0; z-index: -1; }
+  .evt-walk__step { display: block; height: var(--evt-step); }
+
+  /* Every card shares one grid cell, so only the active one is seen. */
+  .evt-walk__deck { display: grid; justify-items: center; }
+  .evt-walk__item {
+    grid-area: 1 / 1;
+    width: 100%;
+    max-width: 42ch;
+    text-align: center;
+    opacity: 0; visibility: hidden;
+    transform: translateY(26px);
+    transition: opacity .5s var(--ease), transform .5s var(--ease), visibility 0s linear .5s;
+  }
+  .evt-walk__item.is-shown {
+    opacity: 1; visibility: visible; transform: none;
+    transition: opacity .5s var(--ease), transform .5s var(--ease), visibility 0s;
+  }
+  .evt-walk__topic {
+    font-size: clamp(1.85rem, 5.2vw, 3.4rem);
+    color: var(--forest);
+    text-wrap: balance;
+  }
+  .evt-walk__desc {
+    margin-top: clamp(15px, 2.4vh, 26px);
+    font-size: clamp(1.22rem, 1.9vw, 1.55rem);
+    line-height: 1.5;
     text-wrap: pretty;
+  }
+  .evt-walk__who {
+    margin-top: clamp(16px, 2.6vh, 28px);
+    color: var(--forest);
+    letter-spacing: .16em;
+  }
+  .evt-walk__dots { display: flex; justify-content: center; gap: 9px; margin-top: clamp(22px, 3.6vh, 42px); }
+  .evt-walk__dot { width: 30px; height: 4px; background: var(--paper-dim); transition: background-color .4s var(--ease); }
+  .evt-walk__dot.is-on { background: var(--forest); }
+
+  /* Fallback for reduced motion, no script, or no observer: a plain list with
+     every topic visible and nothing pinned. */
+  .evt-walk__track--flow { height: auto; }
+  .evt-walk__track--flow .evt-walk__stage {
+    position: static; height: auto; overflow: visible;
+    padding-block: clamp(64px, 11vh, 132px);
+  }
+  .evt-walk__track--flow .evt-walk__steps,
+  .evt-walk__track--flow .evt-walk__dots { display: none; }
+  .evt-walk__track--flow .evt-walk__deck { grid-auto-flow: row; gap: clamp(44px, 7vh, 84px); }
+  .evt-walk__track--flow .evt-walk__item {
+    grid-area: auto; opacity: 1; visibility: visible; transform: none;
+  }
+
+  /* ================= The film ================= */
+  .evt-film { background: var(--acid); color: var(--ink); padding-block: clamp(64px, 11vh, 132px); }
+  .evt-film__frame {
+    max-width: 900px; margin-inline: auto;
+    border: 6px solid var(--ink);
+    box-shadow: 14px 14px 0 var(--forest);
+    background: var(--ink);
+  }
+  .evt-film__frame iframe {
+    display: block; width: 100%; aspect-ratio: 16 / 9; border: 0;
   }
 
   /* ================= 7. Tickets ================= */
@@ -744,19 +788,7 @@
   }
 
   @media (min-width: 1024px) {
-    /* The speakers section pins for one screen of scroll per speaker. The
-       markers below the stage are what the observer watches, so the sequence
-       needs no scroll listener and no measurement. */
-    .evt-speakers__track { height: calc(6 * var(--evt-step)); }
-    .evt-speakers__stage {
-      position: sticky; top: 0;
-      height: 100svh;
-      display: grid; align-content: center;
-      padding-block: 0;
-    }
-    .evt-speakers__steps { display: block; position: absolute; inset: 0; z-index: -1; }
-    .evt-speakers__step { display: block; height: var(--evt-step); }
-
+    /* All five speakers side by side, no pinning and no sequence. */
     .evt-speakers__grid {
       grid-auto-flow: row;
       grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -765,15 +797,8 @@
       padding: 0;
       margin-inline: 0;
     }
-    .evt-guest {
-      opacity: 0;
-      transform: translateY(34px) scale(.96);
-      transition: opacity .6s var(--ease), transform .6s var(--ease);
-    }
-    .evt-guest.is-shown { opacity: 1; transform: none; }
     /* Five narrow columns wrap these names onto three or four lines, so the
-       sticker sits in the flow here rather than hanging off the photo, and
-       the topic below it can never be covered. */
+       sticker sits in the flow here rather than hanging off the photo. */
     .evt-guest__frame { display: flex; flex-direction: column; align-items: center; }
     .evt-guest__media { width: 100%; }
     .evt-guest__label {
@@ -783,8 +808,6 @@
       max-width: 100%;
       font-size: clamp(1rem, 1.15vw, 1.2rem);
     }
-    .evt-guest__topic { margin-top: 18px; font-size: 1.05rem; letter-spacing: .1em; }
-    .evt-guest__desc { margin-top: 10px; }
 
     .evt-mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .evt-ticket--featured { transform: rotate(-1.2deg); }
@@ -822,11 +845,12 @@
     .evt-seat--taken { background: var(--acid); }
     .evt-marquee__row { animation: none; }
     .evt-sticky { transform: none; }
-    /* The pinned speaker sequence collapses to a plain, fully visible list. */
-    .evt-speakers__track { height: auto; }
-    .evt-speakers__stage { position: static; height: auto; padding-block: clamp(56px, 9vh, 112px); }
-    .evt-speakers__steps { display: none; }
-    .evt-guest { opacity: 1; transform: none; }
+    /* The pinned walk out sequence collapses to a plain, fully visible list. */
+    .evt-walk__track { height: auto; }
+    .evt-walk__stage { position: static; height: auto; overflow: visible; padding-block: clamp(64px, 11vh, 132px); }
+    .evt-walk__steps, .evt-walk__dots { display: none; }
+    .evt-walk__deck { grid-auto-flow: row; gap: clamp(44px, 7vh, 84px); }
+    .evt-walk__item { grid-area: auto; opacity: 1; visibility: visible; transform: none; }
   }
 </style>
 
@@ -835,10 +859,11 @@
     .evt [data-reveal] > * { opacity: 1; transform: none; }
     .evt .evt-seat { opacity: 1; transform: none; }
     .evt .evt-seat--taken { background: var(--acid); }
-    .evt .evt-speakers__track { height: auto; }
-    .evt .evt-speakers__stage { position: static; height: auto; padding-block: clamp(56px, 9vh, 112px); }
-    .evt .evt-speakers__steps { display: none; }
-    .evt .evt-guest { opacity: 1; transform: none; }
+    .evt .evt-walk__track { height: auto; }
+    .evt .evt-walk__stage { position: static; height: auto; overflow: visible; padding-block: clamp(64px, 11vh, 132px); }
+    .evt .evt-walk__steps, .evt .evt-walk__dots { display: none; }
+    .evt .evt-walk__deck { grid-auto-flow: row; gap: clamp(44px, 7vh, 84px); }
+    .evt .evt-walk__item { grid-area: auto; opacity: 1; visibility: visible; transform: none; }
   </style>
 </noscript>
 
@@ -910,54 +935,36 @@
 
   {%- comment -%} ============ 2. Speakers ============ {%- endcomment -%}
   <section class="evt-speakers" aria-labelledby="evt-guests-{{ section.id }}">
-    <div class="evt-speakers__track" data-speaker-track>
-      <div class="evt-speakers__stage">
-        <div class="evt-wrap">
-          <div class="evt-speakers__head">
-            <span class="evt-sticker evt-sticker--acid" style="transform:rotate(-1.5deg);font-size:clamp(1.1rem,2.6vw,1.6rem)">WHO IS SPEAKING</span>
-            <h2 class="evt-sr" id="evt-guests-{{ section.id }}">Who is speaking</h2>
-          </div>
-          <div class="evt-speakers__grid" data-speaker-grid>
-            {%- for row in ev_speakers -%}
-              {%- assign f = row | split: '~' -%}
-              {%- assign full = f[0] | default: 'To be announced' -%}
-              {%- assign parts = full | split: ' ' -%}
-              {%- assign rots = '-2deg,1.5deg,-1deg,2deg,-1.5deg' | split: ',' -%}
-              <article class="evt-guest" data-speaker-card>
-                <div class="evt-guest__frame">
-                  <div class="evt-guest__media">
-                    {%- if f[2] != blank -%}
-                      <div class="evt-guest__portrait">
-                        <img src="{{ f[2] }}&width=800" alt="{{ full | escape }}" width="900" height="1200" loading="lazy">
-                      </div>
-                    {%- else -%}
-                      {%- comment -%} No portrait yet, so the tile carries the slot number rather than repeating the name. {%- endcomment -%}
-                      <div class="evt-guest__initials" role="img" aria-label="Portrait of {{ full | escape }} to follow">0{{ forloop.index }}</div>
-                    {%- endif -%}
-                  </div>
-                  {%- assign rest = full | remove_first: parts[0] | strip -%}
-                  <span class="evt-sticker evt-guest__label" style="--rot:{{ rots[forloop.index0] }}">
-                    <b>{{ parts[0] | upcase }}</b> {{ rest | upcase }}
-                  </span>
-                </div>
-                <span class="evt-micro evt-guest__topic">{{ f[1] }}</span>
-                <p class="evt-guest__desc">{{ f[3] }}</p>
-              </article>
-            {%- endfor -%}
-          </div>
-        </div>
+    <div class="evt-wrap">
+      <div class="evt-speakers__head">
+        <span class="evt-sticker evt-sticker--acid" style="transform:rotate(-1.5deg);font-size:clamp(1.1rem,2.6vw,1.6rem)">WHO IS SPEAKING</span>
+        <h2 class="evt-sr" id="evt-guests-{{ section.id }}">Who is speaking</h2>
       </div>
-
-      {%- comment -%}
-        One marker per speaker. Each is a screen tall, and the observer shows
-        every card up to whichever marker is crossing the middle of the view.
-        The sixth screen of scroll releases the section.
-      {%- endcomment -%}
-      <div class="evt-speakers__steps" aria-hidden="true">
+      <div class="evt-speakers__grid" data-reveal>
         {%- for row in ev_speakers -%}
-          <span class="evt-speakers__step" data-speaker-step="{{ forloop.index0 }}"></span>
+          {%- assign f = row | split: '~' -%}
+          {%- assign full = f[0] | default: 'To be announced' -%}
+          {%- assign parts = full | split: ' ' -%}
+          {%- assign rots = '-2deg,1.5deg,-1deg,2deg,-1.5deg' | split: ',' -%}
+          <article class="evt-guest" style="--i:{{ forloop.index0 }}">
+            <div class="evt-guest__frame">
+              <div class="evt-guest__media">
+                {%- if f[2] != blank -%}
+                  <div class="evt-guest__portrait">
+                    <img src="{{ f[2] }}&width=800" alt="{{ full | escape }}" width="900" height="1200" loading="lazy">
+                  </div>
+                {%- else -%}
+                  {%- comment -%} No portrait yet, so the tile carries the slot number rather than repeating the name. {%- endcomment -%}
+                  <div class="evt-guest__initials" role="img" aria-label="Portrait of {{ full | escape }} to follow">0{{ forloop.index }}</div>
+                {%- endif -%}
+              </div>
+              {%- assign rest = full | remove_first: parts[0] | strip -%}
+              <span class="evt-sticker evt-guest__label" style="--rot:{{ rots[forloop.index0] }}">
+                <b>{{ parts[0] | upcase }}</b> {{ rest | upcase }}
+              </span>
+            </div>
+          </article>
         {%- endfor -%}
-        <span class="evt-speakers__step"></span>
       </div>
     </div>
   </section>
@@ -991,18 +998,58 @@
 
   {{ ev_marquee }}
 
-  {%- comment -%} ============ 5. Benefits ============ {%- endcomment -%}
-  <section class="evt-benefits evt-light" aria-labelledby="evt-benefits-{{ section.id }}">
-    <div class="evt-wrap">
-      <div class="evt-benefits__head" data-reveal>
-        <span class="evt-sticker" style="transform:rotate(-1.5deg);font-size:clamp(1.1rem,2.6vw,1.6rem)">WHAT YOU WALK OUT WITH</span>
-        <h2 class="evt-sr" id="evt-benefits-{{ section.id }}">What you walk out with</h2>
+  {%- comment -%} ============ 5. What you walk out with ============ {%- endcomment -%}
+  <section class="evt-walk evt-light" aria-labelledby="evt-walk-{{ section.id }}">
+    <div class="evt-walk__track" data-walk-track>
+      <div class="evt-walk__stage">
+        <div class="evt-wrap">
+          <div class="evt-walk__head">
+            <span class="evt-sticker" style="transform:rotate(-1.5deg);font-size:clamp(1.1rem,2.6vw,1.6rem)">WHAT YOU WALK OUT WITH</span>
+            <h2 class="evt-sr" id="evt-walk-{{ section.id }}">What you walk out with</h2>
+          </div>
+
+          {%- comment -%}
+            Only one topic is visible at a time, so the whole set is also
+            written out once for screen readers and the visual sequence below
+            is hidden from them.
+          {%- endcomment -%}
+          <ul class="evt-sr">
+            {%- for row in ev_speakers -%}
+              {%- assign w = row | split: '~' -%}
+              <li>{{ w[1] }}. {{ w[3] }} With {{ w[0] }}.</li>
+            {%- endfor -%}
+          </ul>
+
+          <div class="evt-walk__deck" aria-hidden="true">
+            {%- for row in ev_speakers -%}
+              {%- assign w = row | split: '~' -%}
+              <article class="evt-walk__item" data-walk-card>
+                <p class="evt-walk__topic evt-display">{{ w[1] }}</p>
+                <p class="evt-walk__desc">{{ w[3] }}</p>
+                <p class="evt-walk__who evt-micro">{{ w[0] }}</p>
+              </article>
+            {%- endfor -%}
+          </div>
+
+          <div class="evt-walk__dots" aria-hidden="true">
+            {%- for row in ev_speakers -%}
+              <span class="evt-walk__dot" data-walk-dot></span>
+            {%- endfor -%}
+          </div>
+        </div>
       </div>
-      <ul class="evt-benefits__list" data-reveal>
-        {%- for line in ev_benefits -%}
-          <li style="--i:{{ forloop.index0 | modulo: 6 }}">{{ line }}</li>
+
+      {%- comment -%}
+        One marker per topic, each a screen tall. Whichever is crossing the
+        middle of the view names the topic to show. The sixth screen of scroll
+        releases the section.
+      {%- endcomment -%}
+      <div class="evt-walk__steps" aria-hidden="true">
+        {%- for row in ev_speakers -%}
+          <span class="evt-walk__step" data-walk-step="{{ forloop.index0 }}"></span>
         {%- endfor -%}
-      </ul>
+        <span class="evt-walk__step"></span>
+      </div>
     </div>
   </section>
 
@@ -1084,9 +1131,6 @@
         </div>
       {%- endfor -%}
     </div>
-    <div class="evt-gallery__cta">
-      <a class="evt-btn evt-btn--sun" href="{{ ev_gallery1_url }}" target="_blank" rel="noopener noreferrer">{{ ev_gallery1_cta }}</a>
-    </div>
   </section>
 
   {%- comment -%} ============ 11. The organiser ============ {%- endcomment -%}
@@ -1109,22 +1153,26 @@
     </div>
   </section>
 
-  {%- comment -%} ============ 12. Cause ============ {%- endcomment -%}
-  <section class="evt-cause evt-light" aria-labelledby="evt-cause-{{ section.id }}">
-    <div class="evt-backdrop evt-backdrop--ink" aria-hidden="true"><span>{{ ev_short }} {{ ev_year }}</span></div>
-    <div class="evt-wrap evt-cause__inner" data-reveal>
-      <span class="evt-sticker" style="transform:rotate(1.5deg);font-size:clamp(1.2rem,3vw,1.9rem)">{{ ev_cause_title }}</span>
-      <h2 class="evt-sr" id="evt-cause-{{ section.id }}">{{ ev_cause_title }}</h2>
-      <p class="evt-body evt-cause__intro" style="--i:1">{{ ev_cause_intro }}</p>
-      <ul class="evt-cause__list evt-body" style="--i:2">
-        {%- for row in ev_cause_items -%}
-          {%- assign c = row | split: '~' -%}
-          <li><b>{{ c[0] }}</b>{{ c[1] }}</li>
-        {%- endfor -%}
-      </ul>
-      <p class="evt-cause__close evt-display" style="--i:3">{{ ev_cause_close_1 }}<br>{{ ev_cause_close_2 }}</p>
-    </div>
-  </section>
+  {%- comment -%} ============ 12. The film ============ {%- endcomment -%}
+  {%- if ev_film_id != blank -%}
+    <section class="evt-film evt-light" aria-labelledby="evt-film-{{ section.id }}">
+      <div class="evt-wrap">
+        <h2 class="evt-sr" id="evt-film-{{ section.id }}">{{ ev_film_title }}</h2>
+        <div class="evt-film__frame" data-reveal>
+          {%- comment -%}
+            Autoplay is only permitted while a video is muted, so it starts
+            muted with the controls left on for anyone who wants sound.
+          {%- endcomment -%}
+          <iframe
+            src="https://www.youtube.com/embed/{{ ev_film_id }}?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist={{ ev_film_id }}&amp;playsinline=1&amp;rel=0"
+            title="{{ ev_film_title | escape }}"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
 
   {%- comment -%} ============ 13. Community strip ============ {%- endcomment -%}
   <section class="evt-gallery" aria-labelledby="evt-gal2-{{ section.id }}">
@@ -1206,30 +1254,40 @@
     if (!root) return;
 
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var wide = window.matchMedia('(min-width: 1024px)');
     var hasIO = 'IntersectionObserver' in window;
 
-    /* Speakers. Above 1024px the section pins and one card appears per screen
-       of scroll, left to right. Below that, or with motion reduced, the cards
-       fall back to the ordinary reveal used everywhere else on the page. */
-    var cards = root.querySelectorAll('[data-speaker-card]');
-    var steps = root.querySelectorAll('[data-speaker-step]');
-    var grid = root.querySelector('[data-speaker-grid]');
-    var pinned = wide.matches && !reduce.matches && hasIO && steps.length > 0;
+    /* What you walk out with. The section pins at every width and shows one
+       topic at a time, changing once per screen of scroll. Each marker is a
+       screen tall, so whichever is crossing the middle of the view names the
+       topic to show, forwards and backwards alike. */
+    var walkCards = root.querySelectorAll('[data-walk-card]');
+    var walkSteps = root.querySelectorAll('[data-walk-step]');
+    var walkDots = root.querySelectorAll('[data-walk-dot]');
+    var walkTrack = root.querySelector('[data-walk-track]');
+    var sequenced = !reduce.matches && hasIO && walkSteps.length > 0;
 
-    if (pinned) {
-      var stepIO = new IntersectionObserver(function (entries) {
+    function showTopic(n) {
+      Array.prototype.forEach.call(walkCards, function (card, i) {
+        card.classList.toggle('is-shown', i === n);
+      });
+      Array.prototype.forEach.call(walkDots, function (dot, i) {
+        dot.classList.toggle('is-on', i === n);
+      });
+    }
+
+    if (sequenced) {
+      /* The first topic is up before any marker has reached the middle, so
+         the stage is never blank on the way in. */
+      showTopic(0);
+      var walkIO = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
-          var upto = parseInt(entry.target.getAttribute('data-speaker-step'), 10);
-          Array.prototype.forEach.call(cards, function (card, i) {
-            card.classList.toggle('is-shown', i <= upto);
-          });
+          showTopic(parseInt(entry.target.getAttribute('data-walk-step'), 10));
         });
       }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
-      Array.prototype.forEach.call(steps, function (n) { stepIO.observe(n); });
-    } else if (grid) {
-      grid.setAttribute('data-reveal', '');
+      Array.prototype.forEach.call(walkSteps, function (n) { walkIO.observe(n); });
+    } else if (walkTrack) {
+      walkTrack.classList.add('evt-walk__track--flow');
     }
 
     /* Reveal on scroll. IntersectionObserver only, never a scroll listener. */
