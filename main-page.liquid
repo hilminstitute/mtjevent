@@ -429,12 +429,11 @@
   /* Sized by height rather than width, so a short phone never pushes the
      description off the bottom of the pinned stage. */
   .evt-guest__media {
+    position: relative;
     height: clamp(150px, 33svh, 400px);
     aspect-ratio: 3 / 4;
     width: auto; max-width: 100%;
-    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-dim) 100%);
   }
-  .evt-guest__media img { mix-blend-mode: multiply; }
   .evt-guest__initials {
     height: 100%;
     display: grid; place-content: center;
@@ -443,6 +442,32 @@
     font-family: "Anton", system-ui, sans-serif;
     font-size: clamp(2.6rem, 7vw, 4.4rem);
     letter-spacing: .02em;
+  }
+  /* Portraits are supplied as cut-outs with no studio background. The green
+     panel is shorter than the frame and anchored to the bottom, so the top of
+     the photo rises above it instead of sitting inside a full tile. --evt-rise
+     is the panel's share of the frame height: raise it if a speaker's head
+     sits low in their crop, lower it if it sits high, so the panel edge lands
+     mid-head as in the reference. */
+  .evt-guest__portrait {
+    position: relative;
+    height: 100%;
+    isolation: isolate;
+    --evt-rise: .72;
+  }
+  .evt-guest__portrait::before {
+    content: "";
+    position: absolute; z-index: 0;
+    left: 0; right: 0; bottom: 0;
+    height: calc(var(--evt-rise) * 100%);
+    background: var(--moss);
+  }
+  .evt-guest__portrait img {
+    position: relative; z-index: 1;
+    display: block;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    object-position: bottom center;
   }
   .evt-guest__label {
     position: static;
@@ -916,9 +941,11 @@
               {%- assign rots = '-2deg,1.5deg,-1deg,2deg,-1.5deg' | split: ',' -%}
               <article class="evt-guest" data-speaker-card>
                 <div class="evt-guest__frame">
-                  <div class="evt-duo evt-guest__media">
+                  <div class="evt-guest__media">
                     {%- if f[2] != blank -%}
-                      <img src="{{ f[2] }}&width=800" alt="{{ full | escape }}" width="900" height="1200" loading="lazy">
+                      <div class="evt-guest__portrait">
+                        <img src="{{ f[2] }}&width=800" alt="{{ full | escape }}" width="900" height="1200" loading="lazy">
+                      </div>
                     {%- else -%}
                       {%- comment -%} No portrait yet, so the tile carries the slot number rather than repeating the name. {%- endcomment -%}
                       <div class="evt-guest__initials" role="img" aria-label="Portrait of {{ full | escape }} to follow">0{{ forloop.index }}</div>
