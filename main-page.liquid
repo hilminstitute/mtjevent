@@ -1,0 +1,1390 @@
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="page-width page-width--narrow section-{{ section.id }}-padding">
+  <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    {{ page.title | escape }}
+  </h1>
+  <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    {{ page.content }}
+  </div>
+</div>
+
+{%- comment -%}
+  ==========================================================================
+  ONE EVENING 26 :: EVENT LANDING PAGE
+  Nothing above this comment was changed. This block is self-contained and
+  uses no section settings, so the schema stays as it was.
+
+  ALL CONTENT LIVES IN THE LIQUID BLOCK BELOW. Lists use "|" between items
+  and "~" between the fields of one item, so everything stays editable in
+  one place.
+
+  Colour system (never hardcode a hex in the markup, use the tokens):
+    ink #071108 / forest #0E2B18 / moss #17512E      dark surfaces
+    paper #F4F1E6 / paper-dim #E5E0CD                light surfaces
+    acid #D8FF3E  primary accent   sun #FFC629  tickets and badges
+    lime #7BE85A  used twice on the whole page, no more
+  ==========================================================================
+{%- endcomment -%}
+
+{%- liquid
+  # ---------- Identity ------------------------------------------------
+  assign ev_handle    = '#YES26'
+  assign ev_mark_1    = 'YOUTH'
+  assign ev_mark_2    = 'EMPOWERMENT'
+  assign ev_mark_3    = 'SUMMIT'
+  assign ev_year      = '26'
+  assign ev_short     = 'Y.E.S.'
+  assign ev_full_name = 'Youth Empowerment Summit 26'
+  assign ev_date      = '14TH NOVEMBER 2026'
+  assign ev_time      = '6:30 PM'
+  assign ev_venue     = 'EXPO CENTRE, AUDITORIUM 1'
+  assign ev_city      = 'LAHORE'
+
+  assign ev_booking_url = 'https://your-booking-site.com/yes26'
+  assign ev_cta         = 'Book your seat'
+
+  # ---------- Speakers :: name~topic~photo~description -------------------
+  # TODO_CONTENT: paste a portrait URL into the third field of a row to swap
+  # that speaker's number tile for a photograph. Nothing else needs changing.
+  assign ev_speakers = 'Molana Yousaf Khan Sb~Empowerment Through Real Role Models~~Learn who truly deserves to be followed in a world of misleading influencers and personalities.|Faisal Azhar Sir~Empowerment Through Entrepreneurship~~Discover how to build financial strength through halal business without compromising your Deen.|Nasir Abbas Sir~Real Women Empowerment~~Discover the true power and purpose of a Muslim woman in shaping families, generations and society.|Molana Attique Sb~Empowerment Through the Qur’an~~Learn how living by the Qur’an can transform your choices, character and future.|Molana Tariq Jameel Sb~Deen as a Lifestyle~~Learn how to make Islam a living part of every role and every aspect of your daily life.' | split: '|'
+
+  # ---------- Hook one -------------------------------------------------
+  assign ev_hook1_quote   = 'Indeed, Allah does not change the condition of a people until they change what is within themselves.'
+  assign ev_hook1_ref     = 'Qur’an 13:11'
+  assign ev_hook1_script  = 'Your next chapter starts with the choice you make today.'
+  assign ev_video_poster  = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC9036_2_JPG.jpg?v=1788189380'
+  assign ev_video_url     = ''
+
+  # ---------- What you walk out with -----------------------------------
+  # This section reads ev_speakers above: one topic, its description and the
+  # speaker who gives it, revealed one at a time as the section is scrolled.
+
+  # ---------- Tickets :: tier~price~inclusions;~url~featured~badge~note -
+  assign ev_tickets = 'EARLY BIRD~PKR 1,500~Entry to all five sessions;Tea and refreshments in the courtyard~~yes~Save PKR 500~Price goes to PKR 2,000 after 14th October' | split: '|'
+
+  # ---------- About the event ------------------------------------------
+  assign ev_about_eyebrow = 'What is the summit?'
+  assign ev_about_p1 = 'Is a one-evening national gathering where 1,000+ young Pakistanis are shown, not told, that a life built on the Quran is the most powerful life available to them.'
+  assign ev_about_p2 = 'It brings together the country’s most credible scholars, entrepreneurs and educators for one high-energy evening built entirely around one question: how does a young Muslim move from confusion to direction? It ends not with applause, but with a decision — every attendee leaves enrolled in something.'
+
+
+  # ---------- Gallery one :: filename~alt --------------------------------
+  # Nine photographs from the hall. The first, fifth and eighth run double
+  # width, so put your most horizontal shots in those three positions.
+  assign ev_gallery1 = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/WhatsApp_Image_2026-08-31_at_9.50.29_AM.jpg?v=1788197957~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8834_2_JPG.jpg?v=1788194407~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8818_2_JPG.jpg?v=1788016514~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8802_2_JPG.jpg?v=1788016514~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8697_2_JPG.jpg?v=1788016511~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8816_2_JPG.jpg?v=1788016505~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8900_2_JPG.jpg?v=1788016503~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8767_2_JPG.jpg?v=1788197839~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8802_2_JPG.jpg?v=1788016514~A moment from the graduation ceremony' | split: '|'
+
+  # ---------- The organiser --------------------------------------------
+  assign ev_host_eyebrow  = 'Who is behind it'
+  assign ev_host_name     = 'HILM INSTITUTE'
+  assign ev_host_p1 = 'HILM Institute was founded by Hazrat Dr. Shahid Avais Sahab (RA) to teach Islamic sciences to people the traditional route had quietly written off — students with degrees to finish, professionals with jobs to keep, parents with no free evenings. Our mission is to nurture hearts that are connected to Allah ﷻ, shaped by the character and teachings of the Prophet ﷺ and guided by the Quran, Sunnah and Tazkiyah al-Nafs. Our vision is what this summit is for: to form visionary leaders who can carry the renaissance of Islam in their own generation. We teach Dars-e-Nizami and Alima programmes across our Lahore campuses and online to students in the UK, the USA and the UAE. This summit is the front door.'
+  assign ev_host_photo    = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DJI_20260823010913_0042_D_3_JPG.jpg?v=1788016491'
+
+  # ---------- Film ------------------------------------------------------
+  # TODO_CONTENT: paste the YouTube video id here, the part after "v=" in the
+  # watch URL, for example dQw4w9WgXcQ. The section stays hidden until it is
+  # filled in. Browsers only allow autoplay when a video is muted, so it
+  # starts muted with the controls left on.
+  assign ev_film_id    = ''
+  assign ev_film_title = 'Youth Empowerment Summit 26'
+
+  # ---------- Gallery two :: filename~alt --------------------------------
+  assign ev_gallery2 = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC03913_2_JPG.jpg?v=1788016470~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8834_2_JPG.jpg?v=1788194407~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC03909_2_JPG.jpg?v=1788016460~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8856_2_JPG.jpg?v=1788016454~A moment from the graduation ceremony' | split: '|'
+
+  # ---------- Footer :: label~url ---------------------------------------
+  assign ev_org        = 'HILM INSTITUTE'
+  assign ev_rights     = 'All rights reserved.'
+  assign ev_socials    = 'Instagram~https://www.instagram.com/hilminstitute/|YouTube~https://youtube.com/@hilmtv?si=6HB_JaIPtYP8tL7v/|Facebook~https://www.facebook.com/HILMInstitute/' | split: '|'
+
+  # ---------- Imagery ----------------------------------------------------
+  # Every image is a full Shopify CDN URL. To swap one, replace the URL in
+  # place and update the description after the "~" so it matches the photo.
+  # Set ev_duotone to true to put the green and yellow tint back on the two
+  # galleries. Photographs run in full colour while this is false.
+  assign ev_duotone = false
+-%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@700&family=Inter+Tight:wght@400;500;600;700&display=swap">
+
+<style>
+  /* Theme header and footer are hidden on this page. */
+  .shopify-section-group-header-group,
+  .shopify-section-group-footer-group,
+  #shopify-section-header,
+  #shopify-section-footer,
+  .announcement-bar,
+  body > header,
+  body > footer { display: none !important; }
+
+  /* Hides the page title and rich text block above so the hero opens the page.
+     Delete this rule if you want the page title back. */
+  #shopify-section-{{ section.id }} .page-width--narrow.section-{{ section.id }}-padding { display: none; }
+
+  #shopify-section-{{ section.id }} { padding: 0 !important; margin: 0 !important; }
+
+  html { overflow-x: clip; }
+  body { background: #071108; overflow-x: clip; }
+
+  /* ================= Tokens ================= */
+  .evt {
+    --ink:       #071108;
+    --forest:    #0E2B18;
+    --moss:      #17512E;
+    --paper:     #F4F1E6;
+    --paper-dim: #E5E0CD;
+    --acid:      #D8FF3E;
+    --sun:       #FFC629;
+    --lime:      #7BE85A;
+    --on-dark:   #F4F1E6;
+    --on-light:  #071108;
+
+    --pad-x: clamp(18px, 5vw, 72px);
+    --maxw: 1280px;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+
+    /* Marquee speeds. Higher is slower. */
+    --evt-marquee-a: 68s;
+    --evt-marquee-b: 76s;
+
+    /* One viewport height of scroll per speaker in the pinned sequence. */
+    --evt-step: 100svh;
+
+    --z-grain: 5;
+    --z-sticky: 40;
+
+    font-family: "Inter Tight", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    color: var(--on-dark);
+    background: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .evt *, .evt *::before, .evt *::after { box-sizing: border-box; }
+  .evt img { display: block; max-width: 100%; }
+  .evt :where(p) { margin: 0; }
+
+  .evt-sr {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap; border: 0;
+  }
+
+  .evt-wrap {
+    width: 100%;
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding-inline: var(--pad-x);
+  }
+
+  /* ================= Type ================= */
+  .evt-display {
+    font-family: "Anton", "Arial Narrow", system-ui, sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: .82;
+    letter-spacing: -.02em;
+  }
+  .evt-script { font-family: "Caveat", cursive; font-weight: 700; letter-spacing: 0; }
+
+  .evt-h2 { font-size: clamp(2rem, 6vw, 4.5rem); margin: 0; }
+  .evt-q  { font-size: clamp(1.6rem, 4vw, 3rem); line-height: 1.08; margin: 0; text-wrap: balance; }
+  .evt-body { font-size: clamp(1.33rem, 1.5vw, 1.53rem); line-height: 1.62; }
+  .evt-micro { font-size: 1.15rem; text-transform: uppercase; letter-spacing: .14em; font-weight: 600; }
+
+  /* ================= Buttons ================= */
+  .evt-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    white-space: nowrap;
+    padding: 17px 34px;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    font: 700 1rem/1 "Inter Tight", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: .12em;
+    text-decoration: none; cursor: pointer;
+    transition: transform .15s var(--ease), box-shadow .15s var(--ease), background-color .15s var(--ease);
+  }
+  .evt-btn--acid { background: var(--acid); color: var(--ink); box-shadow: 0 0 0 rgba(0,0,0,0); }
+  .evt-btn--acid:hover { background: var(--sun); transform: translateY(-2px); box-shadow: 0 8px 0 var(--moss); }
+  .evt-btn--forest { background: var(--forest); color: var(--paper); }
+  .evt-btn--forest:hover { background: var(--moss); transform: translateY(-2px); box-shadow: 0 8px 0 var(--paper-dim); }
+  .evt-btn--sun { background: var(--sun); color: var(--ink); }
+  .evt-btn--sun:hover { transform: translateY(-2px); box-shadow: 0 8px 0 var(--forest); }
+  .evt-btn:active { transform: translateY(0); }
+
+  .evt :focus-visible { outline: 3px solid var(--acid); outline-offset: 2px; }
+  .evt-light :focus-visible { outline-color: var(--forest); }
+
+  /* ================= Grain ================= */
+  .evt-grain {
+    position: fixed; inset: 0;
+    z-index: var(--z-grain);
+    pointer-events: none;
+    opacity: .05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ================= Sticker label ================= */
+  .evt-sticker {
+    display: inline-block;
+    padding: 8px 18px 7px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 5px 5px 0 var(--ink);
+    font-family: "Anton", system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .01em;
+    line-height: 1;
+  }
+  .evt-sticker--acid { background: var(--acid); }
+  .evt-sticker--sun  { background: var(--sun); }
+  .evt-light .evt-sticker { box-shadow: 5px 5px 0 var(--forest); }
+
+  /* ================= Texture backdrop ================= */
+  .evt-backdrop {
+    position: absolute; inset: 0;
+    display: grid; place-content: center;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .evt-backdrop span {
+    font-family: "Anton", system-ui, sans-serif;
+    text-transform: uppercase;
+    font-size: clamp(6rem, 26vw, 26rem);
+    line-height: .8;
+    white-space: nowrap;
+    color: var(--moss);
+    opacity: .08;
+  }
+  .evt-backdrop--acid span { color: var(--acid); opacity: .16; }
+  .evt-backdrop--ink span  { color: var(--ink); opacity: .09; }
+
+  /* ================= Photographs =================
+     ev_duotone adds the green and yellow tint. It is off, so the galleries
+     run in full colour and .evt-duo is only a cropping frame. */
+  .evt-duo { position: relative; isolation: isolate; overflow: hidden; background: var(--ink); }
+  .evt-duo img { width: 100%; height: 100%; object-fit: cover; }
+  .evt-duo--tint img { filter: grayscale(1) contrast(1.15); }
+  .evt-duo--tint::before,
+  .evt-duo--tint::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+  .evt-duo--tint::before { background: var(--ink); mix-blend-mode: lighten; }
+  .evt-duo--tint::after  { background: var(--acid); mix-blend-mode: darken; }
+
+  /* ================= Reveal ================= */
+  .evt [data-reveal] > * {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .6s var(--ease), transform .6s var(--ease);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+  .evt [data-reveal].is-in > * { opacity: 1; transform: none; }
+
+  /* ================= Marquee ================= */
+  .evt-marquee {
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+    padding-block: clamp(14px, 2vw, 26px);
+    transform: skewY(-1.2deg);
+    border-block: 2px solid var(--moss);
+  }
+  .evt-marquee__row { display: flex; width: max-content; will-change: transform; }
+  .evt-marquee__row--a { animation: evt-slide var(--evt-marquee-a) linear infinite; }
+  .evt-marquee__row--b { animation: evt-slide var(--evt-marquee-b) linear infinite reverse; margin-top: -.1em; }
+  .evt-marquee__track { display: flex; flex-shrink: 0; }
+  .evt-marquee__item {
+    font-family: "Anton", system-ui, sans-serif;
+    text-transform: uppercase;
+    font-size: clamp(1.6rem, 4.6vw, 3.4rem);
+    line-height: 1;
+    padding-inline: .28em;
+    color: var(--on-dark);
+  }
+  .evt-marquee__item:nth-child(odd) { color: var(--acid); }
+  @keyframes evt-slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ================= 1. Hero ================= */
+  .evt-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--ink);
+    min-height: 100svh;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding-block: clamp(20px, 4vh, 44px) clamp(20px, 4vh, 40px);
+  }
+  .evt-hero__eyebrow {
+    text-align: center;
+    color: var(--acid);
+    margin-bottom: clamp(12px, 2vh, 24px);
+    font-size: clamp(1.55rem, 3.4vw, 2.3rem);
+    letter-spacing: .2em;
+    font-weight: 700;
+  }
+  .evt-hero__inner { position: relative; z-index: 1; margin-block: auto; text-align: center; max-width: none; --pad-x: clamp(10px, 2vw, 28px); }
+  .evt-hero__mark { margin: 0; min-width: 0; }
+  /* The script below measures the longest line and sets --evt-fit so the mark
+     fills the column exactly, whatever font actually loads. The value here is
+     the no-script fallback: deliberately conservative, since a guess that is
+     too wide is what breaks a word across two lines. */
+  .evt-hero__stack {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    text-align: left;
+    font-size: var(--evt-fit, max(2.4rem, min(23vw, 26vh)));
+  }
+  /* One word per line, always. The host theme sets overflow-wrap: break-word
+     globally, which would otherwise split EMPOWERMENT mid-word on a phone. */
+  .evt-hero__line {
+    display: block;
+    width: fit-content;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    hyphens: none;
+    color: var(--on-dark);
+  }
+  .evt-hero__year { color: var(--acid); display: inline-block; font-size: 1.12em; margin-left: .04em; vertical-align: baseline; }
+
+  /* Date, time and place as one solid block, the loudest object after the mark. */
+  .evt-hero__facts {
+    margin-top: clamp(20px, 3vh, 34px);
+    display: inline-flex;
+    flex-direction: column;
+    background: var(--acid);
+    color: var(--ink);
+    box-shadow: 10px 10px 0 var(--moss);
+    text-align: center;
+  }
+  .evt-fact {
+    font-family: "Anton", "Arial Narrow", system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    line-height: 1;
+    font-size: clamp(1.5rem, 4.2vw, 2.3rem);
+    padding: 15px clamp(18px, 4vw, 34px);
+    border-bottom: 3px solid var(--ink);
+  }
+  .evt-fact:last-child { border-bottom: 0; }
+
+  .evt-marquee--hero {
+    /* Slowest band on the page, so the hero reads as still. */
+    --evt-marquee-a: 104s;
+    padding-top: clamp(20px, 3.5vh, 38px);
+    border-block: 0;
+    border-top: 2px solid var(--moss);
+    background: none;
+  }
+  .evt-marquee--hero .evt-marquee__item { font-size: clamp(1.05rem, 2.5vw, 1.8rem); }
+
+  /* ================= 2. Speakers ================= */
+  .evt-speakers { background: var(--ink); padding-block: clamp(56px, 9vh, 112px); }
+  .evt-speakers__head { text-align: center; margin-bottom: clamp(26px, 4vh, 46px); }
+
+  .evt-speakers__grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 74%;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--pad-x);
+    padding: 8px var(--pad-x) 34px;
+    margin-inline: calc(var(--pad-x) * -1);
+  }
+  .evt-guest { scroll-snap-align: start; min-width: 0; }
+  .evt-guest__frame { position: relative; }
+  .evt-guest__media {
+    position: relative;
+    aspect-ratio: 3 / 4;
+  }
+  .evt-guest__initials {
+    height: 100%;
+    display: grid; place-content: center;
+    background: var(--moss);
+    color: var(--acid);
+    font-family: "Anton", system-ui, sans-serif;
+    font-size: clamp(3rem, 9vw, 5rem);
+    letter-spacing: .02em;
+  }
+  /* Portraits are supplied as cut-outs with no studio background, so the green
+     block is shorter than the frame and anchored to the bottom: the top of the
+     photo rises above it instead of sitting inside a full tile. --evt-rise is
+     the block's share of the frame height. Raise it if a speaker's head sits
+     low in their own crop, lower it if it sits high, so the edge lands across
+     the middle of the head. */
+  .evt-guest__portrait {
+    position: relative;
+    height: 100%;
+    isolation: isolate;
+    --evt-rise: .72;
+  }
+  .evt-guest__portrait::before {
+    content: "";
+    position: absolute; z-index: 0;
+    left: 0; right: 0; bottom: 0;
+    height: calc(var(--evt-rise) * 100%);
+    background: var(--moss);
+  }
+  .evt-guest__portrait img {
+    position: relative; z-index: 1;
+    display: block;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+  }
+  .evt-guest__label {
+    position: absolute; left: 50%; bottom: 0; z-index: 2;
+    transform: translate(-50%, 50%) rotate(var(--rot, -2deg));
+    max-width: calc(100% + 24px);
+    font-size: clamp(1.2rem, 2.6vw, 1.45rem);
+    line-height: 1.08;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .evt-guest__label b { font-weight: 400; }
+
+  /* ================= 3 + 6. Hooks ================= */
+  .evt-hook { padding-block: clamp(64px, 11vh, 132px); text-align: center; }
+  .evt-hook--dark { background: var(--ink); }
+  .evt-hook--light { background: var(--paper); color: var(--on-light); }
+  .evt-hook__q { max-width: 22ch; margin-inline: auto; }
+  .evt-hook__q--verse { max-width: 26ch; }
+  .evt-hook--dark .evt-hook__q { color: var(--on-dark); }
+  .evt-hook__ref { margin-top: 20px; color: var(--acid); letter-spacing: .18em; }
+  .evt-hook__line {
+    margin-top: clamp(26px, 4vh, 44px);
+    color: var(--acid);
+    font-size: clamp(1.7rem, 4vw, 2.9rem);
+    line-height: 1.12;
+    max-width: 24ch;
+    margin-inline: auto;
+  }
+  .evt-hook__script { color: var(--acid); font-size: 1.35em; display: inline-block; line-height: 1; padding-bottom: .08em; }
+  .evt-hook--light .evt-hook__accent { color: var(--forest); }
+  .evt-hook__support { margin-top: 22px; max-width: 46ch; margin-inline: auto; color: var(--forest); font-size: clamp(1.4rem, 1.7vw, 1.65rem); }
+  .evt-hook__cta { margin-top: clamp(30px, 5vh, 48px); }
+
+  .evt-video {
+    margin: clamp(40px, 7vh, 72px) auto 0;
+    max-width: 560px;
+    border: 6px solid var(--acid);
+    box-shadow: 14px 14px 0 var(--moss);
+    position: relative;
+    display: block;
+    background: var(--ink);
+  }
+  .evt-video__media { aspect-ratio: 4 / 5; }
+  .evt-video__play {
+    position: absolute; inset: 0; margin: auto;
+    width: 84px; height: 84px;
+    display: grid; place-content: center;
+    border-radius: 999px;
+    background: var(--acid); color: var(--ink);
+    font-size: 1.6rem; line-height: 1;
+    border: 0;
+  }
+
+  /* ================= 5. What you walk out with =================
+     One topic at a time, centred. The section pins for a screen of scroll per
+     topic; the markers behind the stage are what the observer watches, so the
+     sequence needs no scroll listener. */
+  .evt-walk { background: var(--paper); color: var(--on-light); }
+  .evt-walk__track { position: relative; height: calc(6 * var(--evt-step)); }
+  .evt-walk__stage {
+    position: sticky; top: 0;
+    height: 100svh;
+    display: grid; align-content: center;
+    overflow: hidden;
+  }
+  .evt-walk__head { text-align: center; margin-bottom: clamp(20px, 3.6vh, 44px); }
+  .evt-walk__steps { position: absolute; inset: 0; z-index: -1; }
+  .evt-walk__step { display: block; height: var(--evt-step); }
+
+  /* Every card shares one grid cell, so only the active one is seen. */
+  .evt-walk__deck { display: grid; justify-items: center; }
+  .evt-walk__item {
+    grid-area: 1 / 1;
+    width: 100%;
+    max-width: 42ch;
+    text-align: center;
+    opacity: 0; visibility: hidden;
+    transform: translateY(26px);
+    transition: opacity .5s var(--ease), transform .5s var(--ease), visibility 0s linear .5s;
+  }
+  .evt-walk__item.is-shown {
+    opacity: 1; visibility: visible; transform: none;
+    transition: opacity .5s var(--ease), transform .5s var(--ease), visibility 0s;
+  }
+  .evt-walk__topic {
+    font-size: clamp(1.85rem, 5.2vw, 3.4rem);
+    color: var(--forest);
+    text-wrap: balance;
+  }
+  .evt-walk__desc {
+    margin-top: clamp(15px, 2.4vh, 26px);
+    font-size: clamp(1.22rem, 1.9vw, 1.55rem);
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+  .evt-walk__who {
+    margin-top: clamp(16px, 2.6vh, 28px);
+    color: var(--forest);
+    letter-spacing: .16em;
+  }
+  .evt-walk__dots { display: flex; justify-content: center; gap: 9px; margin-top: clamp(22px, 3.6vh, 42px); }
+  .evt-walk__dot { width: 30px; height: 4px; background: var(--paper-dim); transition: background-color .4s var(--ease); }
+  .evt-walk__dot.is-on { background: var(--forest); }
+
+  /* Fallback for reduced motion, no script, or no observer: a plain list with
+     every topic visible and nothing pinned. */
+  .evt-walk__track--flow { height: auto; }
+  .evt-walk__track--flow .evt-walk__stage {
+    position: static; height: auto; overflow: visible;
+    padding-block: clamp(64px, 11vh, 132px);
+  }
+  .evt-walk__track--flow .evt-walk__steps,
+  .evt-walk__track--flow .evt-walk__dots { display: none; }
+  .evt-walk__track--flow .evt-walk__deck { grid-auto-flow: row; gap: clamp(44px, 7vh, 84px); }
+  .evt-walk__track--flow .evt-walk__item {
+    grid-area: auto; opacity: 1; visibility: visible; transform: none;
+  }
+
+  /* ================= The film ================= */
+  .evt-film { background: var(--acid); color: var(--ink); padding-block: clamp(64px, 11vh, 132px); }
+  .evt-film__frame {
+    max-width: 900px; margin-inline: auto;
+    border: 6px solid var(--ink);
+    box-shadow: 14px 14px 0 var(--forest);
+    background: var(--ink);
+  }
+  .evt-film__frame iframe {
+    display: block; width: 100%; aspect-ratio: 16 / 9; border: 0;
+  }
+
+  /* ================= 7. Tickets ================= */
+  .evt-tickets { position: relative; isolation: isolate; background: var(--paper); color: var(--on-light); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; }
+  .evt-tickets__head { position: relative; z-index: 1; text-align: center; margin-bottom: clamp(40px, 6vh, 68px); }
+  .evt-tickets__grid {
+    position: relative; z-index: 1;
+    display: grid; gap: 30px;
+    max-width: 480px; margin-inline: auto;
+  }
+
+  .evt-ticket {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: var(--paper);
+    border: 3px solid var(--forest);
+  }
+  .evt-ticket--featured { background: var(--sun); border-color: var(--ink); }
+
+  .evt-ticket__strip {
+    position: relative;
+    height: 52px;
+    flex: 0 0 auto;
+    border-bottom: 3px dashed var(--forest);
+    background-image: repeating-linear-gradient(90deg, var(--forest) 0 3px, transparent 3px 8px, var(--forest) 8px 10px, transparent 10px 17px);
+    background-size: auto 22px;
+    background-position: center;
+    background-repeat: repeat-x;
+    background-origin: content-box;
+    background-clip: content-box;
+    padding-inline: 40px;
+  }
+  .evt-ticket--featured .evt-ticket__strip {
+    border-bottom-color: var(--ink);
+    background-image: repeating-linear-gradient(90deg, var(--ink) 0 3px, transparent 3px 8px, var(--ink) 8px 10px, transparent 10px 17px);
+  }
+  .evt-ticket__notch {
+    position: absolute; top: 100%;
+    width: 26px; height: 26px;
+    border-radius: 999px;
+    background: var(--paper);
+    border: 3px solid var(--forest);
+  }
+  .evt-ticket__notch--l { left: 0; transform: translate(-50%, -50%); }
+  .evt-ticket__notch--r { right: 0; transform: translate(50%, -50%); }
+  .evt-ticket--featured .evt-ticket__notch { border-color: var(--ink); }
+
+  .evt-ticket__body {
+    min-width: 0;
+    flex: 1;
+    display: flex; flex-direction: column;
+    padding: clamp(26px, 3vw, 42px);
+  }
+  .evt-ticket__badge {
+    align-self: flex-start;
+    background: var(--forest); color: var(--paper);
+    padding: 8px 15px;
+    font-size: 1.05rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
+    margin-bottom: 20px;
+  }
+  .evt-ticket--featured .evt-ticket__badge { background: var(--ink); color: var(--sun); }
+  .evt-ticket__tier { font-size: clamp(1.7rem, 3.4vw, 2.6rem); margin: 0; color: var(--forest); }
+  .evt-ticket--featured .evt-ticket__tier { color: var(--ink); }
+  .evt-ticket__price { font-size: clamp(2.8rem, 6.5vw, 4.4rem); margin: 12px 0 0; color: var(--ink); }
+  .evt-ticket__note {
+    margin-top: 14px;
+    padding: 12px 15px;
+    border: 2px solid var(--ink);
+    font-size: 1.2rem; line-height: 1.45; font-weight: 600;
+  }
+  .evt-ticket__incl { list-style: none; margin: 28px 0 34px; padding: 0; display: grid; gap: 13px; }
+  .evt-ticket__incl li { display: flex; gap: 12px; font-size: 1.31rem; line-height: 1.45; }
+  .evt-ticket__incl li > span:first-child { flex: 0 0 auto; font-weight: 700; color: var(--forest); }
+  .evt-ticket--featured .evt-ticket__incl li > span:first-child { color: var(--ink); }
+  .evt-ticket__incl li > span:last-child { min-width: 0; }
+  .evt-ticket__cta { margin-top: auto; }
+
+  /* ================= 9. About ================= */
+  .evt-about { background: var(--forest); padding-block: clamp(64px, 11vh, 132px); }
+  .evt-about__grid { display: grid; gap: clamp(32px, 5vw, 72px); }
+  .evt-about__mark { font-size: clamp(3rem, 11vw, 7rem); color: var(--on-dark); margin: 14px 0 0; }
+  .evt-about__mark em { font-style: normal; color: var(--acid); }
+  .evt-about__copy p { max-width: 62ch; color: var(--on-dark); }
+  .evt-about__copy p + p { margin-top: 18px; }
+
+  /* ================= 10 + 13. Galleries ================= */
+  .evt-gallery { background: var(--ink); padding-block: clamp(48px, 8vh, 96px) clamp(48px, 8vh, 88px); }
+  .evt-mosaic {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: dense;
+    gap: 4px;
+  }
+  .evt-mosaic .evt-duo { aspect-ratio: 3 / 4; }
+  .evt-mosaic .evt-duo--wide { grid-column: span 2; aspect-ratio: 3 / 2; }
+  .evt-gallery__cta { text-align: center; margin-top: clamp(32px, 5vh, 56px); }
+
+  .evt-strip__top { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
+  .evt-strip__nav { display: flex; gap: 10px; flex-shrink: 0; }
+  .evt-strip__btn {
+    width: 52px; height: 52px; border-radius: 999px;
+    border: 2px solid var(--moss); background: transparent; color: var(--acid);
+    font-size: 1.35rem; line-height: 1; cursor: pointer;
+    transition: background-color .2s var(--ease), border-color .2s var(--ease);
+  }
+  .evt-strip__btn:hover { background: var(--moss); border-color: var(--acid); }
+  .evt-strip {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 74%;
+    gap: 4px; overflow-x: auto; scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--pad-x);
+    padding-inline: var(--pad-x); margin-inline: calc(var(--pad-x) * -1);
+    padding-bottom: 12px;
+  }
+  .evt-strip .evt-duo { scroll-snap-align: start; aspect-ratio: 3 / 4; }
+
+  /* ================= 11. Organiser ================= */
+  .evt-host { background: var(--paper); color: var(--on-light); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; }
+  .evt-host__grid { display: grid; gap: clamp(32px, 5vw, 64px); align-items: center; }
+  .evt-host__eyebrow { font-size: clamp(1.6rem, 3.4vw, 2.4rem); color: var(--forest); display: block; margin-bottom: 14px; }
+  .evt-host__copy { margin-top: 30px; }
+  .evt-host__copy p { max-width: 58ch; }
+  .evt-host__copy p + p { margin-top: 16px; }
+  .evt-host__copy strong { color: var(--forest); }
+  .evt-host__media { aspect-ratio: 4 / 5; }
+
+  /* ================= 12. Cause ================= */
+  .evt-cause { position: relative; isolation: isolate; background: var(--acid); color: var(--ink); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; text-align: center; }
+  .evt-cause__inner { position: relative; z-index: 1; }
+  .evt-cause__intro { max-width: 58ch; margin: 28px auto 0; }
+  .evt-cause__list { list-style: none; margin: clamp(36px, 6vh, 56px) auto 0; padding: 0; max-width: 62ch; display: grid; gap: 22px; text-align: left; }
+  .evt-cause__list li { border-top: 2px solid var(--ink); padding-top: 16px; line-height: 1.55; }
+  .evt-cause__list b { font-family: "Anton", system-ui, sans-serif; font-weight: 400; text-transform: uppercase; margin-right: .4em; }
+  .evt-cause__close { margin-top: clamp(40px, 6vh, 64px); font-size: clamp(1.8rem, 6vw, 4rem); }
+
+  /* ================= Booking / seat map ================= */
+  .evt-book { background: var(--ink); padding-block: clamp(64px, 11vh, 132px); }
+  .evt-book__panel {
+    border: 3px solid var(--moss);
+    background: var(--forest);
+    padding: clamp(28px, 4vw, 56px);
+    display: grid; gap: clamp(32px, 4vw, 56px);
+    align-items: center;
+  }
+  .evt-book__note { margin-top: 20px; max-width: 46ch; font-size: 1.29rem; line-height: 1.6; color: var(--on-dark); opacity: .8; }
+  .evt-seats { display: grid; grid-template-columns: repeat(27, 1fr); gap: 3px; margin-bottom: 18px; }
+  .evt-seat {
+    aspect-ratio: 1; border-radius: 2px;
+    background: rgba(244, 241, 230, .16);
+    transform: scale(.4); opacity: 0;
+    transition: transform .5s var(--ease), opacity .5s var(--ease), background-color .5s var(--ease);
+    transition-delay: calc(var(--i) * 6ms);
+  }
+  .is-in .evt-seat { transform: none; opacity: 1; }
+  .is-in .evt-seat--taken { background: var(--acid); }
+  .evt-seats__legend { display: flex; flex-wrap: wrap; gap: 18px; }
+  .evt-seats__key { display: inline-flex; align-items: center; gap: 8px; }
+  .evt-seats__sw { width: 11px; height: 11px; border-radius: 2px; background: rgba(244, 241, 230, .16); }
+  .evt-seats__sw--taken { background: var(--acid); }
+
+  /* ================= 14. Footer ================= */
+  .evt-footer { background: var(--ink); border-top: 2px solid var(--moss); padding-block: 40px; }
+  .evt-footer__grid { display: grid; gap: 22px; align-items: center; text-align: center; }
+  .evt-footer__mark { font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--on-dark); }
+  .evt-footer__mark em { font-style: normal; color: var(--acid); }
+  .evt-footer__socials { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  /* inline-flex plus min-height keeps the link a 44px tap target without
+     stretching the underline past the word */
+  .evt-footer__socials a {
+    display: inline-flex; align-items: center; min-height: 44px;
+    color: var(--on-dark); text-decoration: none;
+    border-bottom: 2px solid var(--moss); padding-bottom: 2px;
+  }
+  .evt-footer__socials a:hover { color: var(--acid); border-color: var(--acid); }
+  .evt-footer__rights { color: var(--on-dark); opacity: .75; font-size: 1.17rem; }
+
+  /* ================= 15. Sticky mobile CTA ================= */
+  .evt-sticky {
+    position: fixed; inset: auto 0 0 0;
+    z-index: var(--z-sticky);
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    background: var(--acid); color: var(--ink);
+    padding: 12px clamp(14px, 4vw, 24px);
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    border-top: 3px solid var(--ink);
+    transform: translateY(110%);
+    transition: transform .35s var(--ease);
+  }
+  .evt-sticky.is-visible { transform: none; }
+  .evt-sticky__when { font-weight: 700; font-size: 1.2rem; letter-spacing: .04em; text-transform: uppercase; }
+  .evt-sticky .evt-btn { padding: 12px 22px; background: var(--ink); color: var(--acid); }
+  .evt-sticky .evt-btn:hover { background: var(--forest); box-shadow: none; transform: none; }
+  @media (max-width: 520px) { .evt-sticky__time { display: none; } }
+  @media (min-width: 1024px) { .evt-sticky { display: none; } }
+
+  /* ================= Responsive ================= */
+  @media (min-width: 640px) {
+    .evt-video { max-width: 720px; }
+    .evt-video__media { aspect-ratio: 1 / 1; }
+    .evt-hero__facts { flex-direction: row; align-items: stretch; }
+    .evt-fact { border-bottom: 0; border-right: 3px solid var(--ink); }
+    .evt-fact:last-child { border-right: 0; }
+    .evt-speakers__grid { grid-auto-columns: 44%; }
+    .evt-strip { grid-auto-columns: 44%; }
+    .evt-footer__grid { grid-template-columns: auto 1fr auto; text-align: left; }
+    .evt-footer__socials { justify-content: center; }
+    .evt-footer__rights { text-align: right; }
+  }
+
+  @media (min-width: 1024px) {
+    /* All five speakers side by side, no pinning and no sequence. */
+    .evt-speakers__grid {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: clamp(16px, 1.8vw, 26px);
+      overflow: visible;
+      padding: 0;
+      margin-inline: 0;
+    }
+    /* Five narrow columns wrap these names onto three or four lines, so the
+       sticker sits in the flow here rather than hanging off the photo. */
+    .evt-guest__frame { display: flex; flex-direction: column; align-items: center; }
+    .evt-guest__media { width: 100%; }
+    .evt-guest__label {
+      position: static;
+      transform: rotate(var(--rot, -2deg));
+      margin-top: -20px;
+      max-width: 100%;
+      font-size: clamp(1rem, 1.15vw, 1.2rem);
+    }
+
+    .evt-mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .evt-ticket--featured { transform: rotate(-1.2deg); }
+    .evt-about__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
+    .evt-host__grid { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); }
+    .evt-host__media { margin-right: calc(var(--pad-x) * -1 - ((100vw - var(--maxw)) / 2)); aspect-ratio: 5 / 4; }
+    .evt-book__panel { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); }
+    .evt-strip { grid-auto-columns: 32%; }
+  }
+
+  @media (max-width: 400px) {
+    .evt-btn { padding: 15px 20px; font-size: .92rem; letter-spacing: .06em; }
+    .evt-micro { font-size: 1rem; letter-spacing: .1em; }
+    .evt-marquee__item { font-size: 1.4rem; }
+    .evt-sticky { gap: 10px; padding-inline: 12px; }
+    .evt-sticky__when { font-size: .95rem; letter-spacing: .02em; }
+    .evt-sticky .evt-btn { padding: 12px 14px; font-size: .86rem; letter-spacing: .04em; }
+  }
+
+  /* Hero year parallax, scroll driven, no scroll listener. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) and (min-width: 640px) {
+      .evt-hero__year {
+        animation: evt-drift linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 90%;
+      }
+      @keyframes evt-drift { to { transform: translateY(-14%); } }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .evt *, .evt *::before, .evt *::after { animation: none !important; transition-duration: .01ms !important; }
+    .evt [data-reveal] > *, .evt-seat { opacity: 1; transform: none; }
+    .evt-seat--taken { background: var(--acid); }
+    .evt-marquee__row { animation: none; }
+    .evt-sticky { transform: none; }
+    /* The pinned walk out sequence collapses to a plain, fully visible list. */
+    .evt-walk__track { height: auto; }
+    .evt-walk__stage { position: static; height: auto; overflow: visible; padding-block: clamp(64px, 11vh, 132px); }
+    .evt-walk__steps, .evt-walk__dots { display: none; }
+    .evt-walk__deck { grid-auto-flow: row; gap: clamp(44px, 7vh, 84px); }
+    .evt-walk__item { grid-area: auto; opacity: 1; visibility: visible; transform: none; }
+  }
+</style>
+
+<noscript>
+  <style>
+    .evt [data-reveal] > * { opacity: 1; transform: none; }
+    .evt .evt-seat { opacity: 1; transform: none; }
+    .evt .evt-seat--taken { background: var(--acid); }
+    .evt .evt-walk__track { height: auto; }
+    .evt .evt-walk__stage { position: static; height: auto; overflow: visible; padding-block: clamp(64px, 11vh, 132px); }
+    .evt .evt-walk__steps, .evt .evt-walk__dots { display: none; }
+    .evt .evt-walk__deck { grid-auto-flow: row; gap: clamp(44px, 7vh, 84px); }
+    .evt .evt-walk__item { grid-area: auto; opacity: 1; visibility: visible; transform: none; }
+  </style>
+</noscript>
+
+{%- capture ev_marquee -%}
+  <div class="evt-marquee" aria-hidden="true">
+    <div class="evt-marquee__row evt-marquee__row--a">
+      {%- for t in (1..2) -%}
+        <div class="evt-marquee__track">
+          {%- for i in (1..6) -%}
+            <span class="evt-marquee__item">{{ ev_full_name | upcase }} ///</span>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="evt-marquee__row evt-marquee__row--b">
+      {%- for t in (1..2) -%}
+        <div class="evt-marquee__track">
+          {%- for i in (1..6) -%}
+            <span class="evt-marquee__item">{{ ev_date }} /// {{ ev_time }} /// {{ ev_city }} ///</span>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endcapture -%}
+
+{%- capture ev_marquee_hero -%}
+  <div class="evt-marquee evt-marquee--hero" aria-hidden="true">
+    <div class="evt-marquee__row evt-marquee__row--a">
+      {%- for t in (1..2) -%}
+        <div class="evt-marquee__track">
+          {%- for i in (1..4) -%}
+            <span class="evt-marquee__item">{{ ev_full_name | upcase }} /// {{ ev_date }} /// {{ ev_time }} /// {{ ev_venue }} // {{ ev_city }} ///</span>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endcapture -%}
+
+<div class="evt" id="evt-{{ section.id }}">
+  <div class="evt-grain" aria-hidden="true"></div>
+
+  {%- comment -%} ============ 1. Hero ============ {%- endcomment -%}
+  <section class="evt-hero" aria-labelledby="evt-h1-{{ section.id }}">
+    <div class="evt-backdrop" aria-hidden="true"><span>{{ ev_mark_2 }}{{ ev_mark_3 }}</span></div>
+
+    <div class="evt-wrap evt-hero__inner">
+      <p class="evt-micro evt-hero__eyebrow">{{ ev_handle }}</p>
+
+      <h1 class="evt-hero__mark" id="evt-h1-{{ section.id }}">
+        <span class="evt-sr">{{ ev_full_name }}, {{ ev_date }}, {{ ev_time }}, {{ ev_venue }}, {{ ev_city }}</span>
+        <span class="evt-hero__stack evt-display" aria-hidden="true">
+          <span class="evt-hero__line">{{ ev_mark_1 }}</span>
+          <span class="evt-hero__line">{{ ev_mark_2 }}</span>
+          <span class="evt-hero__line">{{ ev_mark_3 }}<span class="evt-hero__year">{{ ev_year }}</span></span>
+        </span>
+      </h1>
+
+      <div class="evt-hero__facts">
+        <span class="evt-fact">{{ ev_date }}</span>
+        <span class="evt-fact">{{ ev_time }}</span>
+        <span class="evt-fact">{{ ev_venue }} // {{ ev_city }}</span>
+      </div>
+    </div>
+
+    {{ ev_marquee_hero }}
+  </section>
+
+  {%- comment -%} ============ 2. Speakers ============ {%- endcomment -%}
+  <section class="evt-speakers" aria-labelledby="evt-guests-{{ section.id }}">
+    <div class="evt-wrap">
+      <div class="evt-speakers__head">
+        <span class="evt-sticker evt-sticker--acid" style="transform:rotate(-1.5deg);font-size:clamp(1.1rem,2.6vw,1.6rem)">WHO IS SPEAKING</span>
+        <h2 class="evt-sr" id="evt-guests-{{ section.id }}">Who is speaking</h2>
+      </div>
+      <div class="evt-speakers__grid" data-reveal>
+        {%- for row in ev_speakers -%}
+          {%- assign f = row | split: '~' -%}
+          {%- assign full = f[0] | default: 'To be announced' -%}
+          {%- assign parts = full | split: ' ' -%}
+          {%- assign rots = '-2deg,1.5deg,-1deg,2deg,-1.5deg' | split: ',' -%}
+          <article class="evt-guest" style="--i:{{ forloop.index0 }}">
+            <div class="evt-guest__frame">
+              <div class="evt-guest__media">
+                {%- if f[2] != blank -%}
+                  <div class="evt-guest__portrait">
+                    <img src="{{ f[2] }}&width=800" alt="{{ full | escape }}" width="900" height="1200" loading="lazy">
+                  </div>
+                {%- else -%}
+                  {%- comment -%} No portrait yet, so the tile carries the slot number rather than repeating the name. {%- endcomment -%}
+                  <div class="evt-guest__initials" role="img" aria-label="Portrait of {{ full | escape }} to follow">0{{ forloop.index }}</div>
+                {%- endif -%}
+              </div>
+              {%- assign rest = full | remove_first: parts[0] | strip -%}
+              <span class="evt-sticker evt-guest__label" style="--rot:{{ rots[forloop.index0] }}">
+                <b>{{ parts[0] | upcase }}</b> {{ rest | upcase }}
+              </span>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============ 3. Hook one ============ {%- endcomment -%}
+  <section class="evt-hook evt-hook--dark" aria-labelledby="evt-hook1-{{ section.id }}">
+    <div class="evt-wrap" data-reveal>
+      <h2 class="evt-q evt-hook__q evt-hook__q--verse" id="evt-hook1-{{ section.id }}">
+        &ldquo;{{ ev_hook1_quote }}&rdquo;
+      </h2>
+      <p class="evt-micro evt-hook__ref" style="--i:1">{{ ev_hook1_ref }}</p>
+      <p class="evt-script evt-hook__line" style="--i:2">{{ ev_hook1_script }}</p>
+
+      <p class="evt-hook__cta" style="--i:3">
+        <a class="evt-btn evt-btn--acid" href="#evt-tickets-{{ section.id }}">{{ ev_cta }}</a>
+      </p>
+
+      <figure class="evt-video" style="--i:4">
+        <div class="evt-duo evt-video__media">
+          {%- assign poster_src = ev_video_poster | append: '&width=1400' -%}
+          {%- if poster_src != blank -%}
+            <img src="{{ poster_src }}" alt="Congregational prayer in the courtyard at the institute" width="1400" height="788" loading="lazy">
+          {%- endif -%}
+        </div>
+        {%- if ev_video_url != blank -%}
+          <a class="evt-video__play" href="{{ ev_video_url }}" target="_blank" rel="noopener noreferrer" aria-label="Play the film from last year">&#9654;</a>
+        {%- endif -%}
+      </figure>
+    </div>
+  </section>
+
+  {{ ev_marquee }}
+
+  {%- comment -%} ============ 5. What you walk out with ============ {%- endcomment -%}
+  <section class="evt-walk evt-light" aria-labelledby="evt-walk-{{ section.id }}">
+    <div class="evt-walk__track" data-walk-track>
+      <div class="evt-walk__stage">
+        <div class="evt-wrap">
+          <div class="evt-walk__head">
+            <span class="evt-sticker" style="transform:rotate(-1.5deg);font-size:clamp(1.1rem,2.6vw,1.6rem)">WHAT YOU WALK OUT WITH</span>
+            <h2 class="evt-sr" id="evt-walk-{{ section.id }}">What you walk out with</h2>
+          </div>
+
+          {%- comment -%}
+            Only one topic is visible at a time, so the whole set is also
+            written out once for screen readers and the visual sequence below
+            is hidden from them.
+          {%- endcomment -%}
+          <ul class="evt-sr">
+            {%- for row in ev_speakers -%}
+              {%- assign w = row | split: '~' -%}
+              <li>{{ w[1] }}. {{ w[3] }} With {{ w[0] }}.</li>
+            {%- endfor -%}
+          </ul>
+
+          <div class="evt-walk__deck" aria-hidden="true">
+            {%- for row in ev_speakers -%}
+              {%- assign w = row | split: '~' -%}
+              <article class="evt-walk__item" data-walk-card>
+                <p class="evt-walk__topic evt-display">{{ w[1] }}</p>
+                <p class="evt-walk__desc">{{ w[3] }}</p>
+                <p class="evt-walk__who evt-micro">{{ w[0] }}</p>
+              </article>
+            {%- endfor -%}
+          </div>
+
+          <div class="evt-walk__dots" aria-hidden="true">
+            {%- for row in ev_speakers -%}
+              <span class="evt-walk__dot" data-walk-dot></span>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%}
+        One marker per topic, each a screen tall. Whichever is crossing the
+        middle of the view names the topic to show. The sixth screen of scroll
+        releases the section.
+      {%- endcomment -%}
+      <div class="evt-walk__steps" aria-hidden="true">
+        {%- for row in ev_speakers -%}
+          <span class="evt-walk__step" data-walk-step="{{ forloop.index0 }}"></span>
+        {%- endfor -%}
+        <span class="evt-walk__step"></span>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============ 7. Tickets ============ {%- endcomment -%}
+  <section class="evt-tickets evt-light" id="evt-tickets-{{ section.id }}" aria-labelledby="evt-tickets-h-{{ section.id }}">
+    <div class="evt-backdrop evt-backdrop--acid" aria-hidden="true"><span>SEATS</span></div>
+
+    <div class="evt-wrap">
+      <div class="evt-tickets__head" data-reveal>
+        <span class="evt-sticker" style="transform:rotate(1.5deg);font-size:clamp(1.4rem,3.4vw,2.2rem)">TICKETS</span>
+        <h2 class="evt-sr" id="evt-tickets-h-{{ section.id }}">Tickets</h2>
+      </div>
+
+      <div class="evt-tickets__grid" data-reveal>
+        {%- for row in ev_tickets -%}
+          {%- assign t = row | split: '~' -%}
+          {%- assign incl = t[2] | split: ';' -%}
+          {%- assign is_feat = false -%}
+          {%- if t[4] == 'yes' -%}{%- assign is_feat = true -%}{%- endif -%}
+          <article class="evt-ticket{% if is_feat %} evt-ticket--featured{% endif %}" style="--i:{{ forloop.index0 }}">
+            <div class="evt-ticket__strip" aria-hidden="true">
+              <span class="evt-ticket__notch evt-ticket__notch--l"></span>
+              <span class="evt-ticket__notch evt-ticket__notch--r"></span>
+            </div>
+            <div class="evt-ticket__body">
+              {%- if t[5] != blank -%}<span class="evt-ticket__badge">{{ t[5] }}</span>{%- endif -%}
+              <h3 class="evt-ticket__tier evt-display">{{ t[0] }}</h3>
+              <p class="evt-ticket__price evt-display">{{ t[1] }}</p>
+              {%- if t[6] != blank -%}<p class="evt-ticket__note">{{ t[6] }}</p>{%- endif -%}
+              <ul class="evt-ticket__incl">
+                {%- for item in incl -%}
+                  <li><span aria-hidden="true">&#10003;</span><span>{{ item }}</span></li>
+                {%- endfor -%}
+              </ul>
+              <p class="evt-ticket__cta">
+                <a class="evt-btn {% if is_feat %}evt-btn--forest{% else %}evt-btn--sun{% endif %}"
+                   href="{{ t[3] | default: ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
+              </p>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {{ ev_marquee }}
+
+  {%- comment -%} ============ 9. About the event ============ {%- endcomment -%}
+  <section class="evt-about" aria-labelledby="evt-about-{{ section.id }}">
+    <div class="evt-wrap evt-about__grid">
+      <div data-reveal>
+        <span class="evt-sticker evt-sticker--acid" style="transform:rotate(-2deg);font-size:clamp(.95rem,2.2vw,1.25rem)">{{ ev_about_eyebrow | upcase }}</span>
+        <p class="evt-about__mark evt-display" id="evt-about-{{ section.id }}" style="--i:1">{{ ev_short }} <em>{{ ev_year }}</em></p>
+      </div>
+      <div class="evt-about__copy evt-body" data-reveal>
+        <p>{{ ev_about_p1 }}</p>
+        <p style="--i:1">{{ ev_about_p2 }}</p>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============ 10. Gallery ============ {%- endcomment -%}
+  <section class="evt-gallery" aria-labelledby="evt-gal1-{{ section.id }}">
+    <h2 class="evt-sr" id="evt-gal1-{{ section.id }}">Photographs from the hall</h2>
+    <div class="evt-mosaic">
+      {%- for row in ev_gallery1 -%}
+        {%- assign g = row | split: '~' -%}
+        {%- assign src = g[0] | append: '&width=1200' -%}
+        {%- assign wide = false -%}
+        {%- if forloop.index == 1 or forloop.index == 5 or forloop.index == 8 -%}
+          {%- assign wide = true -%}
+        {%- endif -%}
+        <div class="evt-duo{% if ev_duotone %} evt-duo--tint{% endif %}{% if wide %} evt-duo--wide{% endif %}">
+          {%- if src != blank -%}
+            <img src="{{ src }}" alt="{{ g[1] | escape }}"
+                 width="{% if wide %}1200{% else %}900{% endif %}"
+                 height="{% if wide %}800{% else %}1200{% endif %}" loading="lazy">
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </section>
+
+  {%- comment -%} ============ 11. The organiser ============ {%- endcomment -%}
+  <section class="evt-host evt-light" aria-labelledby="evt-host-{{ section.id }}">
+    <div class="evt-wrap evt-host__grid">
+      <div data-reveal>
+        <span class="evt-script evt-host__eyebrow">{{ ev_host_eyebrow }}</span>
+        <span class="evt-sticker" style="transform:rotate(-1.5deg);font-size:clamp(1.3rem,3.2vw,2rem)">{{ ev_host_name }}</span>
+        <h2 class="evt-sr" id="evt-host-{{ section.id }}">{{ ev_host_name }}</h2>
+        <div class="evt-host__copy evt-body" style="--i:1">
+          <p>{{ ev_host_p1 }}</p>
+        </div>
+      </div>
+      <div class="evt-duo evt-host__media" data-reveal>
+        {%- assign host_src = ev_host_photo | append: '&width=1200' -%}
+        {%- if host_src != blank -%}
+          <img src="{{ host_src }}" alt="Everyone on stage for the graduation group photograph" width="1200" height="960" loading="lazy">
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============ 12. The film ============ {%- endcomment -%}
+  {%- if ev_film_id != blank -%}
+    <section class="evt-film evt-light" aria-labelledby="evt-film-{{ section.id }}">
+      <div class="evt-wrap">
+        <h2 class="evt-sr" id="evt-film-{{ section.id }}">{{ ev_film_title }}</h2>
+        <div class="evt-film__frame" data-reveal>
+          {%- comment -%}
+            Autoplay is only permitted while a video is muted, so it starts
+            muted with the controls left on for anyone who wants sound.
+          {%- endcomment -%}
+          <iframe
+            src="https://www.youtube.com/embed/{{ ev_film_id }}?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist={{ ev_film_id }}&amp;playsinline=1&amp;rel=0"
+            title="{{ ev_film_title | escape }}"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- comment -%} ============ 13. Community strip ============ {%- endcomment -%}
+  <section class="evt-gallery" aria-labelledby="evt-gal2-{{ section.id }}">
+    <div class="evt-wrap">
+      <div class="evt-strip__top">
+        <h2 class="evt-h2 evt-display" id="evt-gal2-{{ section.id }}">THE SMALL<br>ROOMS</h2>
+        <div class="evt-strip__nav">
+          <button class="evt-strip__btn" type="button" data-strip-prev aria-label="Scroll photographs left">&#8592;</button>
+          <button class="evt-strip__btn" type="button" data-strip-next aria-label="Scroll photographs right">&#8594;</button>
+        </div>
+      </div>
+      <div class="evt-strip" data-strip tabindex="0" role="group" aria-label="Photographs from the reading groups">
+        {%- for row in ev_gallery2 -%}
+          {%- assign g = row | split: '~' -%}
+          {%- assign src = g[0] | append: '&width=800' -%}
+          <div class="evt-duo{% if ev_duotone %} evt-duo--tint{% endif %}">
+            {%- if src != blank -%}
+              <img src="{{ src }}" alt="{{ g[1] | escape }}" width="800" height="1067" loading="lazy">
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============ Booking ============ {%- endcomment -%}
+  {%- comment -%} <section class="evt-book" aria-labelledby="evt-book-{{ section.id }}">
+    <div class="evt-wrap">
+      <div class="evt-book__panel" data-reveal>
+        <div>
+          <h2 class="evt-h2 evt-display" id="evt-book-{{ section.id }}">SEATS GO<br>IN BLOCKS</h2>
+          <p class="evt-body evt-book__note">One seat in four is a free scholarship place. The rest are released in blocks, and registration closes when the last block goes. The desk scans your code at Gate 2.</p>
+          <p style="margin-top:28px">
+            <a class="evt-btn evt-btn--acid" href="{{ ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
+          </p>
+        </div>
+        <div style="--i:1">
+          <div class="evt-seats" aria-hidden="true">
+            {%- for i in (1..ev_seat_total) -%}
+              <span class="evt-seat{% if forloop.index <= ev_seats_taken %} evt-seat--taken{% endif %}" style="--i:{{ forloop.index0 }}"></span>
+            {%- endfor -%}
+          </div>
+          <p class="evt-seats__legend evt-micro">
+            <span class="evt-seats__key"><span class="evt-seats__sw evt-seats__sw--taken"></span>{{ ev_seat_percent }}% claimed</span>
+            <span class="evt-seats__key"><span class="evt-seats__sw"></span>Still open</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section> 
+{%- endcomment -%}
+
+  {{ ev_marquee }}
+
+  {%- comment -%} ============ 14. Footer ============ {%- endcomment -%}
+  <footer class="evt-footer">
+    <div class="evt-wrap evt-footer__grid">
+      <p class="evt-footer__mark evt-display">{{ ev_short }} <em>{{ ev_year }}</em></p>
+      <nav class="evt-footer__socials evt-micro" aria-label="Social links">
+        {%- for row in ev_socials -%}
+          {%- assign s = row | split: '~' -%}
+          <a href="{{ s[1] }}" target="_blank" rel="noopener noreferrer">{{ s[0] }}</a>
+        {%- endfor -%}
+      </nav>
+      <p class="evt-footer__rights">&copy; {{ 'now' | date: '%Y' }} {{ ev_org }}. {{ ev_rights }}</p>
+    </div>
+  </footer>
+
+  {%- comment -%} ============ 15. Sticky mobile CTA ============ {%- endcomment -%}
+  <div class="evt-sticky" data-sticky>
+    <span class="evt-sticky__when">{{ ev_date }}<span class="evt-sticky__time"> // {{ ev_time }}</span></span>
+    <a class="evt-btn" href="{{ ev_booking_url }}" target="_blank" rel="noopener noreferrer">{{ ev_cta }}</a>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('evt-{{ section.id }}');
+    if (!root) return;
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var hasIO = 'IntersectionObserver' in window;
+
+    /* What you walk out with. The section pins at every width and shows one
+       topic at a time, changing once per screen of scroll. Each marker is a
+       screen tall, so whichever is crossing the middle of the view names the
+       topic to show, forwards and backwards alike. */
+    var walkCards = root.querySelectorAll('[data-walk-card]');
+    var walkSteps = root.querySelectorAll('[data-walk-step]');
+    var walkDots = root.querySelectorAll('[data-walk-dot]');
+    var walkTrack = root.querySelector('[data-walk-track]');
+    var sequenced = !reduce.matches && hasIO && walkSteps.length > 0;
+
+    function showTopic(n) {
+      Array.prototype.forEach.call(walkCards, function (card, i) {
+        card.classList.toggle('is-shown', i === n);
+      });
+      Array.prototype.forEach.call(walkDots, function (dot, i) {
+        dot.classList.toggle('is-on', i === n);
+      });
+    }
+
+    if (sequenced) {
+      /* The first topic is up before any marker has reached the middle, so
+         the stage is never blank on the way in. */
+      showTopic(0);
+      var walkIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          showTopic(parseInt(entry.target.getAttribute('data-walk-step'), 10));
+        });
+      }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
+      Array.prototype.forEach.call(walkSteps, function (n) { walkIO.observe(n); });
+    } else if (walkTrack) {
+      walkTrack.classList.add('evt-walk__track--flow');
+    }
+
+    /* Reveal on scroll. IntersectionObserver only, never a scroll listener. */
+    var targets = root.querySelectorAll('[data-reveal]');
+    if (reduce.matches || !hasIO) {
+      Array.prototype.forEach.call(targets, function (n) { n.classList.add('is-in'); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
+      Array.prototype.forEach.call(targets, function (n) { io.observe(n); });
+    }
+
+    /* Fit the hero mark to its column. Measured at a known size and scaled, so
+       it is correct for Anton, for the fallback face, and for any screen. */
+    var mark = root.querySelector('.evt-hero__stack');
+    var lines = mark ? mark.querySelectorAll('.evt-hero__line') : [];
+    function fitMark() {
+      if (!mark || !lines.length) return;
+      var column = mark.parentElement;
+      mark.style.setProperty('--evt-fit', '100px');
+      var widest = 0;
+      Array.prototype.forEach.call(lines, function (n) {
+        widest = Math.max(widest, n.getBoundingClientRect().width);
+      });
+      if (!widest) { mark.style.removeProperty('--evt-fit'); return; }
+      var room = column.clientWidth - 2;
+      var size = 100 * (room / widest);
+      /* Three lines at .82 leading must still leave the date block on screen. */
+      size = Math.min(size, window.innerHeight * 0.26);
+      mark.style.setProperty('--evt-fit', Math.max(size, 26) + 'px');
+    }
+    fitMark();
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(fitMark); }
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(fitMark).observe(mark ? mark.parentElement : root);
+    } else {
+      window.addEventListener('resize', fitMark);
+    }
+    window.addEventListener('orientationchange', fitMark);
+
+    /* Sticky bar appears once the hero has scrolled out. */
+    var hero = root.querySelector('.evt-hero');
+    var bar = root.querySelector('[data-sticky]');
+    if (hero && bar && hasIO) {
+      new IntersectionObserver(function (entries) {
+        bar.classList.toggle('is-visible', !entries[0].isIntersecting);
+      }, { threshold: 0 }).observe(hero);
+    }
+
+    /* Community strip controls. */
+    var strip = root.querySelector('[data-strip]');
+    if (strip) {
+      var step = function () { return Math.max(strip.clientWidth * 0.85, 260); };
+      var behavior = reduce.matches ? 'auto' : 'smooth';
+      var prev = root.querySelector('[data-strip-prev]');
+      var next = root.querySelector('[data-strip-next]');
+      if (prev) prev.addEventListener('click', function () { strip.scrollBy({ left: -step(), behavior: behavior }); });
+      if (next) next.addEventListener('click', function () { strip.scrollBy({ left: step(), behavior: behavior }); });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-page.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}
