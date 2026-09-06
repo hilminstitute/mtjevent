@@ -502,9 +502,11 @@
   }
 
   /* ================= 5. What you walk out with =================
-     One topic at a time, centred. The section pins for a screen of scroll per
-     topic; the markers behind the stage are what the observer watches, so the
-     sequence needs no scroll listener. */
+     A deck of five panels laid side by side. The live one opens to fill the
+     row; the rest stay as narrow tabs with their topic name set on end, so the
+     whole set is always in view. The section pins for a screen of scroll per
+     topic and the markers behind the stage are what the observer watches, so
+     one deliberate scroll moves one panel and nothing listens to the wheel. */
   .evt-walk { background: var(--paper); color: var(--on-light); }
   .evt-walk__track { position: relative; height: calc(6 * var(--evt-step)); }
   .evt-walk__stage {
@@ -513,57 +515,186 @@
     display: grid; align-content: center;
     overflow: hidden;
   }
-  .evt-walk__head { text-align: center; margin-bottom: clamp(20px, 3.6vh, 44px); }
+  .evt-walk__head { text-align: center; margin-bottom: clamp(14px, 2.6vh, 32px); }
   .evt-walk__steps { position: absolute; inset: 0; z-index: -1; }
   .evt-walk__step { display: block; height: var(--evt-step); }
 
-  /* Every card shares one grid cell, so only the active one is seen. */
-  .evt-walk__deck { display: grid; justify-items: center; }
-  .evt-walk__item {
-    grid-area: 1 / 1;
-    width: 100%;
-    max-width: 42ch;
-    text-align: center;
+  /* Five bases plus four gaps add up to exactly the width of the deck, so the
+     open panel takes whatever the four tabs leave: about 78% of the row. */
+  .evt-walk__deck {
+    --evt-tab: clamp(48px, 4.4vw, 60px);
+    --evt-gap: clamp(7px, .8vw, 12px);
+    --evt-open: calc(100% - 4 * var(--evt-tab) - 4 * var(--evt-gap));
+    display: flex; gap: var(--evt-gap);
+    height: clamp(380px, 58svh, 600px);
+  }
+  .evt-walk__card {
+    position: relative;
+    flex: 0 1 var(--evt-tab);
+    min-width: 0; min-height: 0;
+    overflow: hidden;
+    border-radius: clamp(16px, 1.8vw, 28px);
+    background: var(--evt-tone); color: var(--evt-on-tone);
+    transition: flex-basis .66s cubic-bezier(.16, 1, .3, 1);
+  }
+  .evt-walk__card.is-active { flex-basis: var(--evt-open); }
+
+  /* Strong, plainly different tones, all of them from the page palette. */
+  .evt-walk__card:nth-child(5n + 1) { --evt-tone: var(--acid);   --evt-on-tone: var(--ink); }
+  .evt-walk__card:nth-child(5n + 2) { --evt-tone: var(--moss);   --evt-on-tone: var(--paper); }
+  .evt-walk__card:nth-child(5n + 3) { --evt-tone: var(--sun);    --evt-on-tone: var(--ink); }
+  .evt-walk__card:nth-child(5n + 4) { --evt-tone: var(--forest); --evt-on-tone: var(--paper); }
+  .evt-walk__card:nth-child(5n + 5) { --evt-tone: var(--lime);   --evt-on-tone: var(--ink); }
+
+  /* The topic name on end. It is the whole of a closed tab and it stays on the
+     leading edge of the open panel. */
+  .evt-walk__spine {
+    position: absolute; z-index: 2;
+    top: 0; bottom: 0; left: 0;
+    width: var(--evt-tab);
+    display: flex; align-items: center; justify-content: center;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    padding-block: 12px;
+    font-size: clamp(.55rem, 1.15svh, .8rem);
+    font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  /* The panel body rides in from the right as its card opens. */
+  .evt-walk__body {
+    position: absolute; inset: 0;
+    padding: clamp(20px, 2.8vw, 40px);
+    padding-left: calc(var(--evt-tab) + clamp(4px, 1vw, 16px));
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    gap: clamp(18px, 2.4vw, 40px);
+    align-items: center;
     opacity: 0; visibility: hidden;
-    transform: translateY(26px);
-    transition: opacity .5s var(--ease), transform .5s var(--ease), visibility 0s linear .5s;
+    transform: translateX(100%);
+    transition: transform .66s cubic-bezier(.16, 1, .3, 1),
+                opacity .34s var(--ease),
+                visibility 0s linear .66s;
   }
-  .evt-walk__item.is-shown {
+  .evt-walk__card.is-active .evt-walk__body {
     opacity: 1; visibility: visible; transform: none;
-    transition: opacity .5s var(--ease), transform .5s var(--ease), visibility 0s;
+    transition: transform .66s cubic-bezier(.16, 1, .3, 1),
+                opacity .5s var(--ease) .14s,
+                visibility 0s;
   }
+
+  /* Art slot. It carries the speaker portrait when one is set and a plain
+     numeral when it is not, so a picture can be dropped in later. */
+  .evt-walk__art {
+    position: relative;
+    height: 100%; min-height: 0;
+    border-radius: clamp(12px, 1.4vw, 22px);
+    overflow: hidden;
+    border: 2px solid currentColor;
+    background: rgba(7, 17, 8, .1);
+    display: grid; place-items: center;
+  }
+  .evt-walk__card:nth-child(5n + 2) .evt-walk__art,
+  .evt-walk__card:nth-child(5n + 4) .evt-walk__art { background: rgba(244, 241, 230, .1); }
+  .evt-walk__art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .evt-walk__num { font-size: clamp(3.6rem, 8vw, 8rem); line-height: .8; opacity: .55; }
+
   .evt-walk__topic {
-    font-size: clamp(1.85rem, 5.2vw, 3.4rem);
-    color: var(--forest);
+    font-size: clamp(1.5rem, 2.9vw, 2.9rem);
+    line-height: 1.03;
     text-wrap: balance;
   }
   .evt-walk__desc {
-    margin-top: clamp(15px, 2.4vh, 26px);
-    font-size: clamp(1.22rem, 1.9vw, 1.55rem);
-    line-height: 1.5;
+    margin-top: clamp(12px, 2vh, 24px);
+    font-size: clamp(1.02rem, 1.25vw, 1.35rem);
+    line-height: 1.45;
+    max-width: 46ch;
     text-wrap: pretty;
   }
   .evt-walk__who {
-    margin-top: clamp(16px, 2.6vh, 28px);
-    color: var(--forest);
+    margin-top: clamp(14px, 2.2vh, 26px);
     letter-spacing: .16em;
+    opacity: .82;
   }
-  .evt-walk__dots { display: flex; justify-content: center; gap: 9px; margin-top: clamp(22px, 3.6vh, 42px); }
+  .evt-walk__dots { display: flex; justify-content: center; gap: 9px; margin-top: clamp(18px, 3vh, 36px); }
   .evt-walk__dot { width: 30px; height: 4px; background: var(--paper-dim); transition: background-color .4s var(--ease); }
   .evt-walk__dot.is-on { background: var(--forest); }
 
-  /* Fallback for reduced motion, no script, or no observer: a plain list with
-     every topic visible and nothing pinned. */
+  /* The date and booking bar is fixed to the foot of the screen below 1024, so
+     the pinned stage keeps its content clear of it. */
+  @media (max-width: 1023px) {
+    .evt-walk__stage { padding-bottom: clamp(76px, 9vh, 100px); }
+  }
+
+  /* Between tablet and small laptop the art slot is dropped so the words keep
+     a comfortable measure. */
+  @media (max-width: 999px) {
+    .evt-walk__body { grid-template-columns: minmax(0, 1fr); }
+    .evt-walk__art { display: none; }
+  }
+
+  /* On a phone the deck turns on its side: the tabs become full width bars
+     stacked down the screen, which reads far better than five slivers, and the
+     open panel takes exactly the room its words need. */
+  @media (max-width: 759px) {
+    .evt-walk__deck {
+      --evt-tab: clamp(38px, 8.4vw, 52px);
+      flex-direction: column;
+      height: auto;
+    }
+    .evt-walk__card {
+      flex: none;
+      max-height: var(--evt-tab);
+      transition: max-height .66s cubic-bezier(.16, 1, .3, 1);
+    }
+    .evt-walk__card.is-active { flex-basis: auto; max-height: 36em; }
+    .evt-walk__spine {
+      writing-mode: horizontal-tb; transform: none;
+      top: 0; bottom: auto; left: 0; right: 0;
+      width: auto; height: var(--evt-tab);
+      justify-content: flex-start;
+      padding-block: 0; padding-inline: clamp(14px, 4vw, 24px);
+      font-size: clamp(.5rem, 2.3vw, .68rem);
+      letter-spacing: .04em;
+    }
+    .evt-walk__body {
+      position: static;
+      padding: clamp(16px, 4vw, 26px);
+      padding-top: calc(var(--evt-tab) + 2px);
+    }
+  }
+
+  /* Smallest phones: tighter type and no progress rule, so the whole deck
+     still clears the booking bar on a short screen. */
+  @media (max-width: 400px) {
+    .evt-walk__deck { --evt-tab: 34px; }
+    .evt-walk__head { margin-bottom: 12px; }
+    .evt-walk__topic { font-size: 1.22rem; }
+    .evt-walk__desc { font-size: .95rem; margin-top: 10px; }
+    .evt-walk__who { margin-top: 12px; }
+    .evt-walk__dots { display: none; }
+  }
+
+  /* Fallback for reduced motion, no script, or no observer: every panel open,
+     one under the other, and nothing pinned. */
   .evt-walk__track--flow { height: auto; }
   .evt-walk__track--flow .evt-walk__stage {
     position: static; height: auto; overflow: visible;
     padding-block: clamp(64px, 11vh, 132px);
   }
   .evt-walk__track--flow .evt-walk__steps,
+  .evt-walk__track--flow .evt-walk__spine,
+  .evt-walk__track--flow .evt-walk__art,
   .evt-walk__track--flow .evt-walk__dots { display: none; }
-  .evt-walk__track--flow .evt-walk__deck { grid-auto-flow: row; gap: clamp(44px, 7vh, 84px); }
-  .evt-walk__track--flow .evt-walk__item {
-    grid-area: auto; opacity: 1; visibility: visible; transform: none;
+  .evt-walk__track--flow .evt-walk__deck {
+    display: grid; grid-auto-flow: row;
+    height: auto; gap: clamp(14px, 2.2vh, 24px);
+  }
+  .evt-walk__track--flow .evt-walk__card { flex: none; max-height: none; }
+  .evt-walk__track--flow .evt-walk__body {
+    position: static;
+    opacity: 1; visibility: visible; transform: none;
+    grid-template-columns: minmax(0, 1fr);
+    padding: clamp(20px, 2.8vw, 40px);
   }
 
   /* ================= The film ================= */
@@ -845,12 +976,16 @@
     .evt-seat--taken { background: var(--acid); }
     .evt-marquee__row { animation: none; }
     .evt-sticky { transform: none; }
-    /* The pinned walk out sequence collapses to a plain, fully visible list. */
+    /* The pinned walk out deck collapses to a plain, fully open stack. */
     .evt-walk__track { height: auto; }
     .evt-walk__stage { position: static; height: auto; overflow: visible; padding-block: clamp(64px, 11vh, 132px); }
-    .evt-walk__steps, .evt-walk__dots { display: none; }
-    .evt-walk__deck { grid-auto-flow: row; gap: clamp(44px, 7vh, 84px); }
-    .evt-walk__item { grid-area: auto; opacity: 1; visibility: visible; transform: none; }
+    .evt-walk__steps, .evt-walk__spine, .evt-walk__art, .evt-walk__dots { display: none; }
+    .evt-walk__deck { display: grid; grid-auto-flow: row; height: auto; gap: clamp(14px, 2.2vh, 24px); }
+    .evt-walk__card { flex: none; max-height: none; }
+    .evt-walk__body {
+      position: static; opacity: 1; visibility: visible; transform: none;
+      grid-template-columns: minmax(0, 1fr); padding: clamp(20px, 2.8vw, 40px);
+    }
   }
 </style>
 
@@ -861,9 +996,13 @@
     .evt .evt-seat--taken { background: var(--acid); }
     .evt .evt-walk__track { height: auto; }
     .evt .evt-walk__stage { position: static; height: auto; overflow: visible; padding-block: clamp(64px, 11vh, 132px); }
-    .evt .evt-walk__steps, .evt .evt-walk__dots { display: none; }
-    .evt .evt-walk__deck { grid-auto-flow: row; gap: clamp(44px, 7vh, 84px); }
-    .evt .evt-walk__item { grid-area: auto; opacity: 1; visibility: visible; transform: none; }
+    .evt .evt-walk__steps, .evt .evt-walk__spine, .evt .evt-walk__art, .evt .evt-walk__dots { display: none; }
+    .evt .evt-walk__deck { display: grid; grid-auto-flow: row; height: auto; gap: clamp(14px, 2.2vh, 24px); }
+    .evt .evt-walk__card { flex: none; max-height: none; }
+    .evt .evt-walk__body {
+      position: static; opacity: 1; visibility: visible; transform: none;
+      grid-template-columns: minmax(0, 1fr); padding: clamp(20px, 2.8vw, 40px);
+    }
   </style>
 </noscript>
 
@@ -1009,9 +1148,9 @@
           </div>
 
           {%- comment -%}
-            Only one topic is visible at a time, so the whole set is also
-            written out once for screen readers and the visual sequence below
-            is hidden from them.
+            Only one panel is open at a time, so the whole set is also
+            written out once for screen readers and the deck below is hidden
+            from them.
           {%- endcomment -%}
           <ul class="evt-sr">
             {%- for row in ev_speakers -%}
@@ -1023,10 +1162,22 @@
           <div class="evt-walk__deck" aria-hidden="true">
             {%- for row in ev_speakers -%}
               {%- assign w = row | split: '~' -%}
-              <article class="evt-walk__item" data-walk-card>
-                <p class="evt-walk__topic evt-display">{{ w[1] }}</p>
-                <p class="evt-walk__desc">{{ w[3] }}</p>
-                <p class="evt-walk__who evt-micro">{{ w[0] }}</p>
+              <article class="evt-walk__card" data-walk-card>
+                <span class="evt-walk__spine">{{ w[1] }}</span>
+                <div class="evt-walk__body">
+                  <div class="evt-walk__art">
+                    {%- if w[2] != blank -%}
+                      <img src="{{ w[2] }}" alt="" loading="lazy" decoding="async" width="600" height="800">
+                    {%- else -%}
+                      <span class="evt-walk__num evt-display">{{ forloop.index }}</span>
+                    {%- endif -%}
+                  </div>
+                  <div class="evt-walk__text">
+                    <p class="evt-walk__topic evt-display">{{ w[1] }}</p>
+                    <p class="evt-walk__desc">{{ w[3] }}</p>
+                    <p class="evt-walk__who evt-micro">{{ w[0] }}</p>
+                  </div>
+                </div>
               </article>
             {%- endfor -%}
           </div>
@@ -1268,7 +1419,7 @@
 
     function showTopic(n) {
       Array.prototype.forEach.call(walkCards, function (card, i) {
-        card.classList.toggle('is-shown', i === n);
+        card.classList.toggle('is-active', i === n);
       });
       Array.prototype.forEach.call(walkDots, function (dot, i) {
         dot.classList.toggle('is-on', i === n);
