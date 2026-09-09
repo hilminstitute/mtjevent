@@ -34,10 +34,11 @@
   one place.
 
   Colour system (never hardcode a hex in the markup, use the tokens):
-    ink #071108 / forest #0E2B18 / moss #17512E      dark surfaces
-    paper #F4F1E6 / paper-dim #E5E0CD                light surfaces
-    acid #D8FF3E  primary accent   sun #FFC629  tickets and badges
-    lime #7BE85A  used twice on the whole page, no more
+    ink #000C1C / forest #0F1934 / moss #26426A      navy surfaces
+    paper #E9F0FA / paper-dim #C6D4E6               silver surfaces
+    acid #5CBBFF  electric blue, the primary accent
+    sun  #F5A524  warm amber, kept for the loudest moments only
+    lime #0E5690  deep electric blue, the far end of the primary gradient
   ==========================================================================
 {%- endcomment -%}
 
@@ -139,20 +140,35 @@
   #shopify-section-{{ section.id }} { padding: 0 !important; margin: 0 !important; }
 
   html { overflow-x: clip; }
-  body { background: #071108; overflow-x: clip; }
+  body { background: #000C1C; overflow-x: clip; }
 
   /* ================= Tokens ================= */
   .evt {
-    --ink:       #071108;
-    --forest:    #0E2B18;
-    --moss:      #17512E;
-    --paper:     #F4F1E6;
-    --paper-dim: #E5E0CD;
-    --acid:      #D8FF3E;
-    --sun:       #FFC629;
-    --lime:      #7BE85A;
-    --on-dark:   #F4F1E6;
-    --on-light:  #071108;
+    /* Dark navy ground lit by electric blue, with a little warm amber for the
+       loudest moments. Two gradients carry it: the primary runs #000C1C to
+       #0E5690 and lights the hero, the secondary runs #0F1934 to #26426A and
+       fills the panels. */
+    --ink:       #000C1C;
+    --forest:    #0F1934;
+    --moss:      #26426A;
+    --paper:     #E9F0FA;
+    --paper-dim: #C6D4E6;
+    --acid:      #5CBBFF;
+    --sun:       #F5A524;
+    --lime:      #0E5690;
+    --on-dark:   #F2F6FC;
+    --on-light:  #000C1C;
+
+    /* The bright end of the primary gradient is held back to the far corner:
+       everywhere the hero carries type stays dark enough for the accent to
+       clear 4.5 to 1 against it. */
+    --grad-primary:   linear-gradient(163deg, #000C1C 0%, #011A33 48%, #073C68 82%, #0E5690 100%);
+    --grad-secondary: linear-gradient(168deg, #0F1934 0%, #26426A 100%);
+    /* The panel gradient is the quiet one: it only lifts a section off the
+       page ground so the stacked sections read as separate planes. */
+    --grad-panel:     linear-gradient(180deg, #000C1C 0%, #061A31 62%, #000C1C 100%);
+    --glow-soft:      0 0 34px rgba(92, 187, 255, .32);
+    --glow-wide:      0 0 60px rgba(92, 187, 255, .22);
 
     --pad-x: clamp(18px, 5vw, 72px);
     --maxw: 1280px;
@@ -221,8 +237,8 @@
     text-decoration: none; cursor: pointer;
     transition: transform .15s var(--ease), box-shadow .15s var(--ease), background-color .15s var(--ease);
   }
-  .evt-btn--acid { background: var(--acid); color: var(--ink); box-shadow: 0 0 0 rgba(0,0,0,0); }
-  .evt-btn--acid:hover { background: var(--sun); transform: translateY(-2px); box-shadow: 0 8px 0 var(--moss); }
+  .evt-btn--acid { background: var(--acid); color: var(--ink); box-shadow: var(--glow-soft); }
+  .evt-btn--acid:hover { background: var(--sun); transform: translateY(-2px); box-shadow: 0 8px 0 var(--moss), var(--glow-soft); }
   .evt-btn--forest { background: var(--forest); color: var(--paper); }
   .evt-btn--forest:hover { background: var(--moss); transform: translateY(-2px); box-shadow: 0 8px 0 var(--paper-dim); }
   .evt-btn--sun { background: var(--sun); color: var(--ink); }
@@ -230,7 +246,7 @@
   .evt-btn:active { transform: translateY(0); }
 
   .evt :focus-visible { outline: 3px solid var(--acid); outline-offset: 2px; }
-  .evt-light :focus-visible { outline-color: var(--forest); }
+  .evt-light :focus-visible { outline-color: var(--lime); }
 
   /* ================= Grain ================= */
   .evt-grain {
@@ -247,15 +263,15 @@
     padding: 8px 18px 7px;
     background: var(--paper);
     color: var(--ink);
-    box-shadow: 5px 5px 0 var(--ink);
+    box-shadow: 5px 5px 0 var(--lime);
     font-family: "Anton", system-ui, sans-serif;
     text-transform: uppercase;
     letter-spacing: .01em;
     line-height: 1;
   }
-  .evt-sticker--acid { background: var(--acid); }
+  .evt-sticker--acid { background: var(--acid); box-shadow: 5px 5px 0 var(--lime), var(--glow-soft); }
   .evt-sticker--sun  { background: var(--sun); }
-  .evt-light .evt-sticker { box-shadow: 5px 5px 0 var(--forest); }
+  .evt-light .evt-sticker { box-shadow: 5px 5px 0 var(--lime); }
 
   /* ================= Texture backdrop ================= */
   .evt-backdrop {
@@ -325,7 +341,10 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background: var(--ink);
+    /* A spotlight over the primary gradient, the way the poster is lit. */
+    background:
+      radial-gradient(118% 78% at 50% -12%, rgba(92, 187, 255, .26) 0%, rgba(92, 187, 255, .07) 44%, transparent 70%),
+      var(--grad-primary);
     min-height: 100svh;
     display: flex; flex-direction: column;
     justify-content: center;
@@ -372,7 +391,7 @@
     flex-direction: column;
     background: var(--acid);
     color: var(--ink);
-    box-shadow: 10px 10px 0 var(--moss);
+    box-shadow: 10px 10px 0 var(--moss), var(--glow-wide);
     text-align: center;
   }
   .evt-fact {
@@ -397,7 +416,7 @@
   .evt-marquee--hero .evt-marquee__item { font-size: clamp(1.16rem, 2.7vw, 1.95rem); }
 
   /* ================= 2. Speakers ================= */
-  .evt-speakers { background: var(--ink); padding-block: clamp(56px, 9vh, 112px); }
+  .evt-speakers { background: var(--grad-panel); padding-block: clamp(56px, 9vh, 112px); }
   .evt-speakers__head { text-align: center; margin-bottom: clamp(26px, 4vh, 46px); }
   /* Same treatment as the badge over the topics deck: a larger face in a box
      padded to match. Scoped to the head, so the stickers in every other
@@ -471,8 +490,8 @@
 
   /* ================= 3 + 6. Hooks ================= */
   .evt-hook { padding-block: clamp(64px, 11vh, 132px); text-align: center; }
-  .evt-hook--dark { background: var(--ink); }
-  .evt-hook--light { background: var(--paper); color: var(--on-light); }
+  .evt-hook--dark { background: var(--grad-panel); }
+  .evt-hook--light { background: var(--grad-secondary); color: var(--on-dark); }
   .evt-hook__q { max-width: 22ch; margin-inline: auto; }
   .evt-hook__q--verse { max-width: 26ch; }
   .evt-hook--dark .evt-hook__q { color: var(--on-dark); }
@@ -486,8 +505,8 @@
     margin-inline: auto;
   }
   .evt-hook__script { color: var(--acid); font-size: 1.35em; display: inline-block; line-height: 1; padding-bottom: .08em; }
-  .evt-hook--light .evt-hook__accent { color: var(--forest); }
-  .evt-hook__support { margin-top: 22px; max-width: 46ch; margin-inline: auto; color: var(--forest); font-size: clamp(1.5rem, 1.82vw, 1.8rem); }
+  .evt-hook--light .evt-hook__accent { color: var(--acid); }
+  .evt-hook__support { margin-top: 22px; max-width: 46ch; margin-inline: auto; color: var(--acid); font-size: clamp(1.5rem, 1.82vw, 1.8rem); }
   .evt-hook__cta { margin-top: clamp(30px, 5vh, 48px); }
 
   .evt-video {
@@ -517,7 +536,7 @@
      a real button, so any topic opens directly in any order. The section is an
      ordinary block: nothing is pinned and nothing watches the page scroll. */
   .evt-walk {
-    background: var(--ink); color: var(--on-dark);
+    background: var(--grad-panel); color: var(--on-dark);
     padding-block: clamp(64px, 11vh, 132px);
   }
   .evt-walk__head { text-align: center; margin-bottom: clamp(22px, 3.6vh, 44px); }
@@ -546,7 +565,7 @@
     overflow: hidden;
     border-radius: clamp(18px, 2vw, 32px);
     background: var(--evt-tone); color: var(--evt-on-tone);
-    box-shadow: -16px 0 34px rgba(7, 17, 8, .5);
+    box-shadow: -16px 0 34px rgba(0, 6, 16, .62);
     transition: flex-basis .6s cubic-bezier(.16, 1, .3, 1);
   }
   /* Each card slides a little under its left hand neighbour, which is what
@@ -562,13 +581,15 @@
   /* Five plainly different tones, all of them from the page palette and all
      of them legible against the dark ground. */
   .evt-walk__card:nth-child(5n + 1) { --evt-tone: var(--acid);  --evt-on-tone: var(--ink); }
-  /* Card two held the darkest green in the set, which left its label
-     working against the tone. It now takes a pale mint from the same green
-     family, so its dark text reads as easily as on the other four. */
-  .evt-walk__card:nth-child(5n + 2) { --evt-tone: #B6EFC9; --evt-on-tone: var(--ink); }
+  /* Card two takes a soft steel blue. It sits a clear step below the accent
+     on one side and the silver on the other, so no two tabs in the row read
+     as the same colour, and its dark text is as easy as on the rest. */
+  .evt-walk__card:nth-child(5n + 2) { --evt-tone: #A6CFF0; --evt-on-tone: var(--ink); }
   .evt-walk__card:nth-child(5n + 3) { --evt-tone: var(--sun);   --evt-on-tone: var(--ink); }
   .evt-walk__card:nth-child(5n + 4) { --evt-tone: var(--paper); --evt-on-tone: var(--ink); }
-  .evt-walk__card:nth-child(5n + 5) { --evt-tone: var(--lime);  --evt-on-tone: var(--ink); }
+  /* The last card is the deep end of the primary gradient, so it is the one
+     panel in the row that carries light type. */
+  .evt-walk__card:nth-child(5n + 5) { --evt-tone: var(--lime);  --evt-on-tone: var(--on-dark); }
 
   /* The tab itself: a button filling the whole strip, with the topic name set
      on end. It wraps onto a second line rather than being cut off, which is
@@ -632,9 +653,10 @@
     width: 100%; aspect-ratio: 1; max-height: 100%;
     border-radius: clamp(14px, 1.6vw, 26px);
     overflow: hidden;
-    background: rgba(7, 17, 8, .12);
+    background: rgba(0, 12, 28, .14);
     display: grid; place-items: center;
   }
+  .evt-walk__card:nth-child(5n + 5) .evt-walk__art { background: rgba(242, 246, 252, .13); }
   .evt-walk__art img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .evt-walk__num { font-size: clamp(3.6rem, 8vw, 8rem); line-height: .8; opacity: .5; }
 
@@ -682,7 +704,7 @@
     .evt-walk__card {
       flex: none;
       max-height: var(--evt-tab);
-      box-shadow: 0 -14px 28px rgba(7, 17, 8, .5);
+      box-shadow: 0 -14px 28px rgba(0, 6, 16, .62);
       transition: max-height .6s cubic-bezier(.16, 1, .3, 1);
     }
     .evt-walk__card + .evt-walk__card {
@@ -721,11 +743,11 @@
   }
 
   /* ================= The film ================= */
-  .evt-film { background: var(--acid); color: var(--ink); padding-block: clamp(64px, 11vh, 132px); }
+  .evt-film { background: var(--grad-secondary); color: var(--on-dark); padding-block: clamp(64px, 11vh, 132px); }
   .evt-film__frame {
     max-width: 900px; margin-inline: auto;
-    border: 6px solid var(--ink);
-    box-shadow: 14px 14px 0 var(--forest);
+    border: 6px solid var(--acid);
+    box-shadow: 14px 14px 0 var(--lime);
     background: var(--ink);
   }
   .evt-film__frame iframe {
@@ -733,7 +755,7 @@
   }
 
   /* ================= 7. Tickets ================= */
-  .evt-tickets { position: relative; isolation: isolate; background: var(--paper); color: var(--on-light); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; }
+  .evt-tickets { position: relative; isolation: isolate; background: var(--grad-secondary); color: var(--on-dark); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; }
   .evt-tickets__head { position: relative; z-index: 1; text-align: center; margin-bottom: clamp(40px, 6vh, 68px); }
   .evt-tickets__grid {
     position: relative; z-index: 1;
@@ -747,6 +769,9 @@
     flex-direction: column;
     min-width: 0;
     background: var(--paper);
+    /* The card keeps its own dark type rather than inheriting the section's,
+       which is light now that the ground behind the ticket is navy. */
+    color: var(--on-light);
     border: 3px solid var(--forest);
   }
   .evt-ticket--featured { background: var(--sun); border-color: var(--ink); }
@@ -777,7 +802,9 @@
   }
   .evt-ticket__notch--l { left: 0; transform: translate(-50%, -50%); }
   .evt-ticket__notch--r { right: 0; transform: translate(50%, -50%); }
-  .evt-ticket--featured .evt-ticket__notch { border-color: var(--ink); }
+  /* The circles read as bites out of the card edge, so they carry the card
+     colour rather than the navy now behind it. */
+  .evt-ticket--featured .evt-ticket__notch { background: var(--sun); border-color: var(--ink); }
 
   .evt-ticket__body {
     min-width: 0;
@@ -811,7 +838,7 @@
   .evt-ticket__cta { margin-top: auto; }
 
   /* ================= 9. About ================= */
-  .evt-about { background: var(--forest); padding-block: clamp(64px, 11vh, 132px); }
+  .evt-about { background: var(--grad-secondary); padding-block: clamp(64px, 11vh, 132px); }
   .evt-about__grid { display: grid; gap: clamp(32px, 5vw, 72px); }
   .evt-about__mark { font-size: clamp(3rem, 11vw, 7rem); color: var(--on-dark); margin: 14px 0 0; }
   .evt-about__mark em { font-style: normal; color: var(--acid); }
@@ -819,7 +846,7 @@
   .evt-about__copy p + p { margin-top: 18px; }
 
   /* ================= 10 + 13. Galleries ================= */
-  .evt-gallery { background: var(--ink); padding-block: clamp(48px, 8vh, 96px) clamp(48px, 8vh, 88px); }
+  .evt-gallery { background: var(--grad-panel); padding-block: clamp(48px, 8vh, 96px) clamp(48px, 8vh, 88px); }
   .evt-mosaic {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -849,26 +876,26 @@
   .evt-strip .evt-duo { scroll-snap-align: start; aspect-ratio: 3 / 4; }
 
   /* ================= 11. Organiser ================= */
-  .evt-host { background: var(--paper); color: var(--on-light); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; }
+  .evt-host { background: var(--grad-secondary); color: var(--on-dark); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; }
   .evt-host__grid { display: grid; gap: clamp(32px, 5vw, 64px); align-items: center; }
-  .evt-host__eyebrow { font-size: clamp(1.8rem, 3.8vw, 2.7rem); color: var(--forest); display: block; margin-bottom: 14px; }
+  .evt-host__eyebrow { font-size: clamp(1.8rem, 3.8vw, 2.7rem); color: var(--acid); display: block; margin-bottom: 14px; }
   .evt-host__copy { margin-top: 30px; }
   .evt-host__copy p { max-width: 58ch; }
   .evt-host__copy p + p { margin-top: 16px; }
-  .evt-host__copy strong { color: var(--forest); }
+  .evt-host__copy strong { color: var(--acid); }
   .evt-host__media { aspect-ratio: 4 / 5; }
 
   /* ================= 12. Cause ================= */
-  .evt-cause { position: relative; isolation: isolate; background: var(--acid); color: var(--ink); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; text-align: center; }
+  .evt-cause { position: relative; isolation: isolate; background: var(--grad-secondary); color: var(--on-dark); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; text-align: center; }
   .evt-cause__inner { position: relative; z-index: 1; }
   .evt-cause__intro { max-width: 58ch; margin: 28px auto 0; }
   .evt-cause__list { list-style: none; margin: clamp(36px, 6vh, 56px) auto 0; padding: 0; max-width: 62ch; display: grid; gap: 22px; text-align: left; }
-  .evt-cause__list li { border-top: 2px solid var(--ink); padding-top: 16px; line-height: 1.55; }
+  .evt-cause__list li { border-top: 2px solid var(--moss); padding-top: 16px; line-height: 1.55; }
   .evt-cause__list b { font-family: "Anton", system-ui, sans-serif; font-weight: 400; text-transform: uppercase; margin-right: .4em; }
   .evt-cause__close { margin-top: clamp(40px, 6vh, 64px); font-size: clamp(1.8rem, 6vw, 4rem); }
 
   /* ================= Booking / seat map ================= */
-  .evt-book { background: var(--ink); padding-block: clamp(64px, 11vh, 132px); }
+  .evt-book { background: var(--grad-panel); padding-block: clamp(64px, 11vh, 132px); }
   .evt-book__panel {
     border: 3px solid var(--moss);
     background: var(--forest);
@@ -880,7 +907,7 @@
   .evt-seats { display: grid; grid-template-columns: repeat(27, 1fr); gap: 3px; margin-bottom: 18px; }
   .evt-seat {
     aspect-ratio: 1; border-radius: 2px;
-    background: rgba(244, 241, 230, .16);
+    background: rgba(92, 187, 255, .18);
     transform: scale(.4); opacity: 0;
     transition: transform .5s var(--ease), opacity .5s var(--ease), background-color .5s var(--ease);
     transition-delay: calc(var(--i) * 6ms);
@@ -889,11 +916,11 @@
   .is-in .evt-seat--taken { background: var(--acid); }
   .evt-seats__legend { display: flex; flex-wrap: wrap; gap: 18px; }
   .evt-seats__key { display: inline-flex; align-items: center; gap: 8px; }
-  .evt-seats__sw { width: 11px; height: 11px; border-radius: 2px; background: rgba(244, 241, 230, .16); }
+  .evt-seats__sw { width: 11px; height: 11px; border-radius: 2px; background: rgba(92, 187, 255, .18); }
   .evt-seats__sw--taken { background: var(--acid); }
 
   /* ================= 14. Footer ================= */
-  .evt-footer { background: var(--ink); border-top: 2px solid var(--moss); padding-block: 40px; }
+  .evt-footer { background: var(--grad-panel); border-top: 2px solid var(--moss); padding-block: 40px; }
   .evt-footer__grid { display: grid; gap: 22px; align-items: center; text-align: center; }
   .evt-footer__mark { font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--on-dark); }
   .evt-footer__mark em { font-style: normal; color: var(--acid); }
