@@ -34,11 +34,12 @@
   one place.
 
   Colour system (never hardcode a hex in the markup, use the tokens):
-    ink #000C1C / forest #0F1934 / moss #26426A      navy surfaces
-    paper #E9F0FA / paper-dim #C6D4E6               silver surfaces
-    acid #5CBBFF  electric blue, the primary accent
-    sun  #F5A524  warm amber, kept for the loudest moments only
-    lime #0E5690  deep electric blue, the far end of the primary gradient
+    ink #061327 / forest #0A1D38 / moss #1C3A63     navy and rich blue
+    paper #EAF1F9 / paper-dim #C3D3E6               soft white surfaces
+    acid #6BB6EE  rich blue, the ambient accent
+    sun  #FF8620  the orange, kept for CTAs and key emphasis only
+    sun-lift #FFA24D  the muted orange, hover only
+    lime #123E73  deep blue, the far end of the primary gradient
   ==========================================================================
 {%- endcomment -%}
 
@@ -58,6 +59,16 @@
 
   assign ev_booking_url = 'https://events.hilm.edu.pk/HILM/Y.E.S/'
   assign ev_cta         = 'Book your seat'
+
+  # ---------- Hero banner -----------------------------------------------
+  # TODO_CONTENT: upload the Y.E.S. banner in Shopify admin under Content then
+  # Files, copy its link, and paste it here. It then sits behind the hero as
+  # the main visual, under a navy scrim so the live type on top stays the
+  # thing you read. Leave it empty and the hero is the type alone, as now.
+  # ev_hero_scrim is how much navy sits over the picture: raise it toward 1
+  # for a quieter banner, lower it toward 0 to let more of the artwork show.
+  assign ev_hero_banner = ''
+  assign ev_hero_scrim  = '.68'
 
   # ---------- Speakers :: name~topic~photo~description -------------------
   # TODO_CONTENT: paste a portrait URL into the third field of a row to swap
@@ -140,7 +151,7 @@
   #shopify-section-{{ section.id }} { padding: 0 !important; margin: 0 !important; }
 
   html { overflow-x: clip; }
-  body { background: #000C1C; overflow-x: clip; }
+  body { background: #061327; overflow-x: clip; }
 
   /* ================= Tokens ================= */
   .evt {
@@ -148,27 +159,29 @@
        loudest moments. Two gradients carry it: the primary runs #000C1C to
        #0E5690 and lights the hero, the secondary runs #0F1934 to #26426A and
        fills the panels. */
-    --ink:       #000C1C;
-    --forest:    #0F1934;
-    --moss:      #26426A;
-    --paper:     #E9F0FA;
-    --paper-dim: #C6D4E6;
-    --acid:      #5CBBFF;
-    --sun:       #F5A524;
-    --lime:      #0E5690;
-    --on-dark:   #F2F6FC;
-    --on-light:  #000C1C;
+    --ink:       #061327;
+    --forest:    #0A1D38;
+    --moss:      #1C3A63;
+    --paper:     #EAF1F9;
+    --paper-dim: #C3D3E6;
+    --acid:      #6BB6EE;
+    --sun:       #FF8620;
+    --sun-lift:  #FFA24D;
+    --lime:      #123E73;
+    --on-dark:   #F1F6FC;
+    --on-light:  #061327;
 
     /* The bright end of the primary gradient is held back to the far corner:
        everywhere the hero carries type stays dark enough for the accent to
        clear 4.5 to 1 against it. */
-    --grad-primary:   linear-gradient(163deg, #000C1C 0%, #011A33 48%, #073C68 82%, #0E5690 100%);
-    --grad-secondary: linear-gradient(168deg, #0F1934 0%, #26426A 100%);
+    --grad-primary:   linear-gradient(163deg, #030C1A 0%, #061327 46%, #0B2E58 82%, #0D3D6E 100%);
+    --grad-secondary: linear-gradient(168deg, #0A1D38 0%, #1C3A63 100%);
     /* The panel gradient is the quiet one: it only lifts a section off the
        page ground so the stacked sections read as separate planes. */
-    --grad-panel:     linear-gradient(180deg, #000C1C 0%, #061A31 62%, #000C1C 100%);
-    --glow-soft:      0 0 34px rgba(92, 187, 255, .32);
-    --glow-wide:      0 0 60px rgba(92, 187, 255, .22);
+    --grad-panel:     linear-gradient(180deg, #061327 0%, #0A2242 62%, #061327 100%);
+    --glow-soft:      0 0 34px rgba(107, 182, 238, .30);
+    --glow-wide:      0 0 60px rgba(107, 182, 238, .20);
+    --glow-warm:      0 0 34px rgba(255, 134, 32, .38);
 
     --pad-x: clamp(18px, 5vw, 72px);
     --maxw: 1280px;
@@ -237,8 +250,8 @@
     text-decoration: none; cursor: pointer;
     transition: transform .15s var(--ease), box-shadow .15s var(--ease), background-color .15s var(--ease);
   }
-  .evt-btn--acid { background: var(--acid); color: var(--ink); box-shadow: var(--glow-soft); }
-  .evt-btn--acid:hover { background: var(--sun); transform: translateY(-2px); box-shadow: 0 8px 0 var(--moss), var(--glow-soft); }
+  .evt-btn--acid { background: var(--sun); color: var(--ink); box-shadow: var(--glow-warm); }
+  .evt-btn--acid:hover { background: var(--sun-lift); transform: translateY(-2px); box-shadow: 0 8px 0 var(--moss), var(--glow-warm); }
   .evt-btn--forest { background: var(--forest); color: var(--paper); }
   .evt-btn--forest:hover { background: var(--moss); transform: translateY(-2px); box-shadow: 0 8px 0 var(--paper-dim); }
   .evt-btn--sun { background: var(--sun); color: var(--ink); }
@@ -343,16 +356,32 @@
     overflow: hidden;
     /* A spotlight over the primary gradient, the way the poster is lit. */
     background:
-      radial-gradient(118% 78% at 50% -12%, rgba(92, 187, 255, .26) 0%, rgba(92, 187, 255, .07) 44%, transparent 70%),
+      radial-gradient(118% 78% at 50% -12%, rgba(107, 182, 238, .28) 0%, rgba(107, 182, 238, .08) 44%, transparent 70%),
       var(--grad-primary);
     min-height: 100svh;
     display: flex; flex-direction: column;
     justify-content: center;
     padding-block: clamp(20px, 4vh, 44px) clamp(20px, 4vh, 40px);
   }
+  /* The banner is the hero's main visual. A navy scrim and a fade into the
+     page ground sit over it, so it reads as the lit room behind the words
+     rather than a second copy of them, and the type keeps its contrast. */
+  .evt-hero__banner { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  .evt-hero__banner img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+  }
+  .evt-hero__banner::after {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(6, 19, 39, .42) 0%, rgba(6, 19, 39, .78) 64%, #061327 100%),
+      rgba(6, 19, 39, var(--evt-scrim, .68));
+  }
+
   .evt-hero__eyebrow {
     text-align: center;
-    color: var(--acid);
+    color: var(--sun);
     margin-bottom: clamp(12px, 2vh, 24px);
     font-size: clamp(1.55rem, 3.4vw, 2.3rem);
     letter-spacing: .2em;
@@ -382,16 +411,16 @@
     hyphens: none;
     color: var(--on-dark);
   }
-  .evt-hero__year { color: var(--acid); display: inline-block; font-size: 1.12em; margin-left: .04em; vertical-align: baseline; }
+  .evt-hero__year { color: var(--sun); display: inline-block; font-size: 1.12em; margin-left: .04em; vertical-align: baseline; }
 
   /* Date, time and place as one solid block, the loudest object after the mark. */
   .evt-hero__facts {
     margin-top: clamp(20px, 3vh, 34px);
     display: inline-flex;
     flex-direction: column;
-    background: var(--acid);
+    background: var(--sun);
     color: var(--ink);
-    box-shadow: 10px 10px 0 var(--moss), var(--glow-wide);
+    box-shadow: 10px 10px 0 var(--moss), var(--glow-warm);
     text-align: center;
   }
   .evt-fact {
@@ -498,15 +527,15 @@
   .evt-hook__ref { margin-top: 20px; color: var(--acid); letter-spacing: .18em; }
   .evt-hook__line {
     margin-top: clamp(26px, 4vh, 44px);
-    color: var(--acid);
+    color: var(--sun);
     font-size: clamp(1.7rem, 4vw, 2.9rem);
     line-height: 1.12;
     max-width: 24ch;
     margin-inline: auto;
   }
-  .evt-hook__script { color: var(--acid); font-size: 1.35em; display: inline-block; line-height: 1; padding-bottom: .08em; }
-  .evt-hook--light .evt-hook__accent { color: var(--acid); }
-  .evt-hook__support { margin-top: 22px; max-width: 46ch; margin-inline: auto; color: var(--acid); font-size: clamp(1.5rem, 1.82vw, 1.8rem); }
+  .evt-hook__script { color: var(--sun); font-size: 1.35em; display: inline-block; line-height: 1; padding-bottom: .08em; }
+  .evt-hook--light .evt-hook__accent { color: var(--sun); }
+  .evt-hook__support { margin-top: 22px; max-width: 46ch; margin-inline: auto; color: var(--sun); font-size: clamp(1.5rem, 1.82vw, 1.8rem); }
   .evt-hook__cta { margin-top: clamp(30px, 5vh, 48px); }
 
   .evt-video {
@@ -584,7 +613,7 @@
   /* Card two takes a soft steel blue. It sits a clear step below the accent
      on one side and the silver on the other, so no two tabs in the row read
      as the same colour, and its dark text is as easy as on the rest. */
-  .evt-walk__card:nth-child(5n + 2) { --evt-tone: #A6CFF0; --evt-on-tone: var(--ink); }
+  .evt-walk__card:nth-child(5n + 2) { --evt-tone: #A9CBE8; --evt-on-tone: var(--ink); }
   .evt-walk__card:nth-child(5n + 3) { --evt-tone: var(--sun);   --evt-on-tone: var(--ink); }
   .evt-walk__card:nth-child(5n + 4) { --evt-tone: var(--paper); --evt-on-tone: var(--ink); }
   /* The last card is the deep end of the primary gradient, so it is the one
@@ -841,7 +870,7 @@
   .evt-about { background: var(--grad-secondary); padding-block: clamp(64px, 11vh, 132px); }
   .evt-about__grid { display: grid; gap: clamp(32px, 5vw, 72px); }
   .evt-about__mark { font-size: clamp(3rem, 11vw, 7rem); color: var(--on-dark); margin: 14px 0 0; }
-  .evt-about__mark em { font-style: normal; color: var(--acid); }
+  .evt-about__mark em { font-style: normal; color: var(--sun); }
   .evt-about__copy p { max-width: 62ch; color: var(--on-dark); }
   .evt-about__copy p + p { margin-top: 18px; }
 
@@ -861,11 +890,11 @@
   .evt-strip__nav { display: flex; gap: 10px; flex-shrink: 0; }
   .evt-strip__btn {
     width: 52px; height: 52px; border-radius: 999px;
-    border: 2px solid var(--moss); background: transparent; color: var(--acid);
+    border: 2px solid var(--moss); background: transparent; color: var(--sun);
     font-size: 1.35rem; line-height: 1; cursor: pointer;
     transition: background-color .2s var(--ease), border-color .2s var(--ease);
   }
-  .evt-strip__btn:hover { background: var(--moss); border-color: var(--acid); }
+  .evt-strip__btn:hover { background: var(--moss); border-color: var(--sun); }
   .evt-strip {
     display: grid; grid-auto-flow: column; grid-auto-columns: 74%;
     gap: 4px; overflow-x: auto; scroll-snap-type: x mandatory;
@@ -878,11 +907,11 @@
   /* ================= 11. Organiser ================= */
   .evt-host { background: var(--grad-secondary); color: var(--on-dark); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; }
   .evt-host__grid { display: grid; gap: clamp(32px, 5vw, 64px); align-items: center; }
-  .evt-host__eyebrow { font-size: clamp(1.8rem, 3.8vw, 2.7rem); color: var(--acid); display: block; margin-bottom: 14px; }
+  .evt-host__eyebrow { font-size: clamp(1.8rem, 3.8vw, 2.7rem); color: var(--sun); display: block; margin-bottom: 14px; }
   .evt-host__copy { margin-top: 30px; }
   .evt-host__copy p { max-width: 58ch; }
   .evt-host__copy p + p { margin-top: 16px; }
-  .evt-host__copy strong { color: var(--acid); }
+  .evt-host__copy strong { color: var(--sun); }
   .evt-host__media { aspect-ratio: 4 / 5; }
 
   /* ================= 12. Cause ================= */
@@ -913,17 +942,17 @@
     transition-delay: calc(var(--i) * 6ms);
   }
   .is-in .evt-seat { transform: none; opacity: 1; }
-  .is-in .evt-seat--taken { background: var(--acid); }
+  .is-in .evt-seat--taken { background: var(--sun); }
   .evt-seats__legend { display: flex; flex-wrap: wrap; gap: 18px; }
   .evt-seats__key { display: inline-flex; align-items: center; gap: 8px; }
   .evt-seats__sw { width: 11px; height: 11px; border-radius: 2px; background: rgba(92, 187, 255, .18); }
-  .evt-seats__sw--taken { background: var(--acid); }
+  .evt-seats__sw--taken { background: var(--sun); }
 
   /* ================= 14. Footer ================= */
   .evt-footer { background: var(--grad-panel); border-top: 2px solid var(--moss); padding-block: 40px; }
   .evt-footer__grid { display: grid; gap: 22px; align-items: center; text-align: center; }
   .evt-footer__mark { font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--on-dark); }
-  .evt-footer__mark em { font-style: normal; color: var(--acid); }
+  .evt-footer__mark em { font-style: normal; color: var(--sun); }
   .evt-footer__socials { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
   /* inline-flex plus min-height keeps the link a 44px tap target without
      stretching the underline past the word */
@@ -932,7 +961,7 @@
     color: var(--on-dark); text-decoration: none;
     border-bottom: 2px solid var(--moss); padding-bottom: 2px;
   }
-  .evt-footer__socials a:hover { color: var(--acid); border-color: var(--acid); }
+  .evt-footer__socials a:hover { color: var(--sun); border-color: var(--sun); }
   .evt-footer__rights { color: var(--on-dark); opacity: .75; font-size: 1.38rem; }
 
   /* ================= 15. Sticky mobile CTA ================= */
@@ -940,7 +969,7 @@
     position: fixed; inset: auto 0 0 0;
     z-index: var(--z-sticky);
     display: flex; align-items: center; justify-content: space-between; gap: 14px;
-    background: var(--acid); color: var(--ink);
+    background: var(--sun); color: var(--ink);
     padding: 12px clamp(14px, 4vw, 24px);
     padding-bottom: calc(12px + env(safe-area-inset-bottom));
     border-top: 3px solid var(--ink);
@@ -949,7 +978,7 @@
   }
   .evt-sticky.is-visible { transform: none; }
   .evt-sticky__when { font-weight: 700; font-size: 1.3rem; letter-spacing: .04em; text-transform: uppercase; }
-  .evt-sticky .evt-btn { padding: 12px 22px; background: var(--ink); color: var(--acid); }
+  .evt-sticky .evt-btn { padding: 12px 22px; background: var(--ink); color: var(--sun); }
   .evt-sticky .evt-btn:hover { background: var(--forest); box-shadow: none; transform: none; }
   @media (max-width: 520px) { .evt-sticky__time { display: none; } }
   /* The bar carries a date and a button on one line, so on a narrow phone both
@@ -1030,7 +1059,7 @@
   @media (prefers-reduced-motion: reduce) {
     .evt *, .evt *::before, .evt *::after { animation: none !important; transition-duration: .01ms !important; }
     .evt [data-reveal] > *, .evt-seat { opacity: 1; transform: none; }
-    .evt-seat--taken { background: var(--acid); }
+    .evt-seat--taken { background: var(--sun); }
     .evt-marquee__row { animation: none; }
     .evt-sticky { transform: none; }
     /* The walk out deck still opens on a press, it just does so at once. */
@@ -1041,7 +1070,7 @@
   <style>
     .evt [data-reveal] > * { opacity: 1; transform: none; }
     .evt .evt-seat { opacity: 1; transform: none; }
-    .evt .evt-seat--taken { background: var(--acid); }
+    .evt .evt-seat--taken { background: var(--sun); }
     /* No script, no pressing, so every panel is simply open. */
     .evt .evt-walk__spine, .evt .evt-walk__art { display: none; }
     .evt .evt-walk__deck { display: grid; grid-auto-flow: row; height: auto; gap: clamp(14px, 2.2vh, 24px); }
@@ -1095,6 +1124,11 @@
 
   {%- comment -%} ============ 1. Hero ============ {%- endcomment -%}
   <section class="evt-hero" aria-labelledby="evt-h1-{{ section.id }}">
+    {%- if ev_hero_banner != blank -%}
+      <div class="evt-hero__banner" aria-hidden="true" style="--evt-scrim:{{ ev_hero_scrim }}">
+        <img src="{{ ev_hero_banner }}&width=2400" alt="" width="2400" height="1350" decoding="async" fetchpriority="high">
+      </div>
+    {%- endif -%}
     <div class="evt-backdrop" aria-hidden="true"><span>{{ ev_mark_2 }}{{ ev_mark_3 }}</span></div>
 
     <div class="evt-wrap evt-hero__inner">
