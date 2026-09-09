@@ -103,7 +103,7 @@
   assign ev_film_title = 'Youth Empowerment Summit 26'
 
   # ---------- Gallery two :: filename~alt --------------------------------
-  assign ev_gallery2 = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/WhatsApp_Image_2026-09-08_at_16.41.23.jpg?v=1788867705~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/WhatsApp_Image_2026-09-06_at_16.38.20.jpg?v=1788698136~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/WhatsApp_Image_2026-09-06_at_16.03.56.jpg?v=1788692709~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/WhatsApp_Image_2026-09-06_at_20.35.10.jpg?v=1788708930~A moment from the graduation ceremony' | split: '|'
+  assign ev_gallery2 = 'https://cdn.shopify.com/s/files/1/0754/9013/2214/files/WhatsApp_Image_2026-09-06_at_20.35.10.jpg?v=1788708930~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/WhatsApp_Image_2026-09-06_at_16.38.20.jpg?v=1788698136~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/WhatsApp_Image_2026-09-06_at_16.03.56.jpg?v=1788692709~A moment from the graduation ceremony|https://cdn.shopify.com/s/files/1/0754/9013/2214/files/DSC8816_2_JPG.jpg?v=1788016505~A moment from the graduation ceremony' | split: '|'
 
   # ---------- Footer :: label~url ---------------------------------------
   assign ev_org        = 'HILM INSTITUTE'
@@ -520,7 +520,7 @@
      so the open panel takes whatever the four tabs leave: about three quarters
      of the row. */
   .evt-walk__deck {
-    --evt-tab: clamp(56px, 5vw, 78px);
+    --evt-tab: clamp(62px, 5.6vw, 88px);
     --evt-lap: clamp(9px, 1vw, 18px);
     --evt-open: calc(100% - 4 * var(--evt-tab) + 4 * var(--evt-lap));
     display: flex;
@@ -550,7 +550,10 @@
   /* Five plainly different tones, all of them from the page palette and all
      of them legible against the dark ground. */
   .evt-walk__card:nth-child(5n + 1) { --evt-tone: var(--acid);  --evt-on-tone: var(--ink); }
-  .evt-walk__card:nth-child(5n + 2) { --evt-tone: var(--moss);  --evt-on-tone: var(--paper); }
+  /* Card two held the darkest green in the set, which left its label
+     working against the tone. It now takes a pale mint from the same green
+     family, so its dark text reads as easily as on the other four. */
+  .evt-walk__card:nth-child(5n + 2) { --evt-tone: #B6EFC9; --evt-on-tone: var(--ink); }
   .evt-walk__card:nth-child(5n + 3) { --evt-tone: var(--sun);   --evt-on-tone: var(--ink); }
   .evt-walk__card:nth-child(5n + 4) { --evt-tone: var(--paper); --evt-on-tone: var(--ink); }
   .evt-walk__card:nth-child(5n + 5) { --evt-tone: var(--lime);  --evt-on-tone: var(--ink); }
@@ -567,10 +570,10 @@
     color: inherit; font-family: inherit;
     display: flex; align-items: center; justify-content: center;
     writing-mode: vertical-rl; transform: rotate(180deg);
-    padding: 16px 3px;
-    font-size: clamp(.82rem, 1.5svh, 1.06rem);
-    font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
-    line-height: 1.22; text-align: center;
+    padding: 16px 4px;
+    font-size: clamp(1rem, 1.85svh, 1.32rem);
+    font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+    line-height: 1.3; text-align: center;
     text-wrap: balance;
     cursor: pointer;
   }
@@ -615,7 +618,6 @@
     background: rgba(7, 17, 8, .12);
     display: grid; place-items: center;
   }
-  .evt-walk__card:nth-child(5n + 2) .evt-walk__art { background: rgba(244, 241, 230, .14); }
   .evt-walk__art img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .evt-walk__num { font-size: clamp(3.6rem, 8vw, 8rem); line-height: .8; opacity: .5; }
 
@@ -623,6 +625,10 @@
     font-size: clamp(1.72rem, 3.2vw, 3.3rem);
     line-height: 1.06;
     text-wrap: balance;
+    /* ENTREPRENEURSHIP is long enough to run past the column if the display
+       face falls back to something wider than Anton, and the card clips what
+       overflows. Wrapping is the safety net. */
+    overflow-wrap: break-word;
   }
   .evt-walk__desc {
     margin-top: clamp(13px, 2.1vh, 26px);
@@ -651,7 +657,7 @@
     .evt-walk__deck {
       /* Deep enough that a long topic name can run to two lines inside the
          bar rather than being cut off by it. */
-      --evt-tab: clamp(56px, 14vw, 74px);
+      --evt-tab: clamp(62px, 15.5vw, 84px);
       --evt-lap: clamp(6px, 1.6vw, 12px);
       flex-direction: column;
       height: auto;
@@ -678,8 +684,8 @@
       width: auto; height: var(--evt-tab);
       justify-content: flex-start; text-align: left;
       padding: 6px clamp(14px, 4vw, 24px);
-      font-size: clamp(.74rem, 2.9vw, .94rem);
-      letter-spacing: .05em;
+      font-size: clamp(.88rem, 3.4vw, 1.12rem);
+      letter-spacing: .06em;
     }
     .evt-walk__body {
       position: static;
@@ -691,7 +697,7 @@
   /* Smallest phones: tighter type, so the deck still sits comfortably on a
      short screen. */
   @media (max-width: 400px) {
-    .evt-walk__deck { --evt-tab: 52px; }
+    .evt-walk__deck { --evt-tab: 58px; }
     .evt-walk__topic { font-size: 1.42rem; }
     .evt-walk__desc { font-size: 1.08rem; margin-top: 11px; }
     .evt-walk__who { margin-top: 13px; }
