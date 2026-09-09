@@ -34,7 +34,13 @@
   one place.
 
   Colour system (never hardcode a hex in the markup, use the tokens):
-    ink #12060A / forest #2A0B0D / moss #52161A     the maroon darks
+    The page ground is the cinematic navy background, #010A17 lit by a deep
+    blue haze with the electric glow held in the top right. Every section is
+    only a transparent veil over it. The maroon and the gold below belong to
+    the objects that sit on top: badges, buttons, cards, tabs and tickets.
+
+    ink #010A17     the navy base, the page ground
+    forest #2A0B0D / moss #52161A                   the maroon darks
     paper #F6EFE6 / paper-dim #DCCFC1               warm white surfaces
     acid #690506  THE MAROON. Surfaces: badges, buttons, tiles, tabs
     sun  #FFC425  THE GOLD. Emphasis on dark grounds, and bright surfaces
@@ -157,14 +163,14 @@
   #shopify-section-{{ section.id }} { padding: 0 !important; margin: 0 !important; }
 
   html { overflow-x: clip; }
-  body { background: #12060A; overflow-x: clip; }
+  body { background: #010A17; overflow-x: clip; }
 
   /* ================= Tokens ================= */
   .evt {
-    /* A deep maroon ground with gold as the single bright note. Two
-       gradients carry it: the primary runs near black into #690506 and
-       lights the hero, the secondary fills the panels. */
-    --ink:       #12060A;
+    /* The page ground is the cinematic navy: a near black base lit by a
+       deep blue haze with the electric glow held up in the top right. The
+       maroon and the gold stay on the objects that sit over it. */
+    --ink:       #010A17;
     --forest:    #2A0B0D;
     --moss:      #52161A;
     --paper:     #F6EFE6;
@@ -176,17 +182,16 @@
     --on-dark:   #FDF6EE;
     --on-light:  #1B0507;
 
-    /* The lit end of the primary gradient is held back to the far corner:
-       everywhere the hero carries type stays dark enough for the gold to
-       clear 4.5 to 1 against it. */
-    --grad-primary:   linear-gradient(163deg, #0A0407 0%, #12060A 44%, #4A0F11 80%, #690506 100%);
-    /* The panel gradients are deliberately a little transparent. The live
-       background below drifts underneath them, so every section shares the
-       same moving light instead of sitting on a flat plate of its own. */
-    --grad-secondary: linear-gradient(168deg, rgba(28, 8, 11, .84) 0%, rgba(66, 17, 20, .84) 100%);
-    /* The panel gradient is the quiet one: it only lifts a section off the
-       page ground so the stacked sections read as separate planes. */
-    --grad-panel:     linear-gradient(180deg, rgba(18, 6, 10, .88) 0%, rgba(44, 12, 14, .80) 62%, rgba(18, 6, 10, .88) 100%);
+    /* No section paints a ground of its own any more. All three of these are
+       transparent veils of the base navy: they only deepen the live
+       background enough to separate one section from the next and to hold
+       the type clear of the glow. The lightest of them still leaves the
+       gold at 5.9 to 1 over the brightest point of the background, which is
+       what sets their floor. Darkest at the edges and the feet, per the
+       reference. */
+    --grad-primary:   linear-gradient(163deg, rgba(1, 10, 23, .30) 0%, rgba(1, 10, 23, .42) 58%, rgba(1, 10, 23, .60) 100%);
+    --grad-secondary: linear-gradient(168deg, rgba(1, 10, 23, .48) 0%, rgba(1, 22, 51, .34) 100%);
+    --grad-panel:     linear-gradient(180deg, rgba(1, 10, 23, .52) 0%, rgba(1, 22, 51, .34) 62%, rgba(1, 10, 23, .52) 100%);
     --glow-soft:      0 0 34px rgba(255, 196, 37, .26);
     --glow-wide:      0 0 60px rgba(255, 196, 37, .18);
     --glow-warm:      0 0 34px rgba(255, 196, 37, .34);
@@ -219,28 +224,36 @@
   }
 
   /* ================= Live background =================
-     Three slow lights over the page ground, pinned to the viewport and
-     drifting against each other. It paints above the block's own ground and
-     below every section, and the section gradients are a little transparent,
-     so the whole page breathes with one light rather than reading as a stack
-     of flat plates. Pure CSS: it runs on the compositor and watches nothing. */
+     The whole page sits on this one moving light: a near black navy base,
+     a deep blue haze through the middle and the electric glow held up in
+     the top right, exactly the three layers of the reference. It is pinned
+     to the viewport and every section above it is only a transparent veil,
+     so the sections blend into the background instead of covering it.
+
+     The reference moves the layers with background-position. Moving them
+     with a transform instead puts the whole drift on the compositor: the
+     same slow sweep, left and low, up through the middle, then right, with
+     the 1.00 to 1.06 breath over it, and none of the per frame repainting
+     that a full screen gradient would otherwise cost a phone. It watches
+     nothing: no listeners, no measuring. */
   .evt::before {
     content: "";
     position: fixed;
-    inset: -22%;
+    inset: -8%;
     z-index: -1;
     pointer-events: none;
-    background:
-      radial-gradient(46% 46% at 22% 22%, rgba(105, 5, 6, .62) 0%, rgba(105, 5, 6, 0) 66%),
-      radial-gradient(38% 38% at 80% 12%, rgba(255, 196, 37, .13) 0%, rgba(255, 196, 37, 0) 62%),
-      radial-gradient(56% 56% at 72% 82%, rgba(122, 12, 14, .50) 0%, rgba(122, 12, 14, 0) 68%),
-      radial-gradient(70% 50% at 50% 50%, rgba(38, 8, 11, .55) 0%, rgba(18, 6, 10, 0) 72%);
-    animation: evt-aurora 30s ease-in-out infinite alternate;
+    background-color: #010A17;
+    background-image:
+      radial-gradient(60% 55% at 72% 3%, rgba(8, 124, 232, .78) 0%, rgba(2, 76, 160, .50) 24%, rgba(2, 43, 92, .23) 52%, rgba(1, 10, 23, 0) 78%),
+      radial-gradient(70% 65% at 48% 32%, rgba(14, 86, 144, .24) 0%, rgba(2, 43, 92, .16) 38%, rgba(1, 10, 23, 0) 74%),
+      linear-gradient(115deg, #010A17 0%, #011633 32%, #022B5C 58%, #011633 78%, #010A17 100%);
+    animation: evt-cinematic 16s ease-in-out infinite alternate;
     will-change: transform;
   }
-  @keyframes evt-aurora {
-    from { transform: translate3d(-3.2%, -2.2%, 0) scale(1.04); }
-    to   { transform: translate3d(3.2%, 2.4%, 0) scale(1.16); }
+  @keyframes evt-cinematic {
+    0%   { transform: translate3d(-2.2%, 1.2%, 0) scale(1.00); }
+    50%  { transform: translate3d(0.4%, -1.4%, 0) scale(1.03); }
+    100% { transform: translate3d(2.2%, 1.6%, 0) scale(1.06); }
   }
 
   .evt *, .evt *::before, .evt *::after { box-sizing: border-box; }
@@ -406,9 +419,12 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    /* A spotlight over the primary gradient, the way the poster is lit. */
+    /* The hero adds no light of its own: the glow in the top right of the
+       live background is the hero's light. This only feathers the outer
+       edges and the foot down, which is where the reference is darkest and
+       where the date block and the marquee need the extra hold. */
     background:
-      radial-gradient(118% 78% at 50% -12%, rgba(255, 196, 37, .16) 0%, rgba(105, 5, 6, .30) 44%, transparent 70%),
+      radial-gradient(120% 86% at 50% 6%, rgba(1, 10, 23, 0) 28%, rgba(1, 10, 23, .46) 100%),
       var(--grad-primary);
     min-height: 100svh;
     display: flex; flex-direction: column;
@@ -427,8 +443,8 @@
     content: "";
     position: absolute; inset: 0;
     background:
-      linear-gradient(180deg, rgba(18, 6, 10, .42) 0%, rgba(18, 6, 10, .78) 64%, #12060A 100%),
-      rgba(18, 6, 10, var(--evt-scrim, .68));
+      linear-gradient(180deg, rgba(1, 10, 23, .42) 0%, rgba(1, 10, 23, .78) 64%, #010A17 100%),
+      rgba(1, 10, 23, var(--evt-scrim, .68));
   }
 
   .evt-hero__eyebrow {
@@ -648,7 +664,7 @@
     overflow: hidden;
     border-radius: clamp(18px, 2vw, 32px);
     background: var(--evt-tone); color: var(--evt-on-tone);
-    box-shadow: -16px 0 34px rgba(8, 2, 4, .62);
+    box-shadow: -16px 0 34px rgba(0, 4, 11, .66);
     transition: flex-basis .6s cubic-bezier(.16, 1, .3, 1);
   }
   /* Each card slides a little under its left hand neighbour, which is what
@@ -788,7 +804,7 @@
     .evt-walk__card {
       flex: none;
       max-height: var(--evt-tab);
-      box-shadow: 0 -14px 28px rgba(8, 2, 4, .62);
+      box-shadow: 0 -14px 28px rgba(0, 4, 11, .66);
       transition: max-height .6s cubic-bezier(.16, 1, .3, 1);
     }
     .evt-walk__card + .evt-walk__card {
