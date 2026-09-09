@@ -399,6 +399,12 @@
   /* ================= 2. Speakers ================= */
   .evt-speakers { background: var(--ink); padding-block: clamp(56px, 9vh, 112px); }
   .evt-speakers__head { text-align: center; margin-bottom: clamp(26px, 4vh, 46px); }
+  /* Same treatment as the badge over the topics deck: a larger face in a box
+     padded to match. Scoped to the head, so the stickers in every other
+     section keep the page default. */
+  .evt-speakers__head .evt-sticker {
+    padding: clamp(13px, 1.5vw, 22px) clamp(28px, 3.2vw, 50px) clamp(12px, 1.4vw, 20px);
+  }
 
   .evt-speakers__grid {
     display: grid;
@@ -1090,7 +1096,7 @@
   <section class="evt-speakers" aria-labelledby="evt-guests-{{ section.id }}">
     <div class="evt-wrap">
       <div class="evt-speakers__head">
-        <span class="evt-sticker evt-sticker--acid" style="transform:rotate(-1.5deg);font-size:clamp(1.5rem,3.6vw,2.4rem)">SPEAKERS</span>
+        <span class="evt-sticker evt-sticker--acid" style="transform:rotate(-1.5deg);font-size:clamp(2.15rem,5.2vw,3.6rem)">SPEAKERS</span>
         <h2 class="evt-sr" id="evt-guests-{{ section.id }}">SPEAKERS</h2>
       </div>
       <div class="evt-speakers__grid" data-reveal>
