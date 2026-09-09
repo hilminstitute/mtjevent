@@ -37,7 +37,7 @@
     Four colours, and nothing else:
 
     blue #07549A  THE DOMINANT. The page ground and most of what you see.
-    acid #B63818  THE ORANGE RED. Stripes, badge boxes, CTAs, tiles, numbers.
+    acid #F64600  THE ORANGE RED. Stripes, badge boxes, CTAs, tiles, numbers.
     sun  #FFC425  THE GOLDEN YELLOW. Offsets, borders, secondary accents.
     on-dark #FFFFFF  white, for contrast.
 
@@ -46,13 +46,18 @@
     sun-lift #FFD65E  the lifted gold, hover only
     lime #FFC425  the gold again, used only as the hard offset shadow
 
-    #B63818 is a DARK colour: its luminance is 0.13 against the blue's 0.09,
-    so orange red type on the blue measures 1.3 to 1 and cannot be read.
-    It is therefore a SURFACE here, never type on the blue, and the two
-    layer treatment does the rest: the orange red block, the golden yellow
-    offset behind it, white lettering on top. The one place orange red is
-    type is the marquee, whose band is dark enough to carry it, and the 26,
-    which takes the golden yellow offset for the same reason.
+    #F64600 has a luminance of 0.24 against the blue's 0.09, so orange type
+    on the blue still only measures 2.1 to 1 and cannot be read. It is
+    therefore a SURFACE here, never type on the blue, and the two layer
+    treatment does the rest: the orange block, the golden yellow offset
+    behind it, lettering on top. The one place orange is type is the
+    marquee, whose band carries it at 5.3 to 1, and the 26, which takes the
+    golden yellow offset for the same reason.
+
+    NOTE. At this brightness the orange behaves like a LIGHT surface, not a
+    dark one: white on it is 3.6 to 1 and gold on it is 2.3 to 1, where
+    near black is 5.2 to 1. Anything set on the orange at body or button
+    size therefore wants a dark colour, not white.
 
     Textures. Two, both inline SVG so nothing is fetched: a fractal smoke
     at 18 per cent (26 in the hero) and an eight point girih star lattice
@@ -182,8 +187,8 @@
     --moss:      #0A4A85;
     --paper:     #FFFFFF;
     --paper-dim: #CFE0F0;
-    --acid:      #B63818;
-    --acid-lift: #C74320;
+    --acid:      #F64600;
+    --acid-lift: #D93C00;
     --sun:       #FFC425;
     --sun-lift:  #FFD65E;
     --lime:      #FFC425;
@@ -321,7 +326,7 @@
   .evt-btn--sun:hover { background: var(--sun-lift); transform: translateY(-2px); box-shadow: 0 8px 0 var(--acid); }
   .evt-btn:active { transform: translateY(0); }
 
-  /* Gold rings on the blue, orange red on the light surfaces: #B63818 is
+  /* Gold rings on the blue, orange red on the light surfaces: #F64600 is
      too dark to be seen as an outline against the page. */
   .evt :focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
   .evt-light :focus-visible { outline-color: var(--acid); }
@@ -348,7 +353,7 @@
     line-height: 1;
   }
   /* SPEAKERS, TOPICS and TICKETS, and every other heading badge: the
-     #B63818 box as the main layer, the #FFC425 block as the offset behind
+     #F64600 box as the main layer, the #FFC425 block as the offset behind
      it, white lettering on top. */
   .evt-sticker--acid { background: var(--acid); color: var(--on-dark); box-shadow: 5px 5px 0 var(--lime), var(--glow-soft); }
   .evt-sticker--sun  { background: var(--sun); color: var(--on-light); }
@@ -399,8 +404,8 @@
   /* ================= Marquee ================= */
   /* The strip accent is the golden yellow rule top and bottom. The band
      under it is the deepest blue on the page, and it has to be: the
-     alternate loop runs in orange red, and #B63818 only clears 3 to 1 as
-     display type against something this dark. The default loop is white. */
+     alternate loop runs in orange, which needs a dark ground under it: on
+     this band it reads at 5.3 to 1. The default loop is white. */
   .evt-marquee {
     position: relative;
     overflow: hidden;
@@ -571,8 +576,8 @@
     position: relative;
     aspect-ratio: 3 / 4;
   }
-  /* The numbered tile is the #B63818 block, with the numeral in gold on top
-     of it. A #B63818 numeral would be invisible against any dark tile. */
+  /* The numbered tile is the #F64600 block, with the numeral in gold on top
+     of it. A #F64600 numeral would be invisible against any dark tile. */
   .evt-guest__initials {
     height: 100%;
     display: grid; place-content: center;
@@ -933,7 +938,7 @@
     color: var(--on-light);
     border: 3px solid var(--forest);
   }
-  /* The gold card. Its body type is near black, and #B63818 carries the
+  /* The gold card. Its body type is near black, and #F64600 carries the
      display sized parts that have to be picked out: the tier, the price and
      the badge block. The bullet markers run at 23px, which is under the
      size where orange red on gold is safe, so they stay near black. */
