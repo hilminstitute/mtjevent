@@ -515,6 +515,12 @@
     padding-block: clamp(64px, 11vh, 132px);
   }
   .evt-walk__head { text-align: center; margin-bottom: clamp(22px, 3.6vh, 44px); }
+  /* The badge is the only heading this section has, so it carries more weight
+     than the page default: a larger face in a box padded to match. Scoped to
+     the head, so the stickers in every other section are untouched. */
+  .evt-walk__head .evt-sticker {
+    padding: clamp(13px, 1.5vw, 22px) clamp(28px, 3.2vw, 50px) clamp(12px, 1.4vw, 20px);
+  }
 
   /* Five widths less the four overlaps come to exactly the width of the deck,
      so the open panel takes whatever the four tabs leave: about three quarters
@@ -568,12 +574,17 @@
     margin: 0; border: 0; background: transparent;
     -webkit-appearance: none; appearance: none;
     color: inherit; font-family: inherit;
-    display: flex; align-items: center; justify-content: center;
+    display: flex; align-items: center; justify-content: flex-start;
     writing-mode: vertical-rl; transform: rotate(180deg);
-    padding: 16px 4px;
+    /* The strip is turned through 180 degrees, so its physical top edge is
+       what you see at the foot of the tab. Starting the text from there, with
+       a deeper pad in front of it, sets all five labels off from the same low
+       point and runs each one upward. A label that wraps keeps both lines on
+       that same starting edge. */
+    padding: 34px 4px 16px;
     font-size: clamp(1rem, 1.85svh, 1.32rem);
     font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
-    line-height: 1.3; text-align: center;
+    line-height: 1.3; text-align: start;
     text-wrap: balance;
     cursor: pointer;
   }
@@ -1144,7 +1155,7 @@
   <section class="evt-walk" aria-labelledby="evt-walk-{{ section.id }}">
     <div class="evt-wrap" data-reveal>
       <div class="evt-walk__head">
-        <span class="evt-sticker evt-sticker--acid" style="transform:rotate(-1.5deg);font-size:clamp(1.5rem,3.6vw,2.4rem)">TOPICS</span>
+        <span class="evt-sticker evt-sticker--acid" style="transform:rotate(-1.5deg);font-size:clamp(2.15rem,5.2vw,3.6rem)">TOPICS</span>
         <h2 class="evt-sr" id="evt-walk-{{ section.id }}">TOPICS</h2>
       </div>
 
