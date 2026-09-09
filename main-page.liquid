@@ -60,9 +60,14 @@
     size therefore wants a dark colour, not white.
 
     Textures. Two, both inline SVG so nothing is fetched: a fractal smoke
-    at 18 per cent (26 in the hero) and an eight point girih star lattice
-    in gold line at 12 per cent over a 10 per cent wash. Both only ever
-    darken the blue, so nothing they sit under loses contrast.
+    at 18 per cent (26 in the hero) and a girih strapwork lattice in gold
+    line at 12 per cent over a 10 per cent wash. The lattice is the real
+    construction, not a motif traced by eye: octagons on a truncated square
+    grid, an eight point star inside each one with its tips run out to the
+    edge midpoints so the ring around it falls into pentagons, and a small
+    eight point star in every square gap. It tiles on the lattice itself,
+    so it repeats with no seam. Both textures only ever darken the blue, so
+    nothing they sit under loses contrast.
   ==========================================================================
 {%- endcomment -%}
 
@@ -199,7 +204,7 @@
        inside the file, and both only darken what is under them. */
     --tex-smoke:      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='1200'%3E%3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0055 0.009' numOctaves='5' seed='17' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0.004 0 0 0 0 0.055 0 0 0 0 0.105 1.15 0.85 0.35 0 -0.98'/%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3Crect width='1200' height='1200' filter='url(%23s)' opacity='0.18'/%3E%3C/svg%3E");
     --tex-smoke-hero: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='1200'%3E%3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0048 0.0082' numOctaves='5' seed='29' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0.004 0 0 0 0 0.055 0 0 0 0 0.105 1.15 0.85 0.35 0 -0.98'/%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3Crect width='1200' height='1200' filter='url(%23s)' opacity='0.26'/%3E%3C/svg%3E");
-    --tex-pattern:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Crect width='160' height='160' fill='%2301111F' opacity='0.10'/%3E%3Cg fill='none' stroke='%23FFC425' stroke-width='1.4' opacity='0.12'%3E%3Cpath d='M58 58H102V102H58ZM80 48.9L111.1 80L80 111.1L48.9 80ZM-22 -22H22V22H-22ZM0 -31.1L31.1 0L0 31.1L-31.1 0ZM138 -22H182V22H138ZM160 -31.1L191.1 0L160 31.1L128.9 0ZM-22 138H22V182H-22ZM0 128.9L31.1 160L0 191.1L-31.1 160ZM138 138H182V182H138ZM160 128.9L191.1 160L160 191.1L128.9 160Z'/%3E%3Cpath d='M0 80L80 0L160 80L80 160Z' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E");
+    --tex-pattern:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='176' height='176'%3E%3Crect width='176' height='176' fill='%2301111F' opacity='0.1'/%3E%3Cg fill='none' stroke='%23FFC425' stroke-width='1.1' stroke-linejoin='round' opacity='0.12'%3E%3Cpath d='M88.0 36.5L36.5 88.0L-36.5 88.0L-88.0 36.5L-88.0 -36.5L-36.5 -88.0L36.5 -88.0L88.0 -36.5Z'/%3E%3Cpath d='M63.4 0.0L31.0 12.9L44.8 44.8L12.9 31.0L0.0 63.4L-12.9 31.0L-44.8 44.8L-31.0 12.9L-63.4 0.0L-31.0 -12.9L-44.8 -44.8L-12.9 -31.0L-0.0 -63.4L12.9 -31.0L44.8 -44.8L31.0 -12.9Z'/%3E%3Cpath d='M63.4 0.0L88.0 0.0'/%3E%3Cpath d='M44.8 44.8L62.2 62.2'/%3E%3Cpath d='M0.0 63.4L0.0 88.0'/%3E%3Cpath d='M-44.8 44.8L-62.2 62.2'/%3E%3Cpath d='M-63.4 0.0L-88.0 0.0'/%3E%3Cpath d='M-44.8 -44.8L-62.2 -62.2'/%3E%3Cpath d='M-0.0 -63.4L-0.0 -88.0'/%3E%3Cpath d='M44.8 -44.8L62.2 -62.2'/%3E%3Cpath d='M264.0 36.5L212.5 88.0L139.5 88.0L88.0 36.5L88.0 -36.5L139.5 -88.0L212.5 -88.0L264.0 -36.5Z'/%3E%3Cpath d='M239.4 0.0L207.0 12.9L220.8 44.8L188.9 31.0L176.0 63.4L163.1 31.0L131.2 44.8L145.0 12.9L112.6 0.0L145.0 -12.9L131.2 -44.8L163.1 -31.0L176.0 -63.4L188.9 -31.0L220.8 -44.8L207.0 -12.9Z'/%3E%3Cpath d='M239.4 0.0L264.0 0.0'/%3E%3Cpath d='M220.8 44.8L238.2 62.2'/%3E%3Cpath d='M176.0 63.4L176.0 88.0'/%3E%3Cpath d='M131.2 44.8L113.8 62.2'/%3E%3Cpath d='M112.6 0.0L88.0 0.0'/%3E%3Cpath d='M131.2 -44.8L113.8 -62.2'/%3E%3Cpath d='M176.0 -63.4L176.0 -88.0'/%3E%3Cpath d='M220.8 -44.8L238.2 -62.2'/%3E%3Cpath d='M88.0 212.5L36.5 264.0L-36.5 264.0L-88.0 212.5L-88.0 139.5L-36.5 88.0L36.5 88.0L88.0 139.5Z'/%3E%3Cpath d='M63.4 176.0L31.0 188.9L44.8 220.8L12.9 207.0L0.0 239.4L-12.9 207.0L-44.8 220.8L-31.0 188.9L-63.4 176.0L-31.0 163.1L-44.8 131.2L-12.9 145.0L-0.0 112.6L12.9 145.0L44.8 131.2L31.0 163.1Z'/%3E%3Cpath d='M63.4 176.0L88.0 176.0'/%3E%3Cpath d='M44.8 220.8L62.2 238.2'/%3E%3Cpath d='M0.0 239.4L0.0 264.0'/%3E%3Cpath d='M-44.8 220.8L-62.2 238.2'/%3E%3Cpath d='M-63.4 176.0L-88.0 176.0'/%3E%3Cpath d='M-44.8 131.2L-62.2 113.8'/%3E%3Cpath d='M-0.0 112.6L-0.0 88.0'/%3E%3Cpath d='M44.8 131.2L62.2 113.8'/%3E%3Cpath d='M264.0 212.5L212.5 264.0L139.5 264.0L88.0 212.5L88.0 139.5L139.5 88.0L212.5 88.0L264.0 139.5Z'/%3E%3Cpath d='M239.4 176.0L207.0 188.9L220.8 220.8L188.9 207.0L176.0 239.4L163.1 207.0L131.2 220.8L145.0 188.9L112.6 176.0L145.0 163.1L131.2 131.2L163.1 145.0L176.0 112.6L188.9 145.0L220.8 131.2L207.0 163.1Z'/%3E%3Cpath d='M239.4 176.0L264.0 176.0'/%3E%3Cpath d='M220.8 220.8L238.2 238.2'/%3E%3Cpath d='M176.0 239.4L176.0 264.0'/%3E%3Cpath d='M131.2 220.8L113.8 238.2'/%3E%3Cpath d='M112.6 176.0L88.0 176.0'/%3E%3Cpath d='M131.2 131.2L113.8 113.8'/%3E%3Cpath d='M176.0 112.6L176.0 88.0'/%3E%3Cpath d='M220.8 131.2L238.2 113.8'/%3E%3Cpath d='M139.5 88.0L88.0 139.5L36.5 88.0L88.0 36.5Z'/%3E%3Cpath d='M116.6 99.8L97.8 97.8L99.8 116.6L88.0 101.9L76.2 116.6L78.2 97.8L59.4 99.8L74.1 88.0L59.4 76.2L78.2 78.2L76.2 59.4L88.0 74.1L99.8 59.4L97.8 78.2L116.6 76.2L101.9 88.0Z'/%3E%3C/g%3E%3C/svg%3E");
 
     /* No section paints a ground of its own. These are transparent veils of
        the deepest blue: they only deepen the page enough to separate one
@@ -547,7 +552,7 @@
      reads as geometry cut into the blue and never lifts it. */
   .evt-speakers {
     background: var(--tex-pattern), var(--grad-panel);
-    background-size: 160px 160px, cover;
+    background-size: 176px 176px, cover;
     background-repeat: repeat, no-repeat;
     padding-block: clamp(56px, 9vh, 112px);
   }
@@ -631,7 +636,7 @@
   .evt-hook { padding-block: clamp(64px, 11vh, 132px); text-align: center; }
   .evt-hook--dark {
     background: var(--tex-pattern), var(--grad-panel);
-    background-size: 160px 160px, cover;
+    background-size: 176px 176px, cover;
     background-repeat: repeat, no-repeat;
   }
   .evt-hook--light { background: var(--grad-secondary); color: var(--on-dark); }
@@ -1016,7 +1021,7 @@
   /* ================= 9. About ================= */
   .evt-about {
     background: var(--tex-pattern), var(--grad-secondary);
-    background-size: 160px 160px, cover;
+    background-size: 176px 176px, cover;
     background-repeat: repeat, no-repeat;
     padding-block: clamp(64px, 11vh, 132px);
   }
@@ -1103,7 +1108,7 @@
   /* ================= 14. Footer ================= */
   .evt-footer {
     background: var(--tex-pattern), var(--grad-panel);
-    background-size: 160px 160px, cover;
+    background-size: 176px 176px, cover;
     background-repeat: repeat, no-repeat;
     border-top: 2px solid var(--sun);
     padding-block: 40px;
