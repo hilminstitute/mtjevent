@@ -576,19 +576,22 @@
     position: relative;
     aspect-ratio: 3 / 4;
   }
-  /* The numbered tile is the #F64600 block, with the numeral in gold on top
-     of it. A #F64600 numeral would be invisible against any dark tile. */
+  /* The tile is the golden yellow block with the numeral in orange on it. */
   .evt-guest__initials {
     height: 100%;
     display: grid; place-content: center;
-    background: var(--acid);
-    color: var(--sun);
+    background: var(--sun);
+    color: var(--acid);
+    /* Orange on gold is only 2.3 to 1, so the numeral takes the same two
+       layer device the 26 and the heading badges use: the colour stays
+       exactly #F64600 and a hard offset in the deep blue draws its edge. */
+    text-shadow: .032em .036em 0 var(--ink);
     font-family: "Anton", system-ui, sans-serif;
     font-size: clamp(3rem, 9vw, 5rem);
     letter-spacing: .02em;
   }
-  /* Portraits are supplied as cut-outs with no studio background, so the orange
-     red block is shorter than the frame and anchored to the bottom: the top of the
+  /* Portraits are supplied as cut-outs with no studio background, so the golden
+     yellow block is shorter than the frame and anchored to the bottom: the top of the
      photo rises above it instead of sitting inside a full tile. --evt-rise is
      the block's share of the frame height. Raise it if a speaker's head sits
      low in their own crop, lower it if it sits high, so the edge lands across
@@ -604,7 +607,7 @@
     position: absolute; z-index: 0;
     left: 0; right: 0; bottom: 0;
     height: calc(var(--evt-rise) * 100%);
-    background: var(--acid);
+    background: var(--sun);
   }
   .evt-guest__portrait img {
     position: relative; z-index: 1;
