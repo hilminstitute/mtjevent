@@ -724,24 +724,23 @@
     flex-basis: calc(var(--evt-tab) + 14px);
   }
 
-  /* Five tones, all four palette colours and nothing else: the orange red,
-     the gold, white, the dominant blue and a light tint of it. The two dark
-     cards carry white; the three light ones carry near black, because the
-     body copy on a card runs at 20px and orange red on gold is only good
-     for display sizes. */
-  .evt-walk__card:nth-child(5n + 1) { --evt-tone: var(--acid);  --evt-on-tone: var(--on-dark); }
-  .evt-walk__card:nth-child(5n + 2) { --evt-tone: var(--sun);   --evt-on-tone: var(--on-light); }
-  .evt-walk__card:nth-child(5n + 3) { --evt-tone: var(--paper); --evt-on-tone: var(--ink); }
-  .evt-walk__card:nth-child(5n + 4) { --evt-tone: var(--blue);  --evt-on-tone: var(--on-dark); }
-  .evt-walk__card:nth-child(5n + 5) { --evt-tone: #9EC6E8;      --evt-on-tone: var(--ink); }
-  /* The topic name and its number are display sized, so on the light cards
-     they take the orange red and the deck keeps the site's accent. */
-  .evt-walk__card:nth-child(5n + 2) .evt-walk__topic,
-  .evt-walk__card:nth-child(5n + 3) .evt-walk__topic,
-  .evt-walk__card:nth-child(5n + 5) .evt-walk__topic,
-  .evt-walk__card:nth-child(5n + 2) .evt-walk__num,
-  .evt-walk__card:nth-child(5n + 3) .evt-walk__num,
-  .evt-walk__card:nth-child(5n + 5) .evt-walk__num { color: var(--acid); }
+  /* One warm ramp across the row, the five palette colours in order: the
+     deepest orange opens it and the brightest gold closes it, so no two
+     tabs read alike and the deck reads as one family.
+
+     Every one of these five is a LIGHT surface. The brightest pair in the
+     palette, #FFDF00 on #FF4E00, is only 2.5 to 1, so no palette colour can
+     carry type against another one: all of the deck's words are near black,
+     which is what the brief asks for and what runs from 5.6 to 1 on the
+     deepest card up to 14 to 1 on the lightest.
+
+     --evt-art is the inner block behind the numeral: always the next step
+     along the ramp, so it stays a clear lighter panel whichever card opens. */
+  .evt-walk__card:nth-child(5n + 1) { --evt-tone: #FF4E00; --evt-on-tone: var(--on-light); --evt-art: #FFA000; }
+  .evt-walk__card:nth-child(5n + 2) { --evt-tone: #FF7B00; --evt-on-tone: var(--on-light); --evt-art: #FFC000; }
+  .evt-walk__card:nth-child(5n + 3) { --evt-tone: #FFA000; --evt-on-tone: var(--on-light); --evt-art: #FFDF00; }
+  .evt-walk__card:nth-child(5n + 4) { --evt-tone: #FFC000; --evt-on-tone: var(--on-light); --evt-art: #FF7B00; }
+  .evt-walk__card:nth-child(5n + 5) { --evt-tone: #FFDF00; --evt-on-tone: var(--on-light); --evt-art: #FFA000; }
 
   /* The tab itself: a button filling the whole strip, with the topic name set
      on end. It wraps onto a second line rather than being cut off, which is
@@ -805,14 +804,19 @@
     width: 100%; aspect-ratio: 1; max-height: 100%;
     border-radius: clamp(14px, 1.6vw, 26px);
     overflow: hidden;
-    background: rgba(1, 17, 31, .18);
+    background: var(--evt-art);
     display: grid; place-items: center;
   }
-  /* The two dark cards need the opposite wash behind the numeral. */
-  .evt-walk__card:nth-child(5n + 1) .evt-walk__art,
-  .evt-walk__card:nth-child(5n + 4) .evt-walk__art { background: rgba(255, 255, 255, .17); }
   .evt-walk__art img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  .evt-walk__num { font-size: clamp(3.6rem, 8vw, 8rem); line-height: .8; opacity: .5; }
+  /* The numeral is the brightest gold in the palette. Nothing in this
+     palette clears 3 to 1 against anything else in it, so a hard offset in
+     the deepest orange draws its edge instead: the colour stays exactly
+     #FFDF00 and the figure still reads on the amber block. */
+  .evt-walk__num {
+    font-size: clamp(3.6rem, 8vw, 8rem); line-height: .8;
+    color: #FFDF00;
+    text-shadow: .028em .032em 0 #FF4E00;
+  }
 
   .evt-walk__topic {
     font-size: clamp(1.72rem, 3.2vw, 3.3rem);
