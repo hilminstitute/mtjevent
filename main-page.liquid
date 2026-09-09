@@ -34,23 +34,30 @@
   one place.
 
   Colour system (never hardcode a hex in the markup, use the tokens):
-    The page ground is the cinematic navy background, #010A17 lit by a deep
-    blue haze with the electric glow held in the top right. Every section is
-    only a transparent veil over it. The maroon and the gold below belong to
-    the objects that sit on top: badges, buttons, cards, tabs and tickets.
+    Four colours, and nothing else:
 
-    ink #010A17     the navy base, the page ground
-    forest #2A0B0D / moss #52161A                   the maroon darks
-    paper #F6EFE6 / paper-dim #DCCFC1               warm white surfaces
-    acid #690506  THE MAROON. Surfaces: badges, buttons, tiles, tabs
-    sun  #FFC425  THE GOLD. Emphasis on dark grounds, and bright surfaces
+    blue #07549A  THE DOMINANT. The page ground and most of what you see.
+    acid #B63818  THE ORANGE RED. Stripes, badge boxes, CTAs, tiles, numbers.
+    sun  #FFC425  THE GOLDEN YELLOW. Offsets, borders, secondary accents.
+    on-dark #FFFFFF  white, for contrast.
+
+    ink #01111F / forest #04355F / moss #0A4A85     deeper shades of the blue
+    paper #FFFFFF / paper-dim #CFE0F0               light surfaces
     sun-lift #FFD65E  the lifted gold, hover only
     lime #FFC425  the gold again, used only as the hard offset shadow
 
-    #690506 is almost black by weight, so it reads as a SURFACE, never as
-    type on a dark ground: maroon text on the page ground measures about
-    1.4 to 1. Everywhere the theme wanted maroon on something dark, the
-    maroon became the block and the gold carries the words on top of it.
+    #B63818 is a DARK colour: its luminance is 0.13 against the blue's 0.09,
+    so orange red type on the blue measures 1.3 to 1 and cannot be read.
+    It is therefore a SURFACE here, never type on the blue, and the two
+    layer treatment does the rest: the orange red block, the golden yellow
+    offset behind it, white lettering on top. The one place orange red is
+    type is the marquee, whose band is dark enough to carry it, and the 26,
+    which takes the golden yellow offset for the same reason.
+
+    Textures. Two, both inline SVG so nothing is fetched: a fractal smoke
+    at 18 per cent (26 in the hero) and an eight point girih star lattice
+    in gold line at 12 per cent over a 10 per cent wash. Both only ever
+    darken the blue, so nothing they sit under loses contrast.
   ==========================================================================
 {%- endcomment -%}
 
@@ -163,35 +170,40 @@
   #shopify-section-{{ section.id }} { padding: 0 !important; margin: 0 !important; }
 
   html { overflow-x: clip; }
-  body { background: #010A17; overflow-x: clip; }
+  body { background: #07549A; overflow-x: clip; }
 
   /* ================= Tokens ================= */
   .evt {
-    /* The page ground is the cinematic navy: a near black base lit by a
-       deep blue haze with the electric glow held up in the top right. The
-       maroon and the gold stay on the objects that sit over it. */
-    --ink:       #010A17;
-    --forest:    #2A0B0D;
-    --moss:      #52161A;
-    --paper:     #F6EFE6;
-    --paper-dim: #DCCFC1;
-    --acid:      #690506;
+    /* The dominant blue is the page. Everything else is either a shade of
+       it, the orange red, the gold, or white. */
+    --blue:      #07549A;
+    --ink:       #01111F;
+    --forest:    #04355F;
+    --moss:      #0A4A85;
+    --paper:     #FFFFFF;
+    --paper-dim: #CFE0F0;
+    --acid:      #B63818;
+    --acid-lift: #C74320;
     --sun:       #FFC425;
     --sun-lift:  #FFD65E;
     --lime:      #FFC425;
-    --on-dark:   #FDF6EE;
-    --on-light:  #1B0507;
+    --on-dark:   #FFFFFF;
+    --on-light:  #04141F;
 
-    /* No section paints a ground of its own any more. All three of these are
-       transparent veils of the base navy: they only deepen the live
-       background enough to separate one section from the next and to hold
-       the type clear of the glow. The lightest of them still leaves the
-       gold at 5.9 to 1 over the brightest point of the background, which is
-       what sets their floor. Darkest at the edges and the feet, per the
-       reference. */
-    --grad-primary:   linear-gradient(163deg, rgba(1, 10, 23, .30) 0%, rgba(1, 10, 23, .42) 58%, rgba(1, 10, 23, .60) 100%);
-    --grad-secondary: linear-gradient(168deg, rgba(1, 10, 23, .48) 0%, rgba(1, 22, 51, .34) 100%);
-    --grad-panel:     linear-gradient(180deg, rgba(1, 10, 23, .52) 0%, rgba(1, 22, 51, .34) 62%, rgba(1, 10, 23, .52) 100%);
+    /* The two textures. Both are inline SVG, both carry their opacity
+       inside the file, and both only darken what is under them. */
+    --tex-smoke:      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='1200'%3E%3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0055 0.009' numOctaves='5' seed='17' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0.004 0 0 0 0 0.055 0 0 0 0 0.105 1.15 0.85 0.35 0 -0.98'/%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3Crect width='1200' height='1200' filter='url(%23s)' opacity='0.18'/%3E%3C/svg%3E");
+    --tex-smoke-hero: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='1200'%3E%3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0048 0.0082' numOctaves='5' seed='29' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0.004 0 0 0 0 0.055 0 0 0 0 0.105 1.15 0.85 0.35 0 -0.98'/%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3Crect width='1200' height='1200' filter='url(%23s)' opacity='0.26'/%3E%3C/svg%3E");
+    --tex-pattern:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Crect width='160' height='160' fill='%2301111F' opacity='0.10'/%3E%3Cg fill='none' stroke='%23FFC425' stroke-width='1.4' opacity='0.12'%3E%3Cpath d='M58 58H102V102H58ZM80 48.9L111.1 80L80 111.1L48.9 80ZM-22 -22H22V22H-22ZM0 -31.1L31.1 0L0 31.1L-31.1 0ZM138 -22H182V22H138ZM160 -31.1L191.1 0L160 31.1L128.9 0ZM-22 138H22V182H-22ZM0 128.9L31.1 160L0 191.1L-31.1 160ZM138 138H182V182H138ZM160 128.9L191.1 160L160 191.1L128.9 160Z'/%3E%3Cpath d='M0 80L80 0L160 80L80 160Z' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E");
+
+    /* No section paints a ground of its own. These are transparent veils of
+       the deepest blue: they only deepen the page enough to separate one
+       section from the next, and they only ever darken, so the blue stays
+       dominant and nothing under them loses contrast. Both open and close on
+       the same value, so one section meets the next with no step in it. */
+    --grad-primary:   linear-gradient(163deg, rgba(1, 17, 31, .06) 0%, rgba(1, 17, 31, .20) 58%, rgba(1, 17, 31, .40) 100%);
+    --grad-secondary: linear-gradient(168deg, rgba(1, 17, 31, .24) 0%, rgba(1, 17, 31, .09) 50%, rgba(1, 17, 31, .24) 100%);
+    --grad-panel:     linear-gradient(180deg, rgba(1, 17, 31, .24) 0%, rgba(1, 17, 31, .09) 55%, rgba(1, 17, 31, .24) 100%);
     --glow-soft:      0 0 34px rgba(255, 196, 37, .26);
     --glow-wide:      0 0 60px rgba(255, 196, 37, .18);
     --glow-warm:      0 0 34px rgba(255, 196, 37, .34);
@@ -212,7 +224,7 @@
 
     font-family: "Inter Tight", ui-sans-serif, system-ui, -apple-system, sans-serif;
     color: var(--on-dark);
-    background: var(--ink);
+    background: var(--blue);
     -webkit-font-smoothing: antialiased;
 
     /* isolate makes the live background below a private layer of this block,
@@ -224,29 +236,24 @@
   }
 
   /* ================= Live background =================
-     The whole page sits on this one moving light: a near black navy base,
-     a deep blue haze through the middle and the electric glow held up in
-     the top right, exactly the three layers of the reference. It is pinned
-     to the viewport and every section above it is only a transparent veil,
-     so the sections blend into the background instead of covering it.
-
-     The reference moves the layers with background-position. Moving them
-     with a transform instead puts the whole drift on the compositor: the
-     same slow sweep, left and low, up through the middle, then right, with
-     the 1.00 to 1.06 breath over it, and none of the per frame repainting
-     that a full screen gradient would otherwise cost a phone. It watches
-     nothing: no listeners, no measuring. */
+     The dominant blue, with the smoke drifting slowly over it and the
+     outer edges deepened. Pinned to the viewport and painted behind every
+     section, all of which are transparent veils, so the page is one field
+     of blue rather than a stack of plates. The smoke never rises above 18
+     per cent and only ever darkens, so it cannot overpower the base. Pure
+     CSS on the compositor: it watches nothing. */
   .evt::before {
     content: "";
     position: fixed;
     inset: -8%;
     z-index: -1;
     pointer-events: none;
-    background-color: #010A17;
+    background-color: var(--blue);
     background-image:
-      radial-gradient(60% 55% at 72% 3%, rgba(8, 124, 232, .78) 0%, rgba(2, 76, 160, .50) 24%, rgba(2, 43, 92, .23) 52%, rgba(1, 10, 23, 0) 78%),
-      radial-gradient(70% 65% at 48% 32%, rgba(14, 86, 144, .24) 0%, rgba(2, 43, 92, .16) 38%, rgba(1, 10, 23, 0) 74%),
-      linear-gradient(115deg, #010A17 0%, #011633 32%, #022B5C 58%, #011633 78%, #010A17 100%);
+      var(--tex-smoke),
+      radial-gradient(80% 64% at 50% 40%, rgba(1, 17, 31, 0) 0%, rgba(1, 17, 31, .34) 74%, rgba(1, 17, 31, .56) 100%);
+    background-size: 1100px 1100px, cover;
+    background-repeat: repeat, no-repeat;
     animation: evt-cinematic 16s ease-in-out infinite alternate;
     will-change: transform;
   }
@@ -303,16 +310,18 @@
     text-decoration: none; cursor: pointer;
     transition: transform .15s var(--ease), box-shadow .15s var(--ease), background-color .15s var(--ease);
   }
-  /* The loud button is the maroon block with the gold behind it. */
+  /* Every key call to action is the same two layers: the orange red block,
+     the golden yellow behind it, white lettering on top. --forest is the
+     one that sits on the gold ticket, so it takes the same treatment. */
   .evt-btn--acid { background: var(--acid); color: var(--on-dark); box-shadow: 0 6px 0 var(--lime), var(--glow-warm); }
-  .evt-btn--acid:hover { background: #8A0A0C; transform: translateY(-2px); box-shadow: 0 8px 0 var(--lime), var(--glow-warm); }
-  .evt-btn--forest { background: var(--forest); color: var(--paper); }
-  .evt-btn--forest:hover { background: var(--moss); transform: translateY(-2px); box-shadow: 0 8px 0 var(--paper-dim); }
+  .evt-btn--acid:hover { background: var(--acid-lift); transform: translateY(-2px); box-shadow: 0 8px 0 var(--lime), var(--glow-warm); }
+  .evt-btn--forest { background: var(--acid); color: var(--on-dark); box-shadow: 0 6px 0 var(--lime); }
+  .evt-btn--forest:hover { background: var(--acid-lift); transform: translateY(-2px); box-shadow: 0 8px 0 var(--lime); }
   .evt-btn--sun { background: var(--sun); color: var(--on-light); }
   .evt-btn--sun:hover { background: var(--sun-lift); transform: translateY(-2px); box-shadow: 0 8px 0 var(--acid); }
   .evt-btn:active { transform: translateY(0); }
 
-  /* Gold rings on the dark ground, maroon on the light surfaces: #690506 is
+  /* Gold rings on the blue, orange red on the light surfaces: #B63818 is
      too dark to be seen as an outline against the page. */
   .evt :focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
   .evt-light :focus-visible { outline-color: var(--acid); }
@@ -338,9 +347,9 @@
     letter-spacing: .01em;
     line-height: 1;
   }
-  /* SPEAKERS, TOPICS and TICKETS: a #690506 box with a #FFC425 block behind
-     it, and white lettering, which is the only pairing that stays readable
-     at this weight. */
+  /* SPEAKERS, TOPICS and TICKETS, and every other heading badge: the
+     #B63818 box as the main layer, the #FFC425 block as the offset behind
+     it, white lettering on top. */
   .evt-sticker--acid { background: var(--acid); color: var(--on-dark); box-shadow: 5px 5px 0 var(--lime), var(--glow-soft); }
   .evt-sticker--sun  { background: var(--sun); color: var(--on-light); }
   .evt-light .evt-sticker { box-shadow: 5px 5px 0 var(--lime); }
@@ -363,7 +372,7 @@
     opacity: .08;
   }
   /* The giant ghost word only exists as a texture, so it takes the gold:
-     maroon at this opacity would vanish into the ground. */
+     orange red at this opacity would vanish into the ground. */
   .evt-backdrop--acid span { color: var(--sun); opacity: .09; }
   .evt-backdrop--ink span  { color: var(--ink); opacity: .09; }
 
@@ -388,16 +397,17 @@
   .evt [data-reveal].is-in > * { opacity: 1; transform: none; }
 
   /* ================= Marquee ================= */
-  /* The band itself is the #690506: the moving line is what the theme asked
-     to be maroon, and a maroon band with gold and white words is how that
-     reads at speed. */
+  /* The strip accent is the golden yellow rule top and bottom. The band
+     under it is the deepest blue on the page, and it has to be: the
+     alternate loop runs in orange red, and #B63818 only clears 3 to 1 as
+     display type against something this dark. The default loop is white. */
   .evt-marquee {
     position: relative;
     overflow: hidden;
-    background: var(--acid);
+    background: var(--ink);
     padding-block: clamp(14px, 2vw, 26px);
     transform: skewY(-1.2deg);
-    border-block: 2px solid var(--moss);
+    border-block: 2px solid var(--sun);
   }
   .evt-marquee__row { display: flex; width: max-content; will-change: transform; }
   .evt-marquee__row--a { animation: evt-slide var(--evt-marquee-a) linear infinite; }
@@ -411,7 +421,7 @@
     padding-inline: .28em;
     color: var(--on-dark);
   }
-  .evt-marquee__item:nth-child(odd) { color: var(--sun); }
+  .evt-marquee__item:nth-child(odd) { color: var(--acid); }
   @keyframes evt-slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* ================= 1. Hero ================= */
@@ -419,13 +429,15 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    /* The hero adds no light of its own: the glow in the top right of the
-       live background is the hero's light. This only feathers the outer
-       edges and the foot down, which is where the reference is darkest and
-       where the date block and the marquee need the extra hold. */
+    /* The hero carries the smoke a touch stronger than the rest of the page,
+       and feathers its outer edges and its foot down, which is where the
+       date block and the marquee need the extra hold. */
     background:
-      radial-gradient(120% 86% at 50% 6%, rgba(1, 10, 23, 0) 28%, rgba(1, 10, 23, .46) 100%),
+      var(--tex-smoke-hero),
+      radial-gradient(120% 86% at 50% 6%, rgba(1, 17, 31, 0) 28%, rgba(1, 17, 31, .40) 100%),
       var(--grad-primary);
+    background-size: 1100px 1100px, cover, cover;
+    background-repeat: repeat, no-repeat, no-repeat;
     min-height: 100svh;
     display: flex; flex-direction: column;
     justify-content: center;
@@ -443,8 +455,8 @@
     content: "";
     position: absolute; inset: 0;
     background:
-      linear-gradient(180deg, rgba(1, 10, 23, .42) 0%, rgba(1, 10, 23, .78) 64%, #010A17 100%),
-      rgba(1, 10, 23, var(--evt-scrim, .68));
+      linear-gradient(180deg, rgba(1, 17, 31, .34) 0%, rgba(1, 17, 31, .68) 64%, #053A6C 100%),
+      rgba(1, 17, 31, var(--evt-scrim, .68));
   }
 
   .evt-hero__eyebrow {
@@ -479,16 +491,26 @@
     hyphens: none;
     color: var(--on-dark);
   }
-  .evt-hero__year { color: var(--sun); display: inline-block; font-size: 1.12em; margin-left: .04em; vertical-align: baseline; }
+  /* The 26 is the one word in the mark that changes colour. Orange red on
+     the blue is 1.3 to 1 on its own, so it takes the same two layer
+     treatment as every heading badge: the orange red glyph with the golden
+     yellow set hard behind it, which is what makes it read. */
+  .evt-hero__year {
+    color: var(--acid);
+    text-shadow: .038em .042em 0 var(--sun);
+    display: inline-block; font-size: 1.12em; margin-left: .04em; vertical-align: baseline;
+  }
 
   /* Date, time and place as one solid block, the loudest object after the mark. */
   .evt-hero__facts {
     margin-top: clamp(20px, 3vh, 34px);
     display: inline-flex;
     flex-direction: column;
-    background: var(--sun);
-    color: var(--on-light);
-    box-shadow: 10px 10px 0 var(--acid), var(--glow-warm);
+    /* The stripe itself is the orange red, its lettering the golden yellow,
+       and the block set back behind it the golden yellow again. */
+    background: var(--acid);
+    color: var(--sun);
+    box-shadow: 10px 10px 0 var(--lime), var(--glow-warm);
     text-align: center;
   }
   .evt-fact {
@@ -498,7 +520,7 @@
     line-height: 1;
     font-size: clamp(1.5rem, 4.2vw, 2.3rem);
     padding: 15px clamp(18px, 4vw, 34px);
-    border-bottom: 3px solid var(--acid);
+    border-bottom: 3px solid var(--sun);
   }
   .evt-fact:last-child { border-bottom: 0; }
 
@@ -507,13 +529,23 @@
     --evt-marquee-a: 104s;
     padding-top: clamp(20px, 3.5vh, 38px);
     border-block: 0;
-    border-top: 2px solid var(--moss);
-    background: none;
+    border-top: 2px solid var(--sun);
+    /* Nearly opaque rather than solid, so it still reads as part of the
+       hero while being dark enough to carry the orange red loop. */
+    background: rgba(1, 17, 31, .92);
   }
   .evt-marquee--hero .evt-marquee__item { font-size: clamp(1.16rem, 2.7vw, 1.95rem); }
 
   /* ================= 2. Speakers ================= */
-  .evt-speakers { background: var(--grad-panel); padding-block: clamp(56px, 9vh, 112px); }
+  /* The girih lattice sits over the speakers, the ayah and the two closing
+     Y.E.S. blocks. Gold line at 12 per cent over a 10 per cent wash, so it
+     reads as geometry cut into the blue and never lifts it. */
+  .evt-speakers {
+    background: var(--tex-pattern), var(--grad-panel);
+    background-size: 160px 160px, cover;
+    background-repeat: repeat, no-repeat;
+    padding-block: clamp(56px, 9vh, 112px);
+  }
   .evt-speakers__head { text-align: center; margin-bottom: clamp(26px, 4vh, 46px); }
   /* Same treatment as the badge over the topics deck: a larger face in a box
      padded to match. Scoped to the head, so the stickers in every other
@@ -539,8 +571,8 @@
     position: relative;
     aspect-ratio: 3 / 4;
   }
-  /* The numbered tile is the #690506 block, with the numeral in gold on top
-     of it. A #690506 numeral would be invisible against any dark tile. */
+  /* The numbered tile is the #B63818 block, with the numeral in gold on top
+     of it. A #B63818 numeral would be invisible against any dark tile. */
   .evt-guest__initials {
     height: 100%;
     display: grid; place-content: center;
@@ -550,8 +582,8 @@
     font-size: clamp(3rem, 9vw, 5rem);
     letter-spacing: .02em;
   }
-  /* Portraits are supplied as cut-outs with no studio background, so the maroon
-     block is shorter than the frame and anchored to the bottom: the top of the
+  /* Portraits are supplied as cut-outs with no studio background, so the orange
+     red block is shorter than the frame and anchored to the bottom: the top of the
      photo rises above it instead of sitting inside a full tile. --evt-rise is
      the block's share of the frame height. Raise it if a speaker's head sits
      low in their own crop, lower it if it sits high, so the edge lands across
@@ -589,7 +621,11 @@
 
   /* ================= 3 + 6. Hooks ================= */
   .evt-hook { padding-block: clamp(64px, 11vh, 132px); text-align: center; }
-  .evt-hook--dark { background: var(--grad-panel); }
+  .evt-hook--dark {
+    background: var(--tex-pattern), var(--grad-panel);
+    background-size: 160px 160px, cover;
+    background-repeat: repeat, no-repeat;
+  }
   .evt-hook--light { background: var(--grad-secondary); color: var(--on-dark); }
   .evt-hook__q { max-width: 22ch; margin-inline: auto; }
   .evt-hook__q--verse { max-width: 26ch; }
@@ -635,7 +671,10 @@
      a real button, so any topic opens directly in any order. The section is an
      ordinary block: nothing is pinned and nothing watches the page scroll. */
   .evt-walk {
-    background: var(--grad-panel); color: var(--on-dark);
+    background: var(--tex-smoke), var(--grad-panel);
+    background-size: 1100px 1100px, cover;
+    background-repeat: repeat, no-repeat;
+    color: var(--on-dark);
     padding-block: clamp(64px, 11vh, 132px);
   }
   .evt-walk__head { text-align: center; margin-bottom: clamp(22px, 3.6vh, 44px); }
@@ -664,7 +703,7 @@
     overflow: hidden;
     border-radius: clamp(18px, 2vw, 32px);
     background: var(--evt-tone); color: var(--evt-on-tone);
-    box-shadow: -16px 0 34px rgba(0, 4, 11, .66);
+    box-shadow: -16px 0 34px rgba(1, 12, 22, .60);
     transition: flex-basis .6s cubic-bezier(.16, 1, .3, 1);
   }
   /* Each card slides a little under its left hand neighbour, which is what
@@ -677,17 +716,24 @@
     flex-basis: calc(var(--evt-tab) + 14px);
   }
 
-  /* Five plainly different steps along the same maroon to gold run. The three
-     light cards carry their words, the topic numeral included, in #690506
-     itself; the two dark cards carry theirs in white. */
+  /* Five tones, all four palette colours and nothing else: the orange red,
+     the gold, white, the dominant blue and a light tint of it. The two dark
+     cards carry white; the three light ones carry near black, because the
+     body copy on a card runs at 20px and orange red on gold is only good
+     for display sizes. */
   .evt-walk__card:nth-child(5n + 1) { --evt-tone: var(--acid);  --evt-on-tone: var(--on-dark); }
-  .evt-walk__card:nth-child(5n + 2) { --evt-tone: var(--sun);   --evt-on-tone: var(--acid); }
-  .evt-walk__card:nth-child(5n + 3) { --evt-tone: var(--paper); --evt-on-tone: var(--acid); }
-  /* Card four is a brick red: a clear step above the deep maroon of card one
-     and below the golds, so no two tabs in the row read as the same colour. */
-  .evt-walk__card:nth-child(5n + 4) { --evt-tone: #9E2B25; --evt-on-tone: var(--on-dark); }
-  /* The last card is the muted, dustier gold, so the row ends warm. */
-  .evt-walk__card:nth-child(5n + 5) { --evt-tone: #C9962B;  --evt-on-tone: var(--on-light); }
+  .evt-walk__card:nth-child(5n + 2) { --evt-tone: var(--sun);   --evt-on-tone: var(--on-light); }
+  .evt-walk__card:nth-child(5n + 3) { --evt-tone: var(--paper); --evt-on-tone: var(--ink); }
+  .evt-walk__card:nth-child(5n + 4) { --evt-tone: var(--blue);  --evt-on-tone: var(--on-dark); }
+  .evt-walk__card:nth-child(5n + 5) { --evt-tone: #9EC6E8;      --evt-on-tone: var(--ink); }
+  /* The topic name and its number are display sized, so on the light cards
+     they take the orange red and the deck keeps the site's accent. */
+  .evt-walk__card:nth-child(5n + 2) .evt-walk__topic,
+  .evt-walk__card:nth-child(5n + 3) .evt-walk__topic,
+  .evt-walk__card:nth-child(5n + 5) .evt-walk__topic,
+  .evt-walk__card:nth-child(5n + 2) .evt-walk__num,
+  .evt-walk__card:nth-child(5n + 3) .evt-walk__num,
+  .evt-walk__card:nth-child(5n + 5) .evt-walk__num { color: var(--acid); }
 
   /* The tab itself: a button filling the whole strip, with the topic name set
      on end. It wraps onto a second line rather than being cut off, which is
@@ -751,12 +797,12 @@
     width: 100%; aspect-ratio: 1; max-height: 100%;
     border-radius: clamp(14px, 1.6vw, 26px);
     overflow: hidden;
-    background: rgba(27, 5, 7, .16);
+    background: rgba(1, 17, 31, .18);
     display: grid; place-items: center;
   }
   /* The two dark cards need the opposite wash behind the numeral. */
   .evt-walk__card:nth-child(5n + 1) .evt-walk__art,
-  .evt-walk__card:nth-child(5n + 4) .evt-walk__art { background: rgba(253, 246, 238, .15); }
+  .evt-walk__card:nth-child(5n + 4) .evt-walk__art { background: rgba(255, 255, 255, .17); }
   .evt-walk__art img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .evt-walk__num { font-size: clamp(3.6rem, 8vw, 8rem); line-height: .8; opacity: .5; }
 
@@ -804,7 +850,7 @@
     .evt-walk__card {
       flex: none;
       max-height: var(--evt-tab);
-      box-shadow: 0 -14px 28px rgba(0, 4, 11, .66);
+      box-shadow: 0 -14px 28px rgba(1, 12, 22, .60);
       transition: max-height .6s cubic-bezier(.16, 1, .3, 1);
     }
     .evt-walk__card + .evt-walk__card {
@@ -855,7 +901,15 @@
   }
 
   /* ================= 7. Tickets ================= */
-  .evt-tickets { position: relative; isolation: isolate; background: var(--grad-secondary); color: var(--on-dark); padding-block: clamp(64px, 11vh, 132px); overflow: hidden; }
+  .evt-tickets {
+    position: relative; isolation: isolate;
+    background: var(--tex-smoke), var(--grad-secondary);
+    background-size: 1100px 1100px, cover;
+    background-repeat: repeat, no-repeat;
+    color: var(--on-dark);
+    padding-block: clamp(64px, 11vh, 132px);
+    overflow: hidden;
+  }
   .evt-tickets__head { position: relative; z-index: 1; text-align: center; margin-bottom: clamp(40px, 6vh, 68px); }
   /* The same badge as SPEAKERS and TOPICS: the larger face in a box padded
      to match it. */
@@ -879,9 +933,10 @@
     color: var(--on-light);
     border: 3px solid var(--forest);
   }
-  /* The gold card. Its type is the near black of the page, and #690506
-     carries the parts that have to be picked out: the tier, the price, the
-     badge and the bullet markers. */
+  /* The gold card. Its body type is near black, and #B63818 carries the
+     display sized parts that have to be picked out: the tier, the price and
+     the badge block. The bullet markers run at 23px, which is under the
+     size where orange red on gold is safe, so they stay near black. */
   .evt-ticket--featured { background: var(--sun); border-color: var(--acid); }
 
   .evt-ticket__strip {
@@ -928,7 +983,7 @@
     text-transform: uppercase; letter-spacing: .1em;
     margin-bottom: 20px;
   }
-  .evt-ticket--featured .evt-ticket__badge { background: var(--acid); color: var(--sun); }
+  .evt-ticket--featured .evt-ticket__badge { background: var(--acid); color: var(--on-dark); }
   .evt-ticket__tier { font-size: clamp(1.7rem, 3.4vw, 2.6rem); margin: 0; color: var(--forest); }
   .evt-ticket--featured .evt-ticket__tier { color: var(--acid); }
   .evt-ticket__price { font-size: clamp(2.8rem, 6.5vw, 4.4rem); margin: 12px 0 0; color: var(--ink); }
@@ -942,12 +997,17 @@
   .evt-ticket__incl { list-style: none; margin: 28px 0 34px; padding: 0; display: grid; gap: 13px; }
   .evt-ticket__incl li { display: flex; gap: 12px; font-size: 1.44rem; line-height: 1.45; }
   .evt-ticket__incl li > span:first-child { flex: 0 0 auto; font-weight: 700; color: var(--forest); }
-  .evt-ticket--featured .evt-ticket__incl li > span:first-child { color: var(--acid); }
+  .evt-ticket--featured .evt-ticket__incl li > span:first-child { color: var(--ink); }
   .evt-ticket__incl li > span:last-child { min-width: 0; }
   .evt-ticket__cta { margin-top: auto; }
 
   /* ================= 9. About ================= */
-  .evt-about { background: var(--grad-secondary); padding-block: clamp(64px, 11vh, 132px); }
+  .evt-about {
+    background: var(--tex-pattern), var(--grad-secondary);
+    background-size: 160px 160px, cover;
+    background-repeat: repeat, no-repeat;
+    padding-block: clamp(64px, 11vh, 132px);
+  }
   .evt-about__grid { display: grid; gap: clamp(32px, 5vw, 72px); }
   .evt-about__mark { font-size: clamp(3rem, 11vw, 7rem); color: var(--on-dark); margin: 14px 0 0; }
   .evt-about__mark em { font-style: normal; color: var(--sun); }
@@ -970,11 +1030,11 @@
   .evt-strip__nav { display: flex; gap: 10px; flex-shrink: 0; }
   .evt-strip__btn {
     width: 52px; height: 52px; border-radius: 999px;
-    border: 2px solid var(--moss); background: transparent; color: var(--sun);
+    border: 2px solid var(--sun); background: transparent; color: var(--sun);
     font-size: 1.35rem; line-height: 1; cursor: pointer;
     transition: background-color .2s var(--ease), border-color .2s var(--ease);
   }
-  .evt-strip__btn:hover { background: var(--moss); border-color: var(--sun); }
+  .evt-strip__btn:hover { background: var(--moss); border-color: var(--sun-lift); }
   .evt-strip {
     display: grid; grid-auto-flow: column; grid-auto-columns: 74%;
     gap: 4px; overflow-x: auto; scroll-snap-type: x mandatory;
@@ -999,7 +1059,7 @@
   .evt-cause__inner { position: relative; z-index: 1; }
   .evt-cause__intro { max-width: 58ch; margin: 28px auto 0; }
   .evt-cause__list { list-style: none; margin: clamp(36px, 6vh, 56px) auto 0; padding: 0; max-width: 62ch; display: grid; gap: 22px; text-align: left; }
-  .evt-cause__list li { border-top: 2px solid var(--moss); padding-top: 16px; line-height: 1.55; }
+  .evt-cause__list li { border-top: 2px solid rgba(255, 196, 37, .45); padding-top: 16px; line-height: 1.55; }
   .evt-cause__list b { font-family: "Anton", system-ui, sans-serif; font-weight: 400; text-transform: uppercase; margin-right: .4em; }
   .evt-cause__close { margin-top: clamp(40px, 6vh, 64px); font-size: clamp(1.8rem, 6vw, 4rem); }
 
@@ -1016,7 +1076,7 @@
   .evt-seats { display: grid; grid-template-columns: repeat(27, 1fr); gap: 3px; margin-bottom: 18px; }
   .evt-seat {
     aspect-ratio: 1; border-radius: 2px;
-    background: rgba(255, 196, 37, .17);
+    background: rgba(255, 255, 255, .20);
     transform: scale(.4); opacity: 0;
     transition: transform .5s var(--ease), opacity .5s var(--ease), background-color .5s var(--ease);
     transition-delay: calc(var(--i) * 6ms);
@@ -1025,11 +1085,17 @@
   .is-in .evt-seat--taken { background: var(--sun); }
   .evt-seats__legend { display: flex; flex-wrap: wrap; gap: 18px; }
   .evt-seats__key { display: inline-flex; align-items: center; gap: 8px; }
-  .evt-seats__sw { width: 11px; height: 11px; border-radius: 2px; background: rgba(255, 196, 37, .17); }
+  .evt-seats__sw { width: 11px; height: 11px; border-radius: 2px; background: rgba(255, 255, 255, .20); }
   .evt-seats__sw--taken { background: var(--sun); }
 
   /* ================= 14. Footer ================= */
-  .evt-footer { background: var(--grad-panel); border-top: 2px solid var(--moss); padding-block: 40px; }
+  .evt-footer {
+    background: var(--tex-pattern), var(--grad-panel);
+    background-size: 160px 160px, cover;
+    background-repeat: repeat, no-repeat;
+    border-top: 2px solid var(--sun);
+    padding-block: 40px;
+  }
   .evt-footer__grid { display: grid; gap: 22px; align-items: center; text-align: center; }
   .evt-footer__mark { font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--on-dark); }
   .evt-footer__mark em { font-style: normal; color: var(--sun); }
@@ -1039,7 +1105,7 @@
   .evt-footer__socials a {
     display: inline-flex; align-items: center; min-height: 44px;
     color: var(--on-dark); text-decoration: none;
-    border-bottom: 2px solid var(--moss); padding-bottom: 2px;
+    border-bottom: 2px solid rgba(255, 196, 37, .45); padding-bottom: 2px;
   }
   .evt-footer__socials a:hover { color: var(--sun); border-color: var(--sun); }
   .evt-footer__rights { color: var(--on-dark); opacity: .75; font-size: 1.38rem; }
@@ -1058,8 +1124,8 @@
   }
   .evt-sticky.is-visible { transform: none; }
   .evt-sticky__when { font-weight: 700; font-size: 1.3rem; letter-spacing: .04em; text-transform: uppercase; }
-  .evt-sticky .evt-btn { padding: 12px 22px; background: var(--acid); color: var(--sun); box-shadow: none; }
-  .evt-sticky .evt-btn:hover { background: #8A0A0C; box-shadow: none; transform: none; }
+  .evt-sticky .evt-btn { padding: 12px 22px; background: var(--acid); color: var(--on-dark); box-shadow: none; }
+  .evt-sticky .evt-btn:hover { background: var(--acid-lift); box-shadow: none; transform: none; }
   @media (max-width: 520px) { .evt-sticky__time { display: none; } }
   /* The bar carries a date and a button on one line, so on a narrow phone both
      step back down from the page wide type sizes to keep the button whole. */
@@ -1075,7 +1141,7 @@
     .evt-video { max-width: 720px; }
     .evt-video__media { aspect-ratio: 1 / 1; }
     .evt-hero__facts { flex-direction: row; align-items: stretch; }
-    .evt-fact { border-bottom: 0; border-right: 3px solid var(--acid); }
+    .evt-fact { border-bottom: 0; border-right: 3px solid var(--sun); }
     .evt-fact:last-child { border-right: 0; }
     .evt-speakers__grid { grid-auto-columns: 44%; }
     .evt-strip { grid-auto-columns: 44%; }
