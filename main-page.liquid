@@ -34,30 +34,28 @@
   one place.
 
   Colour system (never hardcode a hex in the markup, use the tokens):
-    Four colours, and nothing else:
+    Three colours, and nothing else:
 
-    blue #07549A  THE DOMINANT. The page ground and most of what you see.
-    acid #F64600  THE ORANGE RED. Stripes, badge boxes, CTAs, tiles, numbers.
-    sun  #FFC425  THE GOLDEN YELLOW. Offsets, borders, secondary accents.
-    on-dark #FFFFFF  white, for contrast.
+    blue #0C467A  THE GROUND. The whole page sits on it.
+    acid #F03C01  THE ORANGE RED. Stripes, badge offsets, tiles, borders.
+    sun  #FCC824  THE GOLD. Buttons, heading boxes, lines, strips, labels.
 
-    ink #01111F / forest #04355F / moss #0A4A85     deeper shades of the blue
-    paper #FFFFFF / paper-dim #CFE0F0               light surfaces
-    sun-lift #FFD65E  the lifted gold, hover only
-    lime #FFC425  the gold again, used only as the hard offset shadow
+    ink #05243F / forest #093A66 / moss #135C9E     deeper shades of the blue
+    paper #FFFFFF / paper-dim #D9E6F2               light surfaces
+    on-dark #FFFFFF   on the blue        on-light #031523   on the gold
+    sun-lift #FFD95C  the lifted gold, hover only
+    lime #FCC824  the gold again, used as the hard offset shadow
 
-    #F64600 has a luminance of 0.24 against the blue's 0.09, so orange type
-    on the blue still only measures 2.1 to 1 and cannot be read. It is
-    therefore a SURFACE here, never type on the blue, and the two layer
-    treatment does the rest: the orange block, the golden yellow offset
-    behind it, lettering on top. The one place orange is type is the
-    marquee, whose band carries it at 5.3 to 1, and the 26, which takes the
-    golden yellow offset for the same reason.
-
-    NOTE. At this brightness the orange behaves like a LIGHT surface, not a
-    dark one: white on it is 3.6 to 1 and gold on it is 2.3 to 1, where
-    near black is 5.2 to 1. Anything set on the orange at body or button
-    size therefore wants a dark colour, not white.
+    WHY THE TYPE IS NOT #F03C01. Measure the three: the blue is luminance
+    0.059, the orange red 0.218, the gold 0.621. The orange red sits exactly
+    between the other two, so it reaches 2.46 to 1 on the blue and 2.51 to 1
+    on the gold. It cannot clear 4.5 against EITHER, and there is nowhere
+    else on the page for it to stand. It is therefore a SURFACE here, and
+    the reading colours are the two that do work: white on the blue at 9.7
+    to 1, and #031523, the deepest shade of the same blue, on the gold at
+    11.8 to 1. The orange red is still everywhere, as the block rather than
+    the letters, and it is type in the one place dark enough to carry it:
+    the marquee band, at 4.0 to 1.
 
     Textures. Two, both inline SVG so nothing is fetched: a fractal smoke
     at 18 per cent (26 in the hero) and a girih strapwork lattice in gold
@@ -180,43 +178,43 @@
   #shopify-section-{{ section.id }} { padding: 0 !important; margin: 0 !important; }
 
   html { overflow-x: clip; }
-  body { background: #07549A; overflow-x: clip; }
+  body { background: #0C467A; overflow-x: clip; }
 
   /* ================= Tokens ================= */
   .evt {
     /* The dominant blue is the page. Everything else is either a shade of
        it, the orange red, the gold, or white. */
-    --blue:      #07549A;
-    --ink:       #01111F;
-    --forest:    #04355F;
-    --moss:      #0A4A85;
+    --blue:      #0C467A;
+    --ink:       #05243F;
+    --forest:    #093A66;
+    --moss:      #135C9E;
     --paper:     #FFFFFF;
-    --paper-dim: #CFE0F0;
-    --acid:      #F64600;
-    --acid-lift: #D93C00;
-    --sun:       #FFC425;
-    --sun-lift:  #FFD65E;
-    --lime:      #FFC425;
+    --paper-dim: #D9E6F2;
+    --acid:      #F03C01;
+    --acid-lift: #D03200;
+    --sun:       #FCC824;
+    --sun-lift:  #FFD95C;
+    --lime:      #FCC824;
     --on-dark:   #FFFFFF;
-    --on-light:  #04141F;
+    --on-light:  #031523;
 
     /* The two textures. Both are inline SVG, both carry their opacity
        inside the file, and both only darken what is under them. */
     --tex-smoke:      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='1200'%3E%3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0055 0.009' numOctaves='5' seed='17' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0.004 0 0 0 0 0.055 0 0 0 0 0.105 1.15 0.85 0.35 0 -0.98'/%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3Crect width='1200' height='1200' filter='url(%23s)' opacity='0.18'/%3E%3C/svg%3E");
     --tex-smoke-hero: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='1200'%3E%3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0048 0.0082' numOctaves='5' seed='29' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0.004 0 0 0 0 0.055 0 0 0 0 0.105 1.15 0.85 0.35 0 -0.98'/%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3Crect width='1200' height='1200' filter='url(%23s)' opacity='0.26'/%3E%3C/svg%3E");
-    --tex-pattern:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='176' height='176'%3E%3Crect width='176' height='176' fill='%2301111F' opacity='0.1'/%3E%3Cg fill='none' stroke='%23FFC425' stroke-width='1.1' stroke-linejoin='round' opacity='0.12'%3E%3Cpath d='M88.0 36.5L36.5 88.0L-36.5 88.0L-88.0 36.5L-88.0 -36.5L-36.5 -88.0L36.5 -88.0L88.0 -36.5Z'/%3E%3Cpath d='M63.4 0.0L31.0 12.9L44.8 44.8L12.9 31.0L0.0 63.4L-12.9 31.0L-44.8 44.8L-31.0 12.9L-63.4 0.0L-31.0 -12.9L-44.8 -44.8L-12.9 -31.0L-0.0 -63.4L12.9 -31.0L44.8 -44.8L31.0 -12.9Z'/%3E%3Cpath d='M63.4 0.0L88.0 0.0'/%3E%3Cpath d='M44.8 44.8L62.2 62.2'/%3E%3Cpath d='M0.0 63.4L0.0 88.0'/%3E%3Cpath d='M-44.8 44.8L-62.2 62.2'/%3E%3Cpath d='M-63.4 0.0L-88.0 0.0'/%3E%3Cpath d='M-44.8 -44.8L-62.2 -62.2'/%3E%3Cpath d='M-0.0 -63.4L-0.0 -88.0'/%3E%3Cpath d='M44.8 -44.8L62.2 -62.2'/%3E%3Cpath d='M264.0 36.5L212.5 88.0L139.5 88.0L88.0 36.5L88.0 -36.5L139.5 -88.0L212.5 -88.0L264.0 -36.5Z'/%3E%3Cpath d='M239.4 0.0L207.0 12.9L220.8 44.8L188.9 31.0L176.0 63.4L163.1 31.0L131.2 44.8L145.0 12.9L112.6 0.0L145.0 -12.9L131.2 -44.8L163.1 -31.0L176.0 -63.4L188.9 -31.0L220.8 -44.8L207.0 -12.9Z'/%3E%3Cpath d='M239.4 0.0L264.0 0.0'/%3E%3Cpath d='M220.8 44.8L238.2 62.2'/%3E%3Cpath d='M176.0 63.4L176.0 88.0'/%3E%3Cpath d='M131.2 44.8L113.8 62.2'/%3E%3Cpath d='M112.6 0.0L88.0 0.0'/%3E%3Cpath d='M131.2 -44.8L113.8 -62.2'/%3E%3Cpath d='M176.0 -63.4L176.0 -88.0'/%3E%3Cpath d='M220.8 -44.8L238.2 -62.2'/%3E%3Cpath d='M88.0 212.5L36.5 264.0L-36.5 264.0L-88.0 212.5L-88.0 139.5L-36.5 88.0L36.5 88.0L88.0 139.5Z'/%3E%3Cpath d='M63.4 176.0L31.0 188.9L44.8 220.8L12.9 207.0L0.0 239.4L-12.9 207.0L-44.8 220.8L-31.0 188.9L-63.4 176.0L-31.0 163.1L-44.8 131.2L-12.9 145.0L-0.0 112.6L12.9 145.0L44.8 131.2L31.0 163.1Z'/%3E%3Cpath d='M63.4 176.0L88.0 176.0'/%3E%3Cpath d='M44.8 220.8L62.2 238.2'/%3E%3Cpath d='M0.0 239.4L0.0 264.0'/%3E%3Cpath d='M-44.8 220.8L-62.2 238.2'/%3E%3Cpath d='M-63.4 176.0L-88.0 176.0'/%3E%3Cpath d='M-44.8 131.2L-62.2 113.8'/%3E%3Cpath d='M-0.0 112.6L-0.0 88.0'/%3E%3Cpath d='M44.8 131.2L62.2 113.8'/%3E%3Cpath d='M264.0 212.5L212.5 264.0L139.5 264.0L88.0 212.5L88.0 139.5L139.5 88.0L212.5 88.0L264.0 139.5Z'/%3E%3Cpath d='M239.4 176.0L207.0 188.9L220.8 220.8L188.9 207.0L176.0 239.4L163.1 207.0L131.2 220.8L145.0 188.9L112.6 176.0L145.0 163.1L131.2 131.2L163.1 145.0L176.0 112.6L188.9 145.0L220.8 131.2L207.0 163.1Z'/%3E%3Cpath d='M239.4 176.0L264.0 176.0'/%3E%3Cpath d='M220.8 220.8L238.2 238.2'/%3E%3Cpath d='M176.0 239.4L176.0 264.0'/%3E%3Cpath d='M131.2 220.8L113.8 238.2'/%3E%3Cpath d='M112.6 176.0L88.0 176.0'/%3E%3Cpath d='M131.2 131.2L113.8 113.8'/%3E%3Cpath d='M176.0 112.6L176.0 88.0'/%3E%3Cpath d='M220.8 131.2L238.2 113.8'/%3E%3Cpath d='M139.5 88.0L88.0 139.5L36.5 88.0L88.0 36.5Z'/%3E%3Cpath d='M116.6 99.8L97.8 97.8L99.8 116.6L88.0 101.9L76.2 116.6L78.2 97.8L59.4 99.8L74.1 88.0L59.4 76.2L78.2 78.2L76.2 59.4L88.0 74.1L99.8 59.4L97.8 78.2L116.6 76.2L101.9 88.0Z'/%3E%3C/g%3E%3C/svg%3E");
+    --tex-pattern:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='176' height='176'%3E%3Crect width='176' height='176' fill='%23031523' opacity='0.1'/%3E%3Cg fill='none' stroke='%23FCC824' stroke-width='1.1' stroke-linejoin='round' opacity='0.12'%3E%3Cpath d='M88.0 36.5L36.5 88.0L-36.5 88.0L-88.0 36.5L-88.0 -36.5L-36.5 -88.0L36.5 -88.0L88.0 -36.5Z'/%3E%3Cpath d='M63.4 0.0L31.0 12.9L44.8 44.8L12.9 31.0L0.0 63.4L-12.9 31.0L-44.8 44.8L-31.0 12.9L-63.4 0.0L-31.0 -12.9L-44.8 -44.8L-12.9 -31.0L-0.0 -63.4L12.9 -31.0L44.8 -44.8L31.0 -12.9Z'/%3E%3Cpath d='M63.4 0.0L88.0 0.0'/%3E%3Cpath d='M44.8 44.8L62.2 62.2'/%3E%3Cpath d='M0.0 63.4L0.0 88.0'/%3E%3Cpath d='M-44.8 44.8L-62.2 62.2'/%3E%3Cpath d='M-63.4 0.0L-88.0 0.0'/%3E%3Cpath d='M-44.8 -44.8L-62.2 -62.2'/%3E%3Cpath d='M-0.0 -63.4L-0.0 -88.0'/%3E%3Cpath d='M44.8 -44.8L62.2 -62.2'/%3E%3Cpath d='M264.0 36.5L212.5 88.0L139.5 88.0L88.0 36.5L88.0 -36.5L139.5 -88.0L212.5 -88.0L264.0 -36.5Z'/%3E%3Cpath d='M239.4 0.0L207.0 12.9L220.8 44.8L188.9 31.0L176.0 63.4L163.1 31.0L131.2 44.8L145.0 12.9L112.6 0.0L145.0 -12.9L131.2 -44.8L163.1 -31.0L176.0 -63.4L188.9 -31.0L220.8 -44.8L207.0 -12.9Z'/%3E%3Cpath d='M239.4 0.0L264.0 0.0'/%3E%3Cpath d='M220.8 44.8L238.2 62.2'/%3E%3Cpath d='M176.0 63.4L176.0 88.0'/%3E%3Cpath d='M131.2 44.8L113.8 62.2'/%3E%3Cpath d='M112.6 0.0L88.0 0.0'/%3E%3Cpath d='M131.2 -44.8L113.8 -62.2'/%3E%3Cpath d='M176.0 -63.4L176.0 -88.0'/%3E%3Cpath d='M220.8 -44.8L238.2 -62.2'/%3E%3Cpath d='M88.0 212.5L36.5 264.0L-36.5 264.0L-88.0 212.5L-88.0 139.5L-36.5 88.0L36.5 88.0L88.0 139.5Z'/%3E%3Cpath d='M63.4 176.0L31.0 188.9L44.8 220.8L12.9 207.0L0.0 239.4L-12.9 207.0L-44.8 220.8L-31.0 188.9L-63.4 176.0L-31.0 163.1L-44.8 131.2L-12.9 145.0L-0.0 112.6L12.9 145.0L44.8 131.2L31.0 163.1Z'/%3E%3Cpath d='M63.4 176.0L88.0 176.0'/%3E%3Cpath d='M44.8 220.8L62.2 238.2'/%3E%3Cpath d='M0.0 239.4L0.0 264.0'/%3E%3Cpath d='M-44.8 220.8L-62.2 238.2'/%3E%3Cpath d='M-63.4 176.0L-88.0 176.0'/%3E%3Cpath d='M-44.8 131.2L-62.2 113.8'/%3E%3Cpath d='M-0.0 112.6L-0.0 88.0'/%3E%3Cpath d='M44.8 131.2L62.2 113.8'/%3E%3Cpath d='M264.0 212.5L212.5 264.0L139.5 264.0L88.0 212.5L88.0 139.5L139.5 88.0L212.5 88.0L264.0 139.5Z'/%3E%3Cpath d='M239.4 176.0L207.0 188.9L220.8 220.8L188.9 207.0L176.0 239.4L163.1 207.0L131.2 220.8L145.0 188.9L112.6 176.0L145.0 163.1L131.2 131.2L163.1 145.0L176.0 112.6L188.9 145.0L220.8 131.2L207.0 163.1Z'/%3E%3Cpath d='M239.4 176.0L264.0 176.0'/%3E%3Cpath d='M220.8 220.8L238.2 238.2'/%3E%3Cpath d='M176.0 239.4L176.0 264.0'/%3E%3Cpath d='M131.2 220.8L113.8 238.2'/%3E%3Cpath d='M112.6 176.0L88.0 176.0'/%3E%3Cpath d='M131.2 131.2L113.8 113.8'/%3E%3Cpath d='M176.0 112.6L176.0 88.0'/%3E%3Cpath d='M220.8 131.2L238.2 113.8'/%3E%3Cpath d='M139.5 88.0L88.0 139.5L36.5 88.0L88.0 36.5Z'/%3E%3Cpath d='M116.6 99.8L97.8 97.8L99.8 116.6L88.0 101.9L76.2 116.6L78.2 97.8L59.4 99.8L74.1 88.0L59.4 76.2L78.2 78.2L76.2 59.4L88.0 74.1L99.8 59.4L97.8 78.2L116.6 76.2L101.9 88.0Z'/%3E%3C/g%3E%3C/svg%3E");
 
     /* No section paints a ground of its own. These are transparent veils of
        the deepest blue: they only deepen the page enough to separate one
        section from the next, and they only ever darken, so the blue stays
        dominant and nothing under them loses contrast. Both open and close on
        the same value, so one section meets the next with no step in it. */
-    --grad-primary:   linear-gradient(163deg, rgba(1, 17, 31, .06) 0%, rgba(1, 17, 31, .20) 58%, rgba(1, 17, 31, .40) 100%);
-    --grad-secondary: linear-gradient(168deg, rgba(1, 17, 31, .24) 0%, rgba(1, 17, 31, .09) 50%, rgba(1, 17, 31, .24) 100%);
-    --grad-panel:     linear-gradient(180deg, rgba(1, 17, 31, .24) 0%, rgba(1, 17, 31, .09) 55%, rgba(1, 17, 31, .24) 100%);
-    --glow-soft:      0 0 34px rgba(255, 196, 37, .26);
-    --glow-wide:      0 0 60px rgba(255, 196, 37, .18);
-    --glow-warm:      0 0 34px rgba(255, 196, 37, .34);
+    --grad-primary:   linear-gradient(163deg, rgba(3, 21, 35, .06) 0%, rgba(3, 21, 35, .20) 58%, rgba(3, 21, 35, .40) 100%);
+    --grad-secondary: linear-gradient(168deg, rgba(3, 21, 35, .24) 0%, rgba(3, 21, 35, .09) 50%, rgba(3, 21, 35, .24) 100%);
+    --grad-panel:     linear-gradient(180deg, rgba(3, 21, 35, .24) 0%, rgba(3, 21, 35, .09) 55%, rgba(3, 21, 35, .24) 100%);
+    --glow-soft:      0 0 34px rgba(252, 200, 36, .26);
+    --glow-wide:      0 0 60px rgba(252, 200, 36, .18);
+    --glow-warm:      0 0 34px rgba(252, 200, 36, .34);
 
     --pad-x: clamp(18px, 5vw, 72px);
     --maxw: 1280px;
@@ -261,7 +259,7 @@
     background-color: var(--blue);
     background-image:
       var(--tex-smoke),
-      radial-gradient(80% 64% at 50% 40%, rgba(1, 17, 31, 0) 0%, rgba(1, 17, 31, .34) 74%, rgba(1, 17, 31, .56) 100%);
+      radial-gradient(80% 64% at 50% 40%, rgba(3, 21, 35, 0) 0%, rgba(3, 21, 35, .34) 74%, rgba(3, 21, 35, .56) 100%);
     background-size: 1100px 1100px, cover;
     background-repeat: repeat, no-repeat;
     animation: evt-cinematic 16s ease-in-out infinite alternate;
@@ -320,21 +318,22 @@
     text-decoration: none; cursor: pointer;
     transition: transform .15s var(--ease), box-shadow .15s var(--ease), background-color .15s var(--ease);
   }
-  /* Every key call to action is the same two layers: the orange red block,
-     the golden yellow behind it, white lettering on top. --forest is the
-     one that sits on the gold ticket, so it takes the same treatment. */
-  .evt-btn--acid { background: var(--acid); color: var(--on-dark); box-shadow: 0 6px 0 var(--lime), var(--glow-warm); }
-  .evt-btn--acid:hover { background: var(--acid-lift); transform: translateY(-2px); box-shadow: 0 8px 0 var(--lime), var(--glow-warm); }
-  .evt-btn--forest { background: var(--acid); color: var(--on-dark); box-shadow: 0 6px 0 var(--lime); }
-  .evt-btn--forest:hover { background: var(--acid-lift); transform: translateY(-2px); box-shadow: 0 8px 0 var(--lime); }
+  /* Buttons are the gold block with the orange red set behind it, lettered
+     in the deepest blue at 11.8 to 1. --forest is the one button that sits
+     ON the gold ticket, so it inverts: the orange red block instead, which
+     the same deep blue reads on at 4.7 to 1. */
+  .evt-btn--acid { background: var(--sun); color: var(--on-light); box-shadow: 0 6px 0 var(--acid), var(--glow-warm); }
+  .evt-btn--acid:hover { background: var(--sun-lift); transform: translateY(-2px); box-shadow: 0 8px 0 var(--acid), var(--glow-warm); }
+  .evt-btn--forest { background: var(--acid); color: var(--on-light); box-shadow: 0 6px 0 var(--ink); }
+  .evt-btn--forest:hover { background: var(--acid-lift); transform: translateY(-2px); box-shadow: 0 8px 0 var(--ink); }
   .evt-btn--sun { background: var(--sun); color: var(--on-light); }
   .evt-btn--sun:hover { background: var(--sun-lift); transform: translateY(-2px); box-shadow: 0 8px 0 var(--acid); }
   .evt-btn:active { transform: translateY(0); }
 
-  /* Gold rings on the blue, orange red on the light surfaces: #F64600 is
-     too dark to be seen as an outline against the page. */
+  /* Gold rings on the blue at 6.2 to 1, the deepest blue on the light
+     surfaces at 11.8: the orange red would be 2.5 either way. */
   .evt :focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
-  .evt-light :focus-visible { outline-color: var(--acid); }
+  .evt-light :focus-visible { outline-color: var(--ink); }
 
   /* ================= Grain ================= */
   .evt-grain {
@@ -357,10 +356,10 @@
     letter-spacing: .01em;
     line-height: 1;
   }
-  /* SPEAKERS, TOPICS and TICKETS, and every other heading badge: the
-     #F64600 box as the main layer, the #FFC425 block as the offset behind
-     it, white lettering on top. */
-  .evt-sticker--acid { background: var(--acid); color: var(--on-dark); box-shadow: 5px 5px 0 var(--lime), var(--glow-soft); }
+  /* SPEAKERS, TOPICS and TICKETS, and every other section title box: the
+     #FCC824 box as the main layer, the #F03C01 block as the offset behind
+     it, lettered in the deepest blue. */
+  .evt-sticker--acid { background: var(--sun); color: var(--on-light); box-shadow: 5px 5px 0 var(--acid), var(--glow-soft); }
   .evt-sticker--sun  { background: var(--sun); color: var(--on-light); }
   .evt-light .evt-sticker { box-shadow: 5px 5px 0 var(--lime); }
 
@@ -407,10 +406,10 @@
   .evt [data-reveal].is-in > * { opacity: 1; transform: none; }
 
   /* ================= Marquee ================= */
-  /* The strip accent is the golden yellow rule top and bottom. The band
-     under it is the deepest blue on the page, and it has to be: the
-     alternate loop runs in orange, which needs a dark ground under it: on
-     this band it reads at 5.3 to 1. The default loop is white. */
+  /* The strip accent is the gold rule top and bottom. The band under it is
+     the deepest blue on the page, and it has to be: it is the one place the
+     orange red can be TYPE rather than a block, at 4.0 to 1. The default
+     loop is white. */
   .evt-marquee {
     position: relative;
     overflow: hidden;
@@ -444,7 +443,7 @@
        date block and the marquee need the extra hold. */
     background:
       var(--tex-smoke-hero),
-      radial-gradient(120% 86% at 50% 6%, rgba(1, 17, 31, 0) 28%, rgba(1, 17, 31, .40) 100%),
+      radial-gradient(120% 86% at 50% 6%, rgba(3, 21, 35, 0) 28%, rgba(3, 21, 35, .40) 100%),
       var(--grad-primary);
     background-size: 1100px 1100px, cover, cover;
     background-repeat: repeat, no-repeat, no-repeat;
@@ -465,8 +464,8 @@
     content: "";
     position: absolute; inset: 0;
     background:
-      linear-gradient(180deg, rgba(1, 17, 31, .34) 0%, rgba(1, 17, 31, .68) 64%, #053A6C 100%),
-      rgba(1, 17, 31, var(--evt-scrim, .68));
+      linear-gradient(180deg, rgba(3, 21, 35, .34) 0%, rgba(3, 21, 35, .68) 64%, #0A3A66 100%),
+      rgba(3, 21, 35, var(--evt-scrim, .68));
   }
 
   .evt-hero__eyebrow {
@@ -502,9 +501,9 @@
     color: var(--on-dark);
   }
   /* The 26 is the one word in the mark that changes colour. Orange red on
-     the blue is 1.3 to 1 on its own, so it takes the same two layer
-     treatment as every heading badge: the orange red glyph with the golden
-     yellow set hard behind it, which is what makes it read. */
+     the blue is 2.5 to 1 on its own, so it takes the same two layer
+     treatment as every heading badge: the orange red glyph with the gold
+     set hard behind it, which is what makes it read. */
   .evt-hero__year {
     color: var(--acid);
     text-shadow: .038em .042em 0 var(--sun);
@@ -516,10 +515,11 @@
     margin-top: clamp(20px, 3vh, 34px);
     display: inline-flex;
     flex-direction: column;
-    /* The stripe itself is the orange red, its lettering the golden yellow,
-       and the block set back behind it the golden yellow again. */
+    /* The stripe is the orange red block with the gold set back behind it.
+       Its lettering is white: at 24px and up that clears the 3 to 1 a face
+       this size needs, where the gold on it would be 2.5. */
     background: var(--acid);
-    color: var(--sun);
+    color: var(--on-dark);
     box-shadow: 10px 10px 0 var(--lime), var(--glow-warm);
     text-align: center;
   }
@@ -542,7 +542,7 @@
     border-top: 2px solid var(--sun);
     /* Nearly opaque rather than solid, so it still reads as part of the
        hero while being dark enough to carry the orange red loop. */
-    background: rgba(1, 17, 31, .92);
+    background: rgba(3, 21, 35, .92);
   }
   .evt-marquee--hero .evt-marquee__item { font-size: clamp(1.16rem, 2.7vw, 1.95rem); }
 
@@ -587,9 +587,9 @@
     display: grid; place-content: center;
     background: var(--sun);
     color: var(--acid);
-    /* Orange on gold is only 2.3 to 1, so the numeral takes the same two
-       layer device the 26 and the heading badges use: the colour stays
-       exactly #F64600 and a hard offset in the deep blue draws its edge. */
+    /* Orange red on gold is only 2.5 to 1, so the numeral takes the same
+       two layer device the 26 and the heading badges use: the colour stays
+       exactly #F03C01 and a hard offset in the deep blue draws its edge. */
     text-shadow: .032em .036em 0 var(--ink);
     font-family: "Anton", system-ui, sans-serif;
     font-size: clamp(3rem, 9vw, 5rem);
@@ -672,7 +672,7 @@
     width: 84px; height: 84px;
     display: grid; place-content: center;
     border-radius: 999px;
-    background: var(--acid); color: var(--on-dark);
+    background: var(--acid); color: var(--on-light);
     font-size: 1.6rem; line-height: 1;
     border: 0;
   }
@@ -716,7 +716,7 @@
     overflow: hidden;
     border-radius: clamp(18px, 2vw, 32px);
     background: var(--evt-tone); color: var(--evt-on-tone);
-    box-shadow: -16px 0 34px rgba(1, 12, 22, .60);
+    box-shadow: -16px 0 34px rgba(2, 14, 26, .60);
     transition: flex-basis .6s cubic-bezier(.16, 1, .3, 1);
   }
   /* Each card slides a little under its left hand neighbour, which is what
@@ -729,23 +729,18 @@
     flex-basis: calc(var(--evt-tab) + 14px);
   }
 
-  /* One warm ramp across the row, the five palette colours in order: the
-     deepest orange opens it and the brightest gold closes it, so no two
-     tabs read alike and the deck reads as one family.
+  /* Five tones, the three theme colours plus white and one tint of the same
+     blue, so the row introduces nothing new. Each card carries whichever of
+     the two reading colours works on it: white on the blue card at 9.7 to 1,
+     the deepest blue on the rest, 4.7 on the orange red up to 15.8 on white.
 
-     Every one of these five is a LIGHT surface. The brightest pair in the
-     palette, #FFDF00 on #FF4E00, is only 2.5 to 1, so no palette colour can
-     carry type against another one: all of the deck's words are near black,
-     which is what the brief asks for and what runs from 5.6 to 1 on the
-     deepest card up to 14 to 1 on the lightest.
-
-     --evt-art is the inner block behind the numeral: always the next step
-     along the ramp, so it stays a clear lighter panel whichever card opens. */
-  .evt-walk__card:nth-child(5n + 1) { --evt-tone: #FF4E00; --evt-on-tone: var(--on-light); --evt-art: #FFA000; }
-  .evt-walk__card:nth-child(5n + 2) { --evt-tone: #FF7B00; --evt-on-tone: var(--on-light); --evt-art: #FFC000; }
-  .evt-walk__card:nth-child(5n + 3) { --evt-tone: #FFA000; --evt-on-tone: var(--on-light); --evt-art: #FFDF00; }
-  .evt-walk__card:nth-child(5n + 4) { --evt-tone: #FFC000; --evt-on-tone: var(--on-light); --evt-art: #FF7B00; }
-  .evt-walk__card:nth-child(5n + 5) { --evt-tone: #FFDF00; --evt-on-tone: var(--on-light); --evt-art: #FFA000; }
+     --evt-art is the inner block behind the numeral: a clear step away from
+     its own card, so it reads whichever one opens. */
+  .evt-walk__card:nth-child(5n + 1) { --evt-tone: var(--acid);  --evt-on-tone: var(--on-light); --evt-art: var(--sun); }
+  .evt-walk__card:nth-child(5n + 2) { --evt-tone: var(--sun);   --evt-on-tone: var(--on-light); --evt-art: var(--paper); }
+  .evt-walk__card:nth-child(5n + 3) { --evt-tone: var(--paper); --evt-on-tone: var(--ink);      --evt-art: #7FA9CE; }
+  .evt-walk__card:nth-child(5n + 4) { --evt-tone: var(--blue);  --evt-on-tone: var(--on-dark);  --evt-art: var(--sun); }
+  .evt-walk__card:nth-child(5n + 5) { --evt-tone: #7FA9CE;      --evt-on-tone: var(--ink);      --evt-art: var(--paper); }
 
   /* The tab itself: a button filling the whole strip, with the topic name set
      on end. It wraps onto a second line rather than being cut off, which is
@@ -813,14 +808,13 @@
     display: grid; place-items: center;
   }
   .evt-walk__art img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  /* The numeral is the brightest gold in the palette. Nothing in this
-     palette clears 3 to 1 against anything else in it, so a hard offset in
-     the deepest orange draws its edge instead: the colour stays exactly
-     #FFDF00 and the figure still reads on the amber block. */
+  /* The numeral is the orange red, with a hard offset in the deepest blue
+     drawing its edge: the same device the 26, the heading badges and the
+     speaker tiles use, and what lets #F03C01 be seen on a light block. */
   .evt-walk__num {
     font-size: clamp(3.6rem, 8vw, 8rem); line-height: .8;
-    color: #FFDF00;
-    text-shadow: .028em .032em 0 #FF4E00;
+    color: var(--acid);
+    text-shadow: .028em .032em 0 var(--ink);
   }
 
   .evt-walk__topic {
@@ -867,7 +861,7 @@
     .evt-walk__card {
       flex: none;
       max-height: var(--evt-tab);
-      box-shadow: 0 -14px 28px rgba(1, 12, 22, .60);
+      box-shadow: 0 -14px 28px rgba(2, 14, 26, .60);
       transition: max-height .6s cubic-bezier(.16, 1, .3, 1);
     }
     .evt-walk__card + .evt-walk__card {
@@ -950,10 +944,10 @@
     color: var(--on-light);
     border: 3px solid var(--forest);
   }
-  /* The gold card. Its body type is near black, and #F64600 carries the
-     display sized parts that have to be picked out: the tier, the price and
-     the badge block. The bullet markers run at 23px, which is under the
-     size where orange red on gold is safe, so they stay near black. */
+  /* The gold card, which is the loudest highlight box on the page. Orange
+     red is 2.5 to 1 on gold and so cannot letter it: the card's type is the
+     deepest blue throughout, and the orange red carries the border, the
+     badge block, the perforation and the button. */
   .evt-ticket--featured { background: var(--sun); border-color: var(--acid); }
 
   .evt-ticket__strip {
@@ -1000,11 +994,11 @@
     text-transform: uppercase; letter-spacing: .1em;
     margin-bottom: 20px;
   }
-  .evt-ticket--featured .evt-ticket__badge { background: var(--acid); color: var(--on-dark); }
+  .evt-ticket--featured .evt-ticket__badge { background: var(--acid); color: var(--on-light); }
   .evt-ticket__tier { font-size: clamp(1.7rem, 3.4vw, 2.6rem); margin: 0; color: var(--forest); }
-  .evt-ticket--featured .evt-ticket__tier { color: var(--acid); }
+  .evt-ticket--featured .evt-ticket__tier { color: var(--ink); }
   .evt-ticket__price { font-size: clamp(2.8rem, 6.5vw, 4.4rem); margin: 12px 0 0; color: var(--ink); }
-  .evt-ticket--featured .evt-ticket__price { color: var(--acid); }
+  .evt-ticket--featured .evt-ticket__price { color: var(--ink); }
   .evt-ticket__note {
     margin-top: 14px;
     padding: 12px 15px;
@@ -1051,7 +1045,7 @@
     font-size: 1.35rem; line-height: 1; cursor: pointer;
     transition: background-color .2s var(--ease), border-color .2s var(--ease);
   }
-  .evt-strip__btn:hover { background: var(--moss); border-color: var(--sun-lift); }
+  .evt-strip__btn:hover { background: var(--forest); border-color: var(--sun-lift); }
   .evt-strip {
     display: grid; grid-auto-flow: column; grid-auto-columns: 74%;
     gap: 4px; overflow-x: auto; scroll-snap-type: x mandatory;
@@ -1076,7 +1070,7 @@
   .evt-cause__inner { position: relative; z-index: 1; }
   .evt-cause__intro { max-width: 58ch; margin: 28px auto 0; }
   .evt-cause__list { list-style: none; margin: clamp(36px, 6vh, 56px) auto 0; padding: 0; max-width: 62ch; display: grid; gap: 22px; text-align: left; }
-  .evt-cause__list li { border-top: 2px solid rgba(255, 196, 37, .45); padding-top: 16px; line-height: 1.55; }
+  .evt-cause__list li { border-top: 2px solid rgba(252, 200, 36, .45); padding-top: 16px; line-height: 1.55; }
   .evt-cause__list b { font-family: "Anton", system-ui, sans-serif; font-weight: 400; text-transform: uppercase; margin-right: .4em; }
   .evt-cause__close { margin-top: clamp(40px, 6vh, 64px); font-size: clamp(1.8rem, 6vw, 4rem); }
 
@@ -1122,7 +1116,7 @@
   .evt-footer__socials a {
     display: inline-flex; align-items: center; min-height: 44px;
     color: var(--on-dark); text-decoration: none;
-    border-bottom: 2px solid rgba(255, 196, 37, .45); padding-bottom: 2px;
+    border-bottom: 2px solid rgba(252, 200, 36, .45); padding-bottom: 2px;
   }
   .evt-footer__socials a:hover { color: var(--sun); border-color: var(--sun); }
   .evt-footer__rights { color: var(--on-dark); opacity: .75; font-size: 1.38rem; }
